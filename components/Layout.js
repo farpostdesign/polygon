@@ -7,7 +7,10 @@ const style =`
 body, html {
   height: 100%;
   width: 100%;
+  font-size: 16px;
 }
+
+* { margin: 0; padding:0; box-sizing: border-box; }
 `;
 
 const Layout = ({ children, navBar }) => (
