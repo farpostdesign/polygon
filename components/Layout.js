@@ -10,7 +10,7 @@ body, html {
 }
 `;
 
-const Layout = ({ children }) => (
+const Layout = ({ children, navBar }) => (
     <div id="layout" style={{
         display: 'flex',
         flexDirection: 'column',
@@ -23,13 +23,17 @@ const Layout = ({ children }) => (
             <style global>{style}</style>
         </Head>
         <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>
-            <PolygonNavigationBar />
+            { navBar && <PolygonNavigationBar /> }
             <div id="content" style={{ flex: '1 1 auto', padding: '16px' }}>
                 { children }
             </div>
         </div>
     </div>
 );
+
+Layout.defaultProps = {
+    navBar: true
+};
 
 Layout.propTypes = {
     children: PropTypes.oneOfType([ PropTypes.element, PropTypes.array ])

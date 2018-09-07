@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 import { FormGroup, InputGroup, Button, H1 } from '@blueprintjs/core';
 
 const Login = () => (
-    <Layout>
+    <Layout navBar={false}>
         <H1>Login</H1>
         <form style={{ maxWidth: '400px' }} >
             <FormGroup>
