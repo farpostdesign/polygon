@@ -1,14 +1,16 @@
 import ProjectsList from '../components/List';
+import LettersFilter from '../components/LettersFilter';
 import Layout from '../components/Layout';
 
+const fakeCurrentLetter = 'D';
 const fakeProjects = [
     { title: 'Dazel' },
-    { title: 'Drom' },
-    { title: 'Time Manager' }
+    { title: 'Drom' }
 ];
 
 const Index = () => (
     <Layout>
+        <LettersFilter current={fakeCurrentLetter} />
         <ProjectsList items={fakeProjects} />
     </Layout>
 );
