@@ -36,6 +36,7 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
+    navBar: PropTypes.boolean,
     children: PropTypes.oneOfType([ PropTypes.element, PropTypes.array ])
 };
 
