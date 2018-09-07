@@ -1,0 +1,27 @@
+{
+  "name": "polygon",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Design polygon",
+  "main": "index.js",
+  "dependencies": {
+    "next": "^6.1.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [
+    "next.js",
+    "react.js",
+    "design",
+    "polygon"
+  ],
+  "author": "Dmitry Shvetsov <shvetsov@farpost.com>",
+  "license": "Unlicense"
+}
