@@ -1,6 +1,6 @@
-import PolygonNavigationBar from '../components/PolygonNavigationBar';
+import Layout from '../components/Layout';
 
 export default () =>
-  <div>
-    <PolygonNavigationBar />
-  </div>
+  <Layout>
+    Content goes here...
+  </Layout>
