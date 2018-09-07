@@ -6,7 +6,10 @@ module.exports = {
         'es6': true,
         'node': true
     },
-    'extends': 'eslint:recommended',
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended'
+    ],
     'parserOptions': {
         'ecmaFeatures': {
             'jsx': true
@@ -65,6 +68,9 @@ module.exports = {
         'no-unused-expressions': 1,
         'no-magic-numbers': 1,
         'max-len': [1, 80, 4],
-        'react/prefer-es6-class': 1
+        'react/prefer-es6-class': 1,
+
+        // Project specific rules
+        'react/react-in-jsx-scope': 0
     }
 };
