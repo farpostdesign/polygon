@@ -1,11 +1,6 @@
-const style = `
-body {
-  font-family: Sans-serif;
-}
-`;
+import PolygonNavigationBar from '../components/PolygonNavigationBar';
 
 export default () =>
   <div>
-    <style global jsx>{style}</style>
-    <h1>Polygon</h1>
+    <PolygonNavigationBar />
   </div>
