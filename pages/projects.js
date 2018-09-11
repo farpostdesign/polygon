@@ -1,18 +1,32 @@
 import url from 'url';
 import PropTypes from 'prop-types';
-import { Breadcrumb } from '@blueprintjs/core';
 import Layout from '../components/Layout';
 import List from '../components/List';
 import BreadcrumbsList from '../components/BreadcrumbsList';
 import fakeProjects from '../fakeProjects';
 
-const Projects = ({ project, subProjects }) => {
+function findDescendantsRecursively(parentId, ascendants = []) {
+    const project = fakeProjects.find(item => item.id === parentId);
+    if (!project) {
+        return ascendants;
+    }
+    if (typeof(project.parent) === 'undefined') {
+        return [project, ...ascendants];
+    }
+    return findDescendantsRecursively(project.parent, [project, ...ascendants]);
+}
+
+function findBreadcrumbs(projectId) {
+    projectId = Number(projectId);
+    const project = fakeProjects.find(item => item.id === projectId);
+    const breadcrumbs = findDescendantsRecursively(project.parent);
+    return [{ title: 'Projects', href: '/' }, ...breadcrumbs, project];
+}
+
+const Projects = ({ subProjects, breadcrumbs }) => {
     return (
         <Layout>
-            <BreadcrumbsList>
-                <Breadcrumb href="/" text="Projects" />
-                <Breadcrumb text={project.title} />
-            </BreadcrumbsList>
+            <BreadcrumbsList items={breadcrumbs} />
             <List items={subProjects} />
         </Layout>
     );
@@ -28,13 +42,14 @@ Projects.getInitialProps = async ({ req }) => {
     }
 
     const subProjects = fakeProjects.filter(item => item.parent === projectId);
+    const breadcrumbs = findBreadcrumbs(project.id);
 
-    return { project, subProjects };
+    return { project, subProjects, breadcrumbs };
 };
 
 Projects.propTypes = {
-    project: PropTypes.object,
-    items: PropTypes.array
+    subProjects: Projects.array,
+    breadcrumbs: PropTypes.array
 };
 
 export default Projects;

@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
-import { Classes } from '@blueprintjs/core';
+import { Breadcrumb, Classes } from '@blueprintjs/core';
 
-const BreadcrumbsList = ({ children }) => (
+const BreadcrumbsList = ({ items }) => (
     <ul className={Classes.BREADCRUMBS} style={{margin: '1rem 0 2rem 0' }}>
-        {children.map((crumb, index) =>
-            <li key={index} className={Classes.BREADCRUMB}>{crumb}</li>)}
+        {items.map((crumb, index) =>
+            <li key={index} className={Classes.BREADCRUMB}><Breadcrumb href={crumb.href} text={crumb.title}/></li>)}
     </ul>
 );
 
 BreadcrumbsList.propTypes = {
-    children: PropTypes.array
+    items: PropTypes.array
 };
 
 export default BreadcrumbsList;
