@@ -5,6 +5,6 @@ export default [
     { id: 4, title: 'Dazel store', href: 'projects?id=4', parent: 1 },
     { id: 5, title: 'Merch', href: 'projects?id=5', parent: 2 },
     { id: 6, title: 'Landing', href: 'projects?id=6', parent: 4 },
-    { id: 7, title: 'Cart', href: 'projects?id=6', parent: 4 }
+    { id: 7, title: 'Cart', href: 'projects?id=7', parent: 4 }
 ];
 
