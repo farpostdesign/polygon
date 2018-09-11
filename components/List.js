@@ -4,8 +4,8 @@ const style = {
     listStyle: 'none'
 };
 
-const ListItem = (project) => (
-    <li style={{ marginBottom: '.75rem' }}>{project.title}</li>
+const ListItem = (item) => (
+    <li style={{ marginBottom: '.75rem' }}>{item.title}</li>
 );
 
 const List = ({ items }) => (
