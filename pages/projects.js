@@ -6,14 +6,14 @@ import List from '../components/List';
 import BreadcrumbsList from '../components/BreadcrumbsList';
 import fakeProjects from '../fakeProjects';
 
-const Projects = ({ project, items }) => {
+const Projects = ({ project, subProjects }) => {
     return (
         <Layout>
             <BreadcrumbsList>
                 <Breadcrumb href="/" text="Projects" />
                 <Breadcrumb text={project.title} />
             </BreadcrumbsList>
-            <List items={items} />
+            <List items={subProjects} />
         </Layout>
     );
 };
@@ -21,11 +21,15 @@ const Projects = ({ project, items }) => {
 Projects.getInitialProps = async ({ req }) => {
     const { query } = url.parse(req.url, true);
     const projectId = Number(query.id);
-    const project = fakeProjects.find(project => project.id === projectId);
+
+    const project = fakeProjects.find(item => item.id === projectId);
     if (!project) {
         throw 'Project not found';
     }
-    return { project, items: [] };
+
+    const subProjects = fakeProjects.filter(item => item.parent === projectId);
+
+    return { project, subProjects };
 };
 
 Projects.propTypes = {
