@@ -9,21 +9,22 @@ const style = {
     alignItems: 'center'
 };
 
-const PolygonNavigationBar = ({ onClickCreateProject }) => (
+const PolygonNavigationBar = ({ onClickCreateProject, onClickCreateDesign }) => (
     <nav style={style}>
         <H1>P</H1>
         <Popover position="bottom-left">
             <Button icon="add" large={true} />
             <Menu key="menu">
                 <MenuItem icon="folder-close" text="Add Project" onClick={onClickCreateProject} />
-                <MenuItem icon="media" text="Add Design" />
+                <MenuItem icon="media" text="Add Design" onClick={onClickCreateDesign} />
             </Menu>
         </Popover>
     </nav>
 );
 
 PolygonNavigationBar.propTypes = {
-    onClickCreateProject: PropTypes.func
+    onClickCreateProject: PropTypes.func,
+    onClickCreateDesign: PropTypes.func
 };
 
 export default PolygonNavigationBar;

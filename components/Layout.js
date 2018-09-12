@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import PolygonNavigationBar from './PolygonNavigationBar';
 import CreateProject from './CreateProject';
+import CreateDesign from './CreateDesign';
 
 // Global styles
 const style =`
@@ -18,10 +19,15 @@ body, html {
 class Layout extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { createProjectIsOpen: false };
+        this.state = {
+            createProjectIsOpen: false,
+            createDesignIsOpen: false
+        };
 
         this.handleOpenCreateProject = this.handleOpenCreateProject.bind(this);
         this.handleCloseCreateProject = this.handleCloseCreateProject.bind(this);
+        this.handleOpenCreateDesign = this.handleOpenCreateDesign.bind(this);
+        this.handleCloseCreateDesign = this.handleCloseCreateDesign.bind(this);
     }
 
     render() {
@@ -38,12 +44,13 @@ class Layout extends React.Component {
                     <style global>{style}</style>
                 </Head>
                 <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>
-                    { this.props.navBar && <PolygonNavigationBar onClickCreateProject={this.handleOpenCreateProject} /> }
+                    { this.props.navBar && <PolygonNavigationBar onClickCreateProject={this.handleOpenCreateProject} onClickCreateDesign={this.handleOpenCreateDesign} /> }
                     <div id="content" style={{ flex: '1 1 auto', padding: '16px' }}>
                         { this.props.children }
                     </div>
                 </div>
                 <CreateProject isOpen={this.state.createProjectIsOpen} onClose={this.handleCloseCreateProject} />
+                <CreateDesign isOpen={this.state.createDesignIsOpen} onClose={this.handleCloseCreateDesign} />
             </div>
         );
     }
@@ -54,6 +61,14 @@ class Layout extends React.Component {
 
     handleCloseCreateProject() {
         this.setState({ createProjectIsOpen: false });
+    }
+
+    handleOpenCreateDesign() {
+        this.setState({ createDesignIsOpen: true });
+    }
+
+    handleCloseCreateDesign() {
+        this.setState({ createDesignIsOpen: false });
     }
 }
 
