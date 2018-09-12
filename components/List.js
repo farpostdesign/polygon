@@ -6,8 +6,8 @@ const style = {
 };
 
 const List = ({ items, icon }) => {
-    const ListItem = (item) => (
-        <li style={{ marginBottom: '.75rem' }}>
+    const ListItem = (item, index) => (
+        <li key={item.id || index} style={{ marginBottom: '.75rem' }}>
             <Icon icon={icon} color='#7390a2' style={{marginRight: '.75rem'}} />
             <a href={item.href}>{item.title}</a>
         </li>

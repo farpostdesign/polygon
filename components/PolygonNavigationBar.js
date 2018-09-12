@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button, H1 } from '@blueprintjs/core';
 
 const style = {
@@ -8,11 +9,15 @@ const style = {
     alignItems: 'center'
 };
 
-const PolygonNavigationBar = () => (
+const PolygonNavigationBar = ({ onClickCreateProject }) => (
     <nav style={style}>
         <H1>P</H1>
-        <Button icon="add" large={true} />
+        <Button icon="add" large={true} onClick={onClickCreateProject} />
     </nav>
 );
+
+PolygonNavigationBar.propTypes = {
+    onClickCreateProject: PropTypes.func
+};
 
 export default PolygonNavigationBar;
