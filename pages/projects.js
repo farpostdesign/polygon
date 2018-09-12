@@ -51,7 +51,7 @@ Projects.getInitialProps = async ({ req }) => {
 };
 
 Projects.propTypes = {
-    subProjects: Projects.array,
+    subProjects: PropTypes.array,
     breadcrumbs: PropTypes.array,
     designs: PropTypes.array
 };
