@@ -1,4 +1,5 @@
 import url from 'url';
+import PropTypes from 'prop-types';
 import List from '../components/List';
 import Layout from '../components/Layout';
 import fakeDesign from '../fakeDesign';
@@ -18,7 +19,7 @@ const imageStyle = {
 };
 
 const quickNavStyle = {
-    flex: '0 0 200px',
+    flex: '0 0 200px'
 };
 
 const images = [
@@ -65,6 +66,10 @@ Design.getInitialProps = ({ req }) => {
         throw 'Project for desing not found';
     }
     return { project };
+};
+
+Design.propTypes = {
+    project: PropTypes.object
 };
 
 export default Design;

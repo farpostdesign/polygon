@@ -41,7 +41,11 @@ module.exports = {
         'keyword-spacing': 2,
         'space-before-function-paren': [
             2,
-            'never'
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
         ],
         'no-inline-comments': 2,
         'no-useless-constructor': 1,
