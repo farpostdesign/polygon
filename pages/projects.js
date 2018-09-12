@@ -28,8 +28,8 @@ const Projects = ({ subProjects, breadcrumbs, designs }) => {
     return (
         <Layout>
             <BreadcrumbsList items={breadcrumbs} />
-            <List icon='folder-close' items={subProjects} />
-            <List icon='media' items={designs} />
+            <List icon='folder-close' items={subProjects} actionsMenu={true} />
+            <List icon='media' items={designs} actionsMenu={true} />
         </Layout>
     );
 };
