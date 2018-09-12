@@ -67,7 +67,6 @@ module.exports = {
         'no-unreachable': 1,
         'no-unused-expressions': 1,
         'no-magic-numbers': 1,
-        'max-len': [1, 80, 4],
         'react/prefer-es6-class': 1,
 
         // Project specific rules
