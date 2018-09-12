@@ -41,6 +41,7 @@ class Layout extends React.Component {
                 <Head>
                     <link rel="stylesheet" href="/static/normalize.css" />
                     <link rel="stylesheet" href="/static/blueprintjs/lib/css/blueprint.css" />
+                    <link rel="stylesheet" href="/static/dropzone.min.css" />
                     <style global>{style}</style>
                 </Head>
                 <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>

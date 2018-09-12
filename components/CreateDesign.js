@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+import config from '../config';
 import { Dialog, H2, FormGroup, InputGroup, Button, Classes } from '@blueprintjs/core';
+import Dropzone from 'react-dropzone-component';
 
 const CreateDesign = ({ isOpen, onClose }) => (
     <Dialog isOpen={isOpen} onClose={onClose}>
@@ -12,10 +14,9 @@ const CreateDesign = ({ isOpen, onClose }) => (
                 <InputGroup id="name" placeholder="Name of the design" />
             </FormGroup>
             <FormGroup
-                label="Files"
                 labelFor="file"
             >
-                <p>File uploader here</p>
+                <Dropzone config={config.dropzone}/>
             </FormGroup>
             <Button text="Add project" type="submit" intent="success" />
         </div>
