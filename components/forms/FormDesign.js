@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import config from '../config';
+import config from '../../config';
 import { Dialog, H2, FormGroup, InputGroup, Button, Classes } from '@blueprintjs/core';
 import Dropzone from 'react-dropzone-component';
 

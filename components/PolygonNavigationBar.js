@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, H1, Popover, Menu, MenuItem } from '@blueprintjs/core';
-import CreateProject from './CreateProject';
-import CreateDesign from './CreateDesign';
+import CreateProject from './forms/FormProject';
+import CreateDesign from './forms/FormDesign';
 
 const style = {
     padding: '16px',
