@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { Breadcrumb, Classes, Popover, Menu, MenuItem, Button } from '@blueprintjs/core';
+import { Breadcrumb, Classes, Button } from '@blueprintjs/core';
+import ActionsMenu from './ActionsMenu';
 
 const BreadcrumbsNav = ({ items }) => {
     const lastItemIndex = items.length - 1;
@@ -10,14 +11,9 @@ const BreadcrumbsNav = ({ items }) => {
             {ancestors.map((crumb, index) =>
                 <li key={index} className={Classes.BREADCRUMB}><Breadcrumb href={crumb.href} text={crumb.title}/></li>)}
             <li>
-                <Popover>
+                <ActionsMenu target={
                     <Button text={currentItem.title} minimal={true} rightIcon="caret-down" large={true} />
-                    <Menu>
-                        <MenuItem text="Edit" icon="edit" />
-                        <MenuItem text="Move" icon="move" />
-                        <MenuItem text="Delete" icon="trash" intent="danger" />
-                    </Menu>
-                </Popover>
+                } />
             </li>
         </ul>
     );

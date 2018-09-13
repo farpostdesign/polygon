@@ -8,9 +8,10 @@ const style = {
 };
 
 const List = ({ items, icon, actionsMenu }) => {
+    const actionTrigger = <Icon icon="more" style={{marginRight: '.75rem', transform: 'rotate(90deg)'}} onClick={this.handleClick} />;
     const ListItem = (item, index) => (
         <li key={item.id || index} style={{ marginBottom: '.75rem' }}>
-            {actionsMenu && <ActionsMenu />}
+            {actionsMenu && <ActionsMenu target={actionTrigger} />}
             <Icon icon={icon} color={listColor} style={{marginRight: '.75rem'}} />
             <a href={item.href}>{item.title}</a>
         </li>
