@@ -2,7 +2,7 @@ import url from 'url';
 import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import List from '../components/List';
-import BreadcrumbsList from '../components/BreadcrumbsList';
+import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import fakeProjects from '../fakeProjects';
 import fakeDesign from '../fakeDesign';
 
@@ -27,7 +27,7 @@ function findBreadcrumbs(projectId) {
 const Projects = ({ subProjects, breadcrumbs, designs }) => {
     return (
         <Layout>
-            <BreadcrumbsList items={breadcrumbs} />
+            <BreadcrumbsNav items={breadcrumbs} />
             <List icon='folder-close' items={subProjects} actionsMenu={true} />
             <List icon='media' items={designs} actionsMenu={true} />
         </Layout>
