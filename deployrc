@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+NAME=polygon-app
+
+docker build --rm -t $NAME .
+
+docker container stop $NAME || echo "..."
+docker container rm $NAME || echo "..."
+
+echo "START CONTAINER"
+docker container run \
+  --detach \
+  --restart unless-stopped \
+  --env-file .envlist \
+  --volume $HOME/data/$NAME/tmp/sockets:/polygon/tmp/sockets \
+  --name $NAME \
+  $NAME
+
+echo "DONE"

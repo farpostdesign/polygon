@@ -7,6 +7,7 @@
   "dependencies": {
     "@blueprintjs/core": "^3.5.1",
     "@blueprintjs/select": "^3.2.0",
+    "debug": "^4.0.1",
     "next": "^6.1.1",
     "react": "16.4.2",
     "react-dom": "^16.4.2",
@@ -20,9 +21,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "DEBUG=polygon:* next",
     "build": "next build",
-    "start": "next start",
+    "start": "DEBUG=polygon:* next build && node server.js",
     "lint": "eslint ."
   },
   "pre-commit": [

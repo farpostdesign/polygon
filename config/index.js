@@ -1,3 +1,5 @@
+const path = require('path');
+
 const config = {};
 
 config.dropzone = {
@@ -6,4 +8,6 @@ config.dropzone = {
     postUrl: '/api/files'
 };
 
-export default config;
+config.httpServerSocketPath = path.resolve('./tmp/sockets/polygon.sock');
+
+module.exports = config;
