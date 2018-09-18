@@ -2,8 +2,37 @@ import url from 'url';
 import PropTypes from 'prop-types';
 import List from '../components/List';
 import Layout from '../components/Layout';
+import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import fakeDesign from '../fakeDesign';
 import fakeProjects from '../fakeProjects';
+import fakeDesigns from '../fakeDesign';
+
+/**
+ * Helpers
+ */
+
+function findDescendantsRecursively(parentId, ascendants = []) {
+    const project = fakeProjects.find(item => item.id === parentId);
+    if (!project) {
+        return ascendants;
+    }
+    if (typeof(project.parent) === 'undefined') {
+        return [project, ...ascendants];
+    }
+    return findDescendantsRecursively(project.parent, [project, ...ascendants]);
+}
+
+function findBreadcrumbs(designId) {
+    designId = Number(designId);
+    const design = fakeDesigns.find(item => item.id === designId);
+    const project = fakeProjects.find(item => item.id === design.project);
+    const breadcrumbs = findDescendantsRecursively(project.parent);
+    return [{ title: 'Projects', href: '/' }, ...breadcrumbs, project, design];
+}
+
+/**
+ * Component
+ */
 
 const style = {
     display: 'flex',
@@ -29,12 +58,13 @@ const images = [
     { href: '#4', title: 'Shkola svarshika' }
 ];
 
-const Design = ({ project }) => (
+const Design = ({ breadcrumbs }) => (
     <Layout navBar={false}>
+        <BreadcrumbsNav items={breadcrumbs}/>
         <div style={{ display: 'flex' }}>
             <div style={quickNavStyle}>
                 <div style={{position: 'fixed' }}>
-                    <a href={project.href}>Back</a>
+                    <a href="#top">Top</a>
                     <br/>
                     <br/>
                     <List items={images} />
@@ -61,15 +91,12 @@ Design.getInitialProps = ({ req }) => {
     if (!desing) {
         throw 'Desing not found';
     }
-    const project = fakeProjects.find(item => item.id === desing.project);
-    if (!project) {
-        throw 'Project for desing not found';
-    }
-    return { project };
+    const breadcrumbs = findBreadcrumbs(designId);
+    return { breadcrumbs };
 };
 
 Design.propTypes = {
-    project: PropTypes.object
+    breadcrumbs: PropTypes.array
 };
 
 export default Design;

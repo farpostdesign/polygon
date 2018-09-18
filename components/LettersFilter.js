@@ -1,22 +1,24 @@
 import PropTypes from 'prop-types';
-import { ButtonGroup, AnchorButton } from '@blueprintjs/core';
-
-const style = {
-    margin: '1rem 0 2rem 0'
-};
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+const style = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    maxWidth: '960px',
+    margin: '1rem 0 2rem 0'
+};
+
 const LettersFilter = ({ current }) => (
-    <ButtonGroup style={style} minimal={true}>
+    <div style={style}>
         {
             alphabet.map((char) =>
-                <AnchorButton key={char} active={current === char}>
+                <a key={char} href={`?char=${char}`} className={current === char ? 'active' : ''}>
                     {char}
-                </AnchorButton>
+                </a>
             )
         }
-    </ButtonGroup>
+    </div>
 );
 
 LettersFilter.propTypes = {

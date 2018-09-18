@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import PolygonNavigationBar from './PolygonNavigationBar';
 
 // Global styles
 const style =`
@@ -9,12 +8,15 @@ body, html {
   height: 100%;
   width: 100%;
   font-size: 16px;
+  font-family: "Roboto", sans-serif;
 }
+
+a { color: #6e6eab; }
 
 * { margin: 0; padding:0; box-sizing: border-box; }
 `;
 
-const Layout = ({ children, navBar }) => (
+const Layout = ({ children }) => (
     <div id="layout" style={{
         display: 'flex',
         flexDirection: 'column',
@@ -22,13 +24,10 @@ const Layout = ({ children, navBar }) => (
         width: '100%'
     }}>
         <Head>
-            <link rel="stylesheet" href="/static/normalize.css" />
-            <link rel="stylesheet" href="/static/blueprintjs/lib/css/blueprint.css" />
-            <link rel="stylesheet" href="/static/dropzone.min.css" />
+            <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet" />
             <style global>{style}</style>
         </Head>
         <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>
-            {navBar && <PolygonNavigationBar />}
             <div id="content" style={{ flex: '1 1 auto', padding: '16px' }}>
                 {children}
             </div>
@@ -41,7 +40,6 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
-    navBar: PropTypes.bool,
     children: PropTypes.oneOfType([ PropTypes.element, PropTypes.array ])
 };
 

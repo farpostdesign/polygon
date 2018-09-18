@@ -1,21 +1,27 @@
 import PropTypes from 'prop-types';
-import { Breadcrumb, Classes, Button } from '@blueprintjs/core';
-import { ActionsMenuController } from './ActionsMenu';
+
+const style = {
+    margin: '1rem 0 2rem 0',
+    display: 'flex',
+    listStyle: 'none'
+};
+
+const separetorStyle = {
+    padding: '0 .5rem'
+};
 
 const BreadcrumbsNav = ({ items }) => {
     const lastItemIndex = items.length - 1;
     const ancestors = items.slice(0, lastItemIndex);
     const currentItem = items[lastItemIndex];
     return (
-        <ul className={Classes.BREADCRUMBS} style={{margin: '1rem 0 2rem 0' }}>
+        <ul style={style}>
             {ancestors.map((crumb, index) =>
-                <li key={index} className={Classes.BREADCRUMB}><Breadcrumb href={crumb.href} text={crumb.title}/></li>)}
-            <li>
-                <ActionsMenuController
-                    target={<Button text={currentItem.title} minimal={true} rightIcon="caret-down" large={true} />}
-                    type="project"
-                />
-            </li>
+                <li key={index}>
+                    <a href={crumb.href}>{crumb.title}</a>
+                    <span style={separetorStyle}>/</span>
+                </li>)}
+            <li>{currentItem.title}</li>
         </ul>
     );
 };
