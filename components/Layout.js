@@ -14,6 +14,7 @@ body, html {
 a { color: #6e6eab; }
 
 * { margin: 0; padding:0; box-sizing: border-box; }
+
 `;
 
 const Layout = ({ children }) => (
@@ -24,6 +25,7 @@ const Layout = ({ children }) => (
         width: '100%'
     }}>
         <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet" />
             <style global>{style}</style>
         </Head>
