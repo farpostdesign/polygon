@@ -11,6 +11,9 @@ const separetorStyle = {
 };
 
 const BreadcrumbsNav = ({ items }) => {
+    if (!items.length) {
+        return null;
+    }
     const lastItemIndex = items.length - 1;
     const ancestors = items.slice(0, lastItemIndex);
     const currentItem = items[lastItemIndex];
