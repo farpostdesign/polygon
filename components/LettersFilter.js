@@ -13,7 +13,7 @@ const LettersFilter = ({ current }) => (
     <div style={style}>
         {
             alphabet.map((char) =>
-                <a key={char} href={`?char=${char}`} className={current === char ? 'active' : ''}>
+                <a key={char} href={`?char=${char}`} style={current === char ? { color: 'red' } : {}}>
                     {char}
                 </a>
             )
