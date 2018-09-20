@@ -1,11 +1,13 @@
+import { Component } from 'react';
 import url from 'url';
 import PropTypes from 'prop-types';
 import List from '../components/List';
 import Layout from '../components/Layout';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
-import fakeDesign from '../fakeDesign';
-import fakeProjects from '../fakeProjects';
+import { DesignForm } from '../components/forms';
+import style from '../style';
 import fakeDesigns from '../fakeDesign';
+import fakeProjects from '../fakeProjects';
 
 /**
  * Helpers
@@ -34,13 +36,6 @@ function findBreadcrumbs(designId) {
  * Component
  */
 
-const style = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    flex: '1 1 auto'
-};
-
 const imageStyle = {
     border: '1px solid #ccc',
     marginBottom: '.75rem',
@@ -51,52 +46,87 @@ const quickNavStyle = {
     flex: '0 0 200px'
 };
 
-const images = [
-    { href: '#1', title: 'Kompleksoe snabjenie1' },
-    { href: '#2', title: 'Kompleksoe snabjenie2' },
-    { href: '#3', title: 'Kompleksoe snabjenie3' },
-    { href: '#4', title: 'Shkola svarshika' }
+const fakeImages = [
+    { href: '#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
+    { href: '#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
+    { href: '#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
+    { href: '#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
 ];
 
-const Design = ({ breadcrumbs }) => (
-    <Layout navBar={false}>
-        <BreadcrumbsNav items={breadcrumbs}/>
-        <div style={{ display: 'flex' }}>
-            <div style={quickNavStyle}>
-                <div style={{position: 'fixed' }}>
-                    <a href="#top">Top</a>
-                    <br/>
-                    <br/>
-                    <List items={images} />
+class Design extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { images: props.images };
+
+        this.handleFileRemoved = this.handleFileRemoved.bind(this);
+        this.handleFilesAdded = this.handleFilesAdded.bind(this);
+        this.buildImage = this.buildImage.bind(this);
+    }
+
+    handleFilesAdded(dropedFiles) {
+        this.setState({ images: this.state.images.concat(dropedFiles) });
+    }
+
+    handleFileRemoved(event) {
+        const { filename } = event.target.dataset;
+        const filesWithoutRemoved = this.state.images.filter((image) => image.name !== filename);
+        this.setState({ images: filesWithoutRemoved });
+    }
+
+    buildImage(image) {
+        return (
+            <div>
+                <h2 id='1'>{image.name}</h2>
+                <img style={imageStyle} src={image.preview} />
+                <div>
+                    <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
                 </div>
             </div>
-            <div style={style}>
-                <h2 id='1'>Kompleksoe snabjenie1</h2>
-                <img style={imageStyle} src="http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg" />
-                <h2 id='2'>Kompleksoe snabjenie2</h2>
-                <img style={imageStyle} src="http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg" />
-                <h2 id='3'>Kompleksoe snabjenie3</h2>
-                <img style={imageStyle} src="http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg" />
-                <h2 id='4'>Shkola svarshika</h2>
-                <img style={imageStyle} src="http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg" />
-            </div>
-        </div>
-    </Layout>
-);
+        );
+    }
+
+    render() {
+        return (
+            <Layout navBar={false}>
+                <BreadcrumbsNav items={this.props.breadcrumbs}/>
+                <DesignForm
+                    files={this.state.images}
+                    onFilesAdded={this.handleFilesAdded}
+                    onFileRemoved={this.handleFileRemoved}
+                    preview={false}
+                />
+                <div style={{ display: 'flex' }}>
+                    <div style={quickNavStyle}>
+                        <div style={{position: 'fixed' }}>
+                            <a href="#top">Top</a>
+                            <br/>
+                            <br/>
+                            <List items={this.state.images} />
+                        </div>
+                    </div>
+                    <div style={style.DESIGNS}>
+                        {this.state.images.map(this.buildImage)}
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+}
 
 Design.getInitialProps = ({ req }) => {
     const { query } = url.parse(req.url, true);
     const designId = Number(query.id);
-    const desing = fakeDesign.find(item => item.id === designId);
+    const desing = fakeDesigns.find(item => item.id === designId);
     if (!desing) {
         throw 'Desing not found';
     }
     const breadcrumbs = findBreadcrumbs(designId);
-    return { breadcrumbs };
+    return { breadcrumbs, images: fakeImages };
 };
 
 Design.propTypes = {
-    breadcrumbs: PropTypes.array
+    breadcrumbs: PropTypes.array,
+    images: PropTypes.array
 };
 
 export default Design;

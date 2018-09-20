@@ -32,4 +32,12 @@ style.INPUT = {
     borderRadius
 };
 
+style.DESIGNS = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flex: '1 1 auto'
+};
+
+
 export default style;
