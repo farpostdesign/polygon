@@ -2,31 +2,13 @@ import PropTypes from 'prop-types';
 import FormField from './FormField';
 import style from '../../style';
 
-const newFormConfig = {
-    buttonText: 'Add project',
-    value: ''
-};
-
-function formConfig(project) {
-    if (project) {
-        return {
-            buttonText: 'Edit project',
-            value: project.title
-        };
-    }
-
-    return newFormConfig;
-
-}
-
 const ProjectForm = ({ project }) => {
-    const conf = formConfig(project);
     return (
         <div>
-            <FormField type="text" name="name" value={conf.value} />
+            <FormField type="text" name="name" value={project && project.title} />
             <br />
             <br />
-            <input style={style.BUTTON} type="submit" value={conf.buttonText} />
+            {!project && <input style={style.BUTTON} type="submit" value="Add Project" />}
         </div>
     );
 };
