@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import url from 'url';
 import PropTypes from 'prop-types';
 import List from '../components/List';
 import Layout from '../components/Layout';
@@ -94,6 +93,7 @@ class Design extends Component {
                     onFilesAdded={this.handleFilesAdded}
                     onFileRemoved={this.handleFileRemoved}
                     preview={false}
+                    design={this.props.design}
                 />
                 <div style={{ display: 'flex' }}>
                     <div style={quickNavStyle}>
@@ -113,20 +113,20 @@ class Design extends Component {
     }
 }
 
-Design.getInitialProps = ({ req }) => {
-    const { query } = url.parse(req.url, true);
+Design.getInitialProps = ({ query }) => {
     const designId = Number(query.id);
-    const desing = fakeDesigns.find(item => item.id === designId);
-    if (!desing) {
+    const design = fakeDesigns.find(item => item.id === designId);
+    if (!design) {
         throw 'Desing not found';
     }
     const breadcrumbs = findBreadcrumbs(designId);
-    return { breadcrumbs, images: fakeImages };
+    return { design, breadcrumbs, images: fakeImages };
 };
 
 Design.propTypes = {
-    breadcrumbs: PropTypes.array,
-    images: PropTypes.array
+    breadcrumbs: PropTypes.array.isRequired,
+    images: PropTypes.array.isRequired,
+    design: PropTypes.object.isRequired
 };
 
 export default Design;
