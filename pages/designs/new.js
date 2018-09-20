@@ -1,3 +1,4 @@
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../../components/Layout';
 import BreadcrumbsNav from '../../components/BreadcrumbsNav';
@@ -39,12 +40,38 @@ function findBreadcrumbs(projectId) {
  *
  */
 
-const New = ({ breadcrumbs }) => (
-    <Layout>
-        <BreadcrumbsNav items={breadcrumbs} />
-        <DesignForm />
-    </Layout>
-);
+class New extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { images: [] };
+
+        this.handleFilesAdded = this.handleFilesAdded.bind(this);
+        this.handleFileRemove = this.handleFileRemove.bind(this);
+    }
+
+    handleFilesAdded(droppedFiles) {
+        this.setState({ images: this.state.images.concat(droppedFiles) });
+    }
+
+    handleFileRemove(event) {
+        const { filename } = event.target.dataset;
+        const filteredImages = this.state.images.filter((image) => image.name !== filename);
+        this.setState({ images: filteredImages });
+    }
+
+    render() {
+        return (
+            <Layout>
+                <BreadcrumbsNav items={this.props.breadcrumbs} />
+                <DesignForm
+                    files={this.state.images}
+                    onFilesAdded={this.handleFilesAdded}
+                    onFileRemoved={this.handleFileRemove}
+                />
+            </Layout>
+        );
+    }
+}
 
 New.getInitialProps = ({ query }) => {
     const breadcrumbs = findBreadcrumbs(query.project);
