@@ -42,6 +42,7 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
             <BreadcrumbsNav items={breadcrumbs} />
             <ProjectForm project={project} />
             <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
+            <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
             <List icon='folder-close' items={subProjects} actionsMenu={true} />
             <List icon='media' items={designs} actionsMenu={true} />
         </Layout>

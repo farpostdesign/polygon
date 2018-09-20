@@ -1,5 +1,7 @@
 import ProjectForm from './ProjectForm';
+import DesignForm from './DesignForm';
 
 export {
-    ProjectForm
+    ProjectForm,
+    DesignForm
 };
