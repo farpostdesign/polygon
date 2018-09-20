@@ -5,27 +5,30 @@ const onChangeStub = () => {
     // do nothing for now
 };
 
-const FormField = ({ name, type, value }) => {
+const FormField = ({ label, name, type, value }) => {
     return (
-        <label>
-            Name:
-            <br />
-            <input
-                id={`form_field_${name}`}
-                type={type}
-                name={name}
-                style={style.INPUT}
-                value={value}
-                onChange={onChangeStub}
-            />
-        </label>
+        <div>
+            <label>
+                {label || name}
+                <br />
+                <input
+                    id={`form_field_${name}`}
+                    type={type}
+                    name={name}
+                    style={style.INPUT}
+                    value={value}
+                    onChange={onChangeStub}
+                />
+            </label>
+        </div>
     );
 };
 
 FormField.propTypes = {
-    name: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    label: PropTypes.string
 };
 
 export default FormField;
