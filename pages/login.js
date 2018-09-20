@@ -1,20 +1,9 @@
 import Layout from '../components/Layout';
-import { FormGroup, InputGroup, Button, H1 } from '@blueprintjs/core';
+import { LoginForm } from '../components/forms';
 
 const Login = () => (
     <Layout navBar={false}>
-        <H1>Login</H1>
-        <form style={{ maxWidth: '400px' }} >
-            <FormGroup>
-                <InputGroup type='email' placeholder="Email" />
-            </FormGroup>
-            <FormGroup>
-                <InputGroup type='password' placeholder="Password" />
-            </FormGroup>
-            <FormGroup>
-                <Button rightIcon="log-in" type='submit' intent='success'>Login</Button>
-            </FormGroup>
-        </form>
+        <LoginForm />
     </Layout>
 );
 
