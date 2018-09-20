@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 const style = {
     listStyle: 'none'
@@ -21,10 +22,12 @@ const List = ({ items, icon }) => {
     const iconSrc = icons[icon];
     const ListItem = (item, index) => (
         <li key={item.id || index}>
-            <a href={item.href} style={itemStyle}>
-                {icon && <img src={iconSrc} style={{ width: '2rem' }}/>}
-                {item.title || item.name}
-            </a>
+            <Link href={item.href}>
+                <a style={itemStyle}>
+                    {icon && <img src={iconSrc} style={{ width: '2rem' }}/>}
+                    {item.title || item.name}
+                </a>
+            </Link>
         </li>
     );
 

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -13,9 +14,11 @@ const LettersFilter = ({ current }) => (
     <div style={style}>
         {
             alphabet.map((char) =>
-                <a key={char} href={`?char=${char}`} style={current === char ? { color: 'red' } : {}}>
-                    {char}
-                </a>
+                <Link key={char} href={`?char${char}`}>
+                    <a href={`?char=${char}`} style={current === char ? { color: 'red' } : {}}>
+                        {char}
+                    </a>
+                </Link>
             )
         }
     </div>

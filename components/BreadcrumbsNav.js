@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 const style = {
     margin: '1rem 0 2rem 0',
@@ -21,7 +22,7 @@ const BreadcrumbsNav = ({ items }) => {
         <ul style={style}>
             {ancestors.map((crumb, index) =>
                 <li key={index}>
-                    <a href={crumb.href}>{crumb.title}</a>
+                    <Link href={crumb.href}><a>{crumb.title}</a></Link>
                     <span style={separetorStyle}>/</span>
                 </li>)}
             <li>{currentItem.title}</li>
