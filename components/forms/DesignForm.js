@@ -5,10 +5,10 @@ import style from '../../style';
 
 const NOSTYLE = {};
 
-const DesignForm = ({ files, onFilesAdded, onFileRemoved, preview }) => {
+const DesignForm = ({ design, files, onFilesAdded, onFileRemoved, preview }) => {
     return (
         <div>
-            <FormField type="text" name="name" />
+            <FormField type="text" name="name" value={design && design.title} />
             <br />
             <br />
             <Dropzone accepts="image/*" onDrop={onFilesAdded} style={NOSTYLE}>
@@ -39,7 +39,7 @@ const DesignForm = ({ files, onFilesAdded, onFileRemoved, preview }) => {
             }
             <br />
             <br />
-            <input style={style.BUTTON} type="submit" value="Add Design"/>
+            {!design && <input style={style.BUTTON} type="submit" value="Add Design"/>}
         </div>
     );
 };
@@ -49,6 +49,7 @@ DesignForm.defaultProps = {
 };
 
 DesignForm.propTypes = {
+    design: PropTypes.object,
     files: PropTypes.array.isRequired,
     onFilesAdded: PropTypes.func.isRequired,
     onFileRemoved: PropTypes.func.isRequired,
