@@ -9,7 +9,7 @@ import fakeProjects from '../../fakeProjects';
  *
  */
 
-const rootCrumb = { title: 'Project', href: '/' };
+const rootCrumb = { title: 'Projects', href: '/' };
 const thisCrumb = { title: 'New Project' };
 
 function findDescendantsRecursively(parentId, ascendants = []) {
