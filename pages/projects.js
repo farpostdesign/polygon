@@ -1,4 +1,3 @@
-import url from 'url';
 import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import AnchorButton from '../components/AnchorButton';
@@ -49,8 +48,7 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
     );
 };
 
-Projects.getInitialProps = async ({ req }) => {
-    const { query } = url.parse(req.url, true);
+Projects.getInitialProps = async ({ query }) => {
     const projectId = Number(query.id);
 
     const project = fakeProjects.find(item => item.id === projectId);
