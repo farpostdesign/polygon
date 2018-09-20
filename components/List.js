@@ -23,7 +23,7 @@ const List = ({ items, icon }) => {
         <li key={item.id || index}>
             <a href={item.href} style={itemStyle}>
                 {icon && <img src={iconSrc} style={{ width: '2rem' }}/>}
-                {item.title}
+                {item.title || item.name}
             </a>
         </li>
     );
