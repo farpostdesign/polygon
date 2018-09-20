@@ -71,7 +71,7 @@ class Design extends Component {
     }
 
     handleFilesAdded(dropedFiles) {
-        this.setState({ images: this.state.images.concat(dropedFiles) });
+        this.setState({ images: dropedFiles.concat(this.state.images) });
     }
 
     handleFileRemoved(event) {
