@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import List from '../components/List';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
+import { ProjectForm } from '../components/forms';
 import fakeProjects from '../fakeProjects';
 import fakeDesign from '../fakeDesign';
+
+/**
+ * Helpers
+ *
+ */
 
 function findDescendantsRecursively(parentId, ascendants = []) {
     const project = fakeProjects.find(item => item.id === parentId);
@@ -24,10 +30,16 @@ function findBreadcrumbs(projectId) {
     return [{ title: 'Projects', href: '/' }, ...breadcrumbs, project];
 }
 
-const Projects = ({ subProjects, breadcrumbs, designs }) => {
+/**
+ * Component
+ *
+ */
+
+const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
     return (
         <Layout>
             <BreadcrumbsNav items={breadcrumbs} />
+            <ProjectForm project={project} />
             <List icon='folder-close' items={subProjects} actionsMenu={true} />
             <List icon='media' items={designs} actionsMenu={true} />
         </Layout>
@@ -47,13 +59,19 @@ Projects.getInitialProps = async ({ req }) => {
     const designs = fakeDesign.filter(item => item.project === projectId);
     const breadcrumbs = findBreadcrumbs(project.id);
 
-    return { subProjects, breadcrumbs, designs };
+    return { project, subProjects, breadcrumbs, designs };
 };
 
 Projects.propTypes = {
+    project: PropTypes.object,
     subProjects: PropTypes.array,
     breadcrumbs: PropTypes.array,
     designs: PropTypes.array
 };
+
+/**
+ * Expose
+ *
+ */
 
 export default Projects;
