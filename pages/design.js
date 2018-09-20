@@ -10,6 +10,7 @@ import fakeProjects from '../fakeProjects';
 
 /**
  * Helpers
+ *
  */
 
 function findDescendantsRecursively(parentId, ascendants = []) {
@@ -32,7 +33,21 @@ function findBreadcrumbs(designId) {
 }
 
 /**
+ * Fake data
+ *
+ */
+
+const fakeImages = [
+    { href: '#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
+    { href: '#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
+    { href: '#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
+    { href: '#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
+];
+
+
+/**
  * Component
+ *
  */
 
 const imageStyle = {
@@ -44,13 +59,6 @@ const imageStyle = {
 const quickNavStyle = {
     flex: '0 0 200px'
 };
-
-const fakeImages = [
-    { href: '#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
-    { href: '#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
-    { href: '#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
-    { href: '#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
-];
 
 class Design extends Component {
     constructor(props) {
