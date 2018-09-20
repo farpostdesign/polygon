@@ -1,6 +1,7 @@
 import url from 'url';
 import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
+import AnchorButton from '../components/AnchorButton';
 import List from '../components/List';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import { ProjectForm } from '../components/forms';
@@ -40,6 +41,7 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
         <Layout>
             <BreadcrumbsNav items={breadcrumbs} />
             <ProjectForm project={project} />
+            <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
             <List icon='folder-close' items={subProjects} actionsMenu={true} />
             <List icon='media' items={designs} actionsMenu={true} />
         </Layout>
