@@ -15,7 +15,8 @@ style.BUTTON = {
     textDecoration: 'none',
     margin: '0 0 2rem 0',
     color: $colorLink,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    cursor: 'pointer'
 };
 
 style.BUTTON_MINIMAL = {
