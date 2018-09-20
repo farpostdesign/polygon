@@ -45,7 +45,7 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
                     <List icon='folder-close' items={subProjects} />
                     <List icon='media' items={designs} />
                 </div>
-                <div style={{ flex: '1 1 50%' }}>
+                <div className="p-small-hide" style={{ flex: '1 1 50%' }}>
                     <ProjectForm project={project} />
                     <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
                     <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />

@@ -77,7 +77,7 @@ class Design extends Component {
             <div>
                 <h2 id='1'>{image.name}</h2>
                 <img style={imageStyle} src={image.preview} />
-                <div>
+                <div className="p-small-hide">
                     <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
                 </div>
             </div>
@@ -88,15 +88,17 @@ class Design extends Component {
         return (
             <Layout navBar={false}>
                 <BreadcrumbsNav items={this.props.breadcrumbs}/>
-                <DesignForm
-                    files={this.state.images}
-                    onFilesAdded={this.handleFilesAdded}
-                    onFileRemoved={this.handleFileRemoved}
-                    preview={false}
-                    design={this.props.design}
-                />
+                <div className="p-small-hide">
+                    <DesignForm
+                        files={this.state.images}
+                        onFilesAdded={this.handleFilesAdded}
+                        onFileRemoved={this.handleFileRemoved}
+                        preview={false}
+                        design={this.props.design}
+                    />
+                </div>
                 <div style={{ display: 'flex' }}>
-                    <div style={quickNavStyle}>
+                    <div className="p-small-hide" style={quickNavStyle}>
                         <div style={{position: 'fixed' }}>
                             <a href="#top">Top</a>
                             <br/>

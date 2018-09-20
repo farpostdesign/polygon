@@ -11,10 +11,13 @@ body, html {
   font-family: "Roboto", sans-serif;
 }
 
-a { color: #6e6eab; }
-
 * { margin: 0; padding:0; box-sizing: border-box; }
 
+a { color: #6e6eab; }
+
+@media screen and (max-width: 1023px) {
+    .p-small-hide { display: none; }
+}
 `;
 
 const Layout = ({ children }) => (

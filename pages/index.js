@@ -9,7 +9,9 @@ const fakeCurrentLetter = 'D';
 const Index = ({ projects }) => (
     <Layout>
         <LettersFilter current={fakeCurrentLetter} />
-        <AnchorButton href="/projects/new" text="New Project" />
+        <div className="p-small-hide">
+            <AnchorButton href="/projects/new" text="New Project" />
+        </div>
         <ProjectsList items={projects} />
     </Layout>
 );
