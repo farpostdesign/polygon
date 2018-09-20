@@ -17,16 +17,31 @@ const BreadcrumbsNav = ({ items }) => {
     }
     const lastItemIndex = items.length - 1;
     const ancestors = items.slice(0, lastItemIndex);
+    const previous = ancestors[lastItemIndex - 1];
     const currentItem = items[lastItemIndex];
     return (
-        <ul style={style}>
-            {ancestors.map((crumb, index) =>
-                <li key={index}>
-                    <Link href={crumb.href}><a>{crumb.title}</a></Link>
-                    <span style={separetorStyle}>/</span>
-                </li>)}
-            <li>{currentItem.title}</li>
-        </ul>
+        <div>
+            <div className="p-large-hide">
+                <ul style={style}>
+                    <li>
+                        <span style={separetorStyle}>&larr;</span>
+                        <Link href={previous.href}><a>{previous.title}</a></Link>
+                        <span style={separetorStyle}>/</span>
+                    </li>
+                    <li>{currentItem.title}</li>
+                </ul>
+            </div>
+            <div className="p-small-hide">
+                <ul style={style}>
+                    {ancestors.map((crumb, index) =>
+                        <li key={index}>
+                            <Link href={crumb.href}><a>{crumb.title}</a></Link>
+                            <span style={separetorStyle}>/</span>
+                        </li>)}
+                    <li>{currentItem.title}</li>
+                </ul>
+            </div>
+        </div>
     );
 };
 

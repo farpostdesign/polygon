@@ -15,6 +15,10 @@ body, html {
 
 a { color: #6e6eab; }
 
+@media screen and (min-width: 1024px) {
+    .p-large-hide { display: none; }
+}
+
 @media screen and (max-width: 1023px) {
     .p-small-hide { display: none; }
 }
