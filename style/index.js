@@ -35,6 +35,14 @@ style.INPUT = {
     borderRadius
 };
 
+style.INLINE_EDITABLE = {
+    fontSize: '2rem',
+    lineHeight: '2rem',
+    height: '2rem',
+    verticalAlign: 'middle',
+    marginRight: '1rem'
+};
+
 style.DESIGNS = {
     display: 'flex',
     flexDirection: 'column',

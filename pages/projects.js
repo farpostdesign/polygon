@@ -3,7 +3,8 @@ import Layout from '../components/Layout';
 import AnchorButton from '../components/AnchorButton';
 import List from '../components/List';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
-import { ProjectForm } from '../components/forms';
+import Section from '../components/Section';
+import { InlineEdit } from '../components/forms';
 import fakeProjects from '../fakeProjects';
 import fakeDesign from '../fakeDesign';
 
@@ -39,18 +40,14 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
     return (
         <Layout>
             <BreadcrumbsNav items={breadcrumbs} />
-            <div style={{ display: 'flex' }}>
-                <div style={{ flex: '1 1 50%' }}>
-                    {!(subProjects.length || designs.length) ? <p>Empty</p> : ''}
-                    <List icon='folder-close' items={subProjects} />
-                    <List icon='media' items={designs} />
-                </div>
-                <div className="p-small-hide" style={{ flex: '1 1 50%' }}>
-                    <ProjectForm project={project} />
-                    <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
-                    <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
-                </div>
-            </div>
+            <Section>
+                <InlineEdit object={project} />
+            </Section>
+            <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
+            <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
+            {!(subProjects.length || designs.length) ? <p>Empty</p> : ''}
+            <List icon='folder-close' items={subProjects} />
+            <List icon='media' items={designs} />
         </Layout>
     );
 };
