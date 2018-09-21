@@ -5,6 +5,7 @@ import List from '../components/List';
 import Layout from '../components/Layout';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
+import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
 import style from '../style';
 import fakeDesigns from '../fakeDesign';
@@ -84,8 +85,8 @@ class Design extends Component {
 
     buildImage(image) {
         return (
-            <div>
-                <h2 id='1'>{image.name}</h2>
+            <div style={{ marginBottom: '2rem' }}>
+                <H3 id='1'>{image.name}</H3>
                 <img style={imageStyle} src={image.preview} />
                 <div className="p-small-hide">
                     <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
