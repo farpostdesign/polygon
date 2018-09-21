@@ -34,10 +34,13 @@ style.BUTTON_MINIMAL = {
 
 style.INPUT = {
     padding: '0 10px',
-    height: '2rem',
+    height: '2.4rem',
+    width: '50%',
+    maxWidth: '20rem',
     fontSize: 'inherit',
     lineHeight: 'inherit',
     border: border('#888'),
+    marginRight: '1rem',
     borderRadius
 };
 
