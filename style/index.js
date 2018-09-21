@@ -7,6 +7,8 @@ function border(color) {
     return `2px solid ${color}`;
 }
 
+style.NOSTYLE = {};
+
 style.SECTION = {
     marginBottom: '2rem'
 };

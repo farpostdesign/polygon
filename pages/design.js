@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import Dropzone from 'react-dropzone';
 import List from '../components/List';
 import Layout from '../components/Layout';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
@@ -99,6 +100,13 @@ class Design extends Component {
                 <BreadcrumbsNav items={this.props.breadcrumbs}/>
                 <Section>
                     <InlineEdit object={this.props.design} />
+                </Section>
+                <Section>
+                    <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} style={style.NOSTYLE}>
+                        <span style={style.BUTTON}>
+                            {this.state.images.length ? 'Choose more files' : 'Choose files'}
+                        </span>
+                    </Dropzone>
                 </Section>
                 <div style={{ display: 'flex' }}>
                     <div className="p-small-hide" style={quickNavStyle}>
