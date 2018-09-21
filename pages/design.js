@@ -41,10 +41,10 @@ function findBreadcrumbs(designId) {
  */
 
 const fakeImages = [
-    { href: '#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
-    { href: '#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
-    { href: '#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
-    { href: '#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
+    { id: 1, href: '?id=3#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
+    { id: 2, href: '?id=3#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
+    { id: 3, href: '?id=3#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
+    { id: 4, href: '?id=3#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
 ];
 
 
@@ -86,7 +86,7 @@ class Design extends Component {
     buildImage(image) {
         return (
             <div style={{ marginBottom: '2rem' }}>
-                <H3 id='1'>{image.name}</H3>
+                <H3 id={image.id}>{image.name}</H3>
                 <img style={imageStyle} src={image.preview} />
                 <div className="p-small-hide">
                     <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
@@ -110,16 +110,13 @@ class Design extends Component {
                     </Dropzone>
                 </Section>
                 <div style={{ display: 'flex' }}>
-                    <div className="p-small-hide" style={quickNavStyle}>
-                        <div style={{position: 'fixed' }}>
-                            <a href="#top">Top</a>
-                            <br/>
-                            <br/>
-                            <List items={this.state.images} />
-                        </div>
-                    </div>
                     <div style={style.DESIGNS}>
                         {this.state.images.map(this.buildImage)}
+                    </div>
+                    <div className="p-small-hide" style={quickNavStyle}>
+                        <div style={{position: 'fixed' }}>
+                            <List items={this.state.images} />
+                        </div>
                     </div>
                 </div>
             </Layout>
