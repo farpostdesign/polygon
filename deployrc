@@ -2,7 +2,7 @@
 
 set -e
 
-NAME=polygon
+NAME=polygon-app
 
 docker build --rm -t $NAME .
 
