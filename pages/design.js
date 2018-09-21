@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import List from '../components/List';
 import Layout from '../components/Layout';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
-import { DesignForm } from '../components/forms';
+import Section from '../components/Section';
+import { InlineEdit } from '../components/forms';
 import style from '../style';
 import fakeDesigns from '../fakeDesign';
 import fakeProjects from '../fakeProjects';
@@ -96,15 +97,9 @@ class Design extends Component {
         return (
             <Layout navBar={false}>
                 <BreadcrumbsNav items={this.props.breadcrumbs}/>
-                <div className="p-small-hide">
-                    <DesignForm
-                        files={this.state.images}
-                        onFilesAdded={this.handleFilesAdded}
-                        onFileRemoved={this.handleFileRemoved}
-                        preview={false}
-                        design={this.props.design}
-                    />
-                </div>
+                <Section>
+                    <InlineEdit object={this.props.design} />
+                </Section>
                 <div style={{ display: 'flex' }}>
                     <div className="p-small-hide" style={quickNavStyle}>
                         <div style={{position: 'fixed' }}>
