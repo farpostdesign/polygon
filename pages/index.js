@@ -2,17 +2,20 @@ import PropTypes from 'prop-types';
 import ProjectsList from '../components/List';
 import LettersFilter from '../components/LettersFilter';
 import Layout from '../components/Layout';
-import AnchorButton from '../components/AnchorButton';
+import Section from '../components/Section';
+import { InlineCreate } from '../components/forms';
 import fakeProjects from '../fakeProjects';
 
 const fakeCurrentLetter = 'D';
 const Index = ({ projects }) => (
     <Layout>
+        <Section>
+            <InlineCreate text="Add Project" />
+        </Section>
         <LettersFilter current={fakeCurrentLetter} />
-        <div className="p-small-hide">
-            <AnchorButton href="/projects/new" text="New Project" />
-        </div>
-        <ProjectsList items={projects} />
+        <Section>
+            <ProjectsList items={projects} />
+        </Section>
     </Layout>
 );
 
