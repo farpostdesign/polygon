@@ -11,6 +11,10 @@ style.SECTION = {
     marginBottom: '2rem'
 };
 
+style.SECTION_HEADER = {
+    marginBottom: '.5rem'
+};
+
 style.BUTTON = {
     display: 'inline-block',
     padding: '.5rem .7rem',
