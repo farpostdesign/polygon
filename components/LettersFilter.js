@@ -14,8 +14,8 @@ const LettersFilter = ({ current }) => (
     <div style={style}>
         {
             alphabet.map((char) =>
-                <Link key={char} href={`?char${char}`}>
-                    <a href={`?char=${char}`} style={current === char ? { color: 'red' } : {}}>
+                <Link key={char} href={`?char=${char}`}>
+                    <a style={current === char ? { color: 'red' } : {}}>
                         {char}
                     </a>
                 </Link>
