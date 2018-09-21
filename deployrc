@@ -18,6 +18,4 @@ docker container run \
   --name $NAME \
   $NAME
 
-docker exec -t $NAME chown $(id -u):$(id -g) tmp/sockets/polygon.sock
-
 echo "DONE"

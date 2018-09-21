@@ -21,7 +21,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "DEBUG=polygon:* next",
     "build": "next build",
-    "start": "DEBUG=polygon:* next build && node server.js",
+    "start": "DEBUG=polygon:* node server.js",
     "lint": "eslint ."
   },
   "pre-commit": [
