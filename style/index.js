@@ -7,13 +7,16 @@ function border(color) {
     return `2px solid ${color}`;
 }
 
+style.SECTION = {
+    marginBottom: '2rem'
+};
+
 style.BUTTON = {
     display: 'inline-block',
     padding: '.5rem .7rem',
     border: border($colorLink),
     borderRadius,
     textDecoration: 'none',
-    margin: '0 0 2rem 0',
     color: $colorLink,
     fontSize: '1rem',
     cursor: 'pointer'
