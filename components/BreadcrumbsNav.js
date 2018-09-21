@@ -21,26 +21,30 @@ const BreadcrumbsNav = ({ items }) => {
     const currentItem = items[lastItemIndex];
     return (
         <div>
-            <div className="p-large-hide">
-                <ul style={style}>
-                    <li>
-                        <span style={separetorStyle}>&larr;</span>
-                        <Link href={previous.href}><a>{previous.title}</a></Link>
-                        <span style={separetorStyle}>/</span>
-                    </li>
-                    <li>{currentItem.title}</li>
-                </ul>
-            </div>
-            <div className="p-small-hide">
-                <ul style={style}>
-                    {ancestors.map((crumb, index) =>
-                        <li key={index}>
-                            <Link href={crumb.href}><a>{crumb.title}</a></Link>
-                            <span style={separetorStyle}>/</span>
-                        </li>)}
-                    <li>{currentItem.title}</li>
-                </ul>
-            </div>
+            {previous &&
+                    <div className="p-large-hide">
+                        <ul style={style}>
+                            <li>
+                                <span style={separetorStyle}>&larr;</span>
+                                <Link href={previous.href}><a>{previous.title}</a></Link>
+                                <span style={separetorStyle}>/</span>
+                            </li>
+                            <li>{currentItem.title}</li>
+                        </ul>
+                    </div>
+            }
+            {ancestors.length > 0 &&
+                    <div className="p-small-hide">
+                        <ul style={style}>
+                            {ancestors.map((crumb, index) =>
+                                <li key={index}>
+                                    <Link href={crumb.href}><a>{crumb.title}</a></Link>
+                                    <span style={separetorStyle}>/</span>
+                                </li>)}
+                            <li>{currentItem.title}</li>
+                        </ul>
+                    </div>
+            }
         </div>
     );
 };
