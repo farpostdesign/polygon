@@ -4,6 +4,7 @@ import AnchorButton from '../components/AnchorButton';
 import List from '../components/List';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
+import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
 import fakeProjects from '../fakeProjects';
 import fakeDesign from '../fakeDesign';
@@ -43,11 +44,16 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
             <Section>
                 <InlineEdit object={project} />
             </Section>
-            <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
-            <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
-            {!(subProjects.length || designs.length) ? <p>Empty</p> : ''}
-            <List icon='folder-close' items={subProjects} />
-            <List icon='media' items={designs} />
+            <Section>
+                <H3>Project</H3>
+                <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
+                <List icon='folder-close' items={subProjects} />
+            </Section>
+            <Section>
+                <H3>Designs</H3>
+                <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
+                <List icon='media' items={designs} />
+            </Section>
         </Layout>
     );
 };
