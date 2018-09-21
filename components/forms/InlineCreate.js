@@ -18,6 +18,7 @@ class InlineCreate extends Component {
     }
 
     handleSaveClick() {
+        this.setState({ isEditable: false });
         Router.push(this.props.stubRedirect);
     }
 
