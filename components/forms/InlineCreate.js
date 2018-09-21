@@ -18,7 +18,7 @@ class InlineCreate extends Component {
     }
 
     handleSaveClick() {
-        Router.push('/projects?id=100');
+        Router.push(this.props.stubRedirect);
     }
 
     render() {
@@ -41,7 +41,8 @@ InlineCreate.defaultProps = {
 };
 
 InlineCreate.propTypes = {
-    text: PropTypes.string
+    text: PropTypes.string,
+    stubRedirect: PropTypes.string
 };
 
 export default InlineCreate;

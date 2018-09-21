@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
-import AnchorButton from '../components/AnchorButton';
+import { InlineCreate } from '../components/forms';
 import List from '../components/List';
 import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
@@ -45,13 +45,13 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
                 <InlineEdit object={project} />
             </Section>
             <Section>
-                <H3>Project</H3>
-                <AnchorButton href={`/projects/new?parent=${project.id}`} text="Add Subproject" />
+                <H3>Projects</H3>
+                <InlineCreate text="Add Subfolder" stubRedirect="/projects?id=100" />
                 <List icon='folder-close' items={subProjects} />
             </Section>
             <Section>
                 <H3>Designs</H3>
-                <AnchorButton href={`/designs/new?project=${project.id}`} text="Add Design" />
+                <InlineCreate text="Add Design" stubRedirect="/design?id=100" />
                 <List icon='media' items={designs} />
             </Section>
         </Layout>
