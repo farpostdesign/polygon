@@ -105,7 +105,7 @@ class Design extends Component {
                 <Section>
                     <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} style={style.NOSTYLE}>
                         <span style={style.BUTTON}>
-                            {this.state.images.length ? 'Choose more files' : 'Choose files'}
+                            {this.state.images.length ? 'Add more files' : 'Add files'}
                         </span>
                     </Dropzone>
                 </Section>
