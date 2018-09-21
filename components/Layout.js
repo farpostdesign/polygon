@@ -15,6 +15,10 @@ body, html {
 
 a { color: #6e6eab; }
 
+button + button {
+    margin-left: 1rem;
+}
+
 @media screen and (min-width: 1024px) {
     .p-large-hide { display: none; }
 }

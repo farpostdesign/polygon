@@ -90,6 +90,7 @@ class Design extends Component {
                 <img style={imageStyle} src={image.preview} />
                 <div className="p-small-hide">
                     <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
+                    <button style={style.BUTTON} data-filename={image.name}>Replace</button>
                 </div>
             </div>
         );
