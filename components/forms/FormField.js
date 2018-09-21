@@ -7,20 +7,17 @@ const onChangeStub = () => {
 
 const FormField = ({ label, name, type, value }) => {
     return (
-        <div>
-            <label>
-                {label || name}
-                <br />
-                <input
-                    id={`form_field_${name}`}
-                    type={type}
-                    name={name}
-                    style={style.INPUT}
-                    value={value}
-                    onChange={onChangeStub}
-                />
-            </label>
-        </div>
+        <span>
+            {label ? <label htmlFor={name}>{label || name}</label> : null}
+            <input
+                id={`form_field_${name}`}
+                type={type}
+                name={name}
+                style={style.INPUT}
+                value={value}
+                onChange={onChangeStub}
+            />
+        </span>
     );
 };
 
