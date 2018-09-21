@@ -10,7 +10,7 @@ const fakeCurrentLetter = 'D';
 const Index = ({ projects }) => (
     <Layout>
         <Section>
-            <InlineCreate text="Add Project" />
+            <InlineCreate text="Add Project" stubRedirect="/projects?id=100"/>
         </Section>
         <LettersFilter current={fakeCurrentLetter} />
         <Section>
