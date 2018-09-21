@@ -24,7 +24,7 @@ class InlineCreate extends Component {
     render() {
         return (
             <div>
-                { this.state.isEditable ? <FormField type="text" name="name" /> : null}
+                { this.state.isEditable ? <FormField type="text" name="name" autoFocus/> : null}
                 {
                     this.state.isEditable
                         ? <button onClick={this.handleSaveClick} style={style.BUTTON}>Create</button>
