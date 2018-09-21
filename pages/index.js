@@ -18,7 +18,10 @@ const Index = ({ projects }) => (
 
 Index.getInitialProps = () => {
     const projects = fakeProjects
-        .filter(item => typeof(item.parent) === 'undefined');
+        .filter(item => {
+            return typeof(item.parent) === 'undefined' &&
+                item.title[0].toUpperCase() === fakeCurrentLetter;
+        });
     return { projects };
 };
 
