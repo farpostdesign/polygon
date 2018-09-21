@@ -1,15 +1,6 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-
-const style = {
-    listStyle: 'none'
-};
-
-const itemStyle = {
-    marginBottom: '.5rem',
-    display: 'flex',
-    alignItems: 'center'
-};
+import style from '../style';
 
 const icons = {
     // https://www.iconfinder.com/icons/2044275/folder_interface_user_icon
@@ -23,7 +14,7 @@ const List = ({ items, icon }) => {
     const ListItem = (item, index) => (
         <li key={item.id || index}>
             <Link href={item.href}>
-                <a style={itemStyle}>
+                <a style={style.LIST_ITEM}>
                     {icon && <img src={iconSrc} style={{ width: '2rem' }}/>}
                     {item.title || item.name}
                 </a>
@@ -32,7 +23,7 @@ const List = ({ items, icon }) => {
     );
 
     return (
-        <ul style={style}>
+        <ul style={style.LIST}>
             {items.map(ListItem)}
         </ul>
     );

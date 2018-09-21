@@ -50,5 +50,15 @@ style.DESIGNS = {
     flex: '1 1 auto'
 };
 
+style.LIST = {
+    listStyle: 'none'
+};
+
+style.LIST_ITEM = {
+    margin: '.25rem 0',
+    display: 'flex',
+    alignItems: 'center'
+};
+
 
 export default style;
