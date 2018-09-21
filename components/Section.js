@@ -6,7 +6,7 @@ const Section = ({ children }) => (
 );
 
 Section.propTypes = {
-    children: PropTypes.element
+    children: PropTypes.any
 };
 
 export default Section;
