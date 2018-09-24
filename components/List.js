@@ -22,6 +22,10 @@ const List = ({ items, icon }) => {
         </li>
     );
 
+    if (!items.length) {
+        return <div style={style.LIST_EMPTY}><i>Empty</i></div>;
+    }
+
     return (
         <ul style={style.LIST}>
             {items.map(ListItem)}

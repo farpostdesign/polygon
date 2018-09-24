@@ -69,5 +69,8 @@ style.LIST_ITEM = {
     alignItems: 'center'
 };
 
+style.LIST_EMPTY = {
+    margin: '10px'
+};
 
 export default style;
