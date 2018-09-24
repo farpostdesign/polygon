@@ -64,9 +64,12 @@ style.LIST = {
 };
 
 style.LIST_ITEM = {
-    margin: '.25rem 0',
-    display: 'flex',
-    alignItems: 'center'
+    margin: '.25rem 0'
+};
+
+style.LIST_ICON = {
+    width: '2rem',
+    verticalAlign: 'middle'
 };
 
 style.LIST_EMPTY = {
