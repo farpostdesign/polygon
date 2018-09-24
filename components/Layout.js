@@ -42,6 +42,7 @@ const Layout = ({ children }) => (
         </Head>
         <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>
             <div id="content" style={{ flex: '1 1 auto', padding: '16px' }}>
+                <h1 style={{ fontSize: '1.25rem', margin: '.5rem 0 1.5rem 0' }}>Polygon</h1>
                 {children}
             </div>
         </div>
