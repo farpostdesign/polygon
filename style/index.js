@@ -76,4 +76,17 @@ style.LIST_EMPTY = {
     margin: '10px'
 };
 
+style.DROPZONE = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1.25rem',
+    color: $colorLink,
+    cursor: 'pointer',
+    width: 'auto',
+    border: `2px solid ${$colorLink}`,
+    height: '4rem',
+    borderRadius
+};
+
 export default style;

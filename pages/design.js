@@ -104,10 +104,8 @@ class Design extends Component {
                     <InlineEdit object={this.props.design} />
                 </Section>
                 <Section>
-                    <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} style={style.NOSTYLE}>
-                        <span style={style.BUTTON}>
-                            {this.state.images.length ? 'Add more files' : 'Add files'}
-                        </span>
+                    <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} style={style.DROPZONE}>
+                        {this.state.images.length ? 'Drop to add more images or click' : 'Drop to add images or click'}
                     </Dropzone>
                 </Section>
                 <div style={{ display: 'flex' }}>
