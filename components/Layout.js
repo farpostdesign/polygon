@@ -29,22 +29,15 @@ button + button {
 `;
 
 const Layout = ({ children }) => (
-    <div id="layout" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100%',
-        width: '100%'
-    }}>
+    <div id="layout" style={{ maxWidth: '1240px' }}>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic" rel="stylesheet" />
             <style global>{style}</style>
         </Head>
-        <div id="container" style={{ display: 'flex', flex: '1 1 auto' }}>
-            <div id="content" style={{ flex: '1 1 auto', padding: '16px' }}>
-                <h1 style={{ fontSize: '1.25rem', margin: '.5rem 0 1.5rem 0' }}>Polygon</h1>
-                {children}
-            </div>
+        <div id="content" style={{ padding: '1.25rem' }}>
+            <h1 style={{ fontSize: '1.25rem', margin: '.5rem 0 1.5rem 0' }}>Polygon</h1>
+            {children}
         </div>
     </div>
 );
