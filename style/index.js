@@ -80,7 +80,6 @@ style.DROPZONE = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '1.25rem',
     color: $colorLink,
     cursor: 'pointer',
     width: 'auto',
