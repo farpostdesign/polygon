@@ -5,18 +5,15 @@ const onChangeStub = () => {
     // do nothing for now
 };
 
-const FormField = ({ label, name, type, value, autoFocus }) => {
+const FormField = (props) => {
     return (
         <span>
-            {label ? <label htmlFor={name}>{label || name}</label> : null}
+            {props.label ? <label htmlFor={name}>{props.label}</label> : null}
             <input
-                id={`form_field_${name}`}
-                type={type}
-                name={name}
-                style={style.INPUT}
-                value={value}
+                id={`form_field_${props.name}`}
+                {...props}
                 onChange={onChangeStub}
-                autoFocus={autoFocus}
+                style={style.INPUT}
             />
         </span>
     );
@@ -29,6 +26,7 @@ FormField.defaultProps = {
 FormField.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     value: PropTypes.string,
     label: PropTypes.string,
     autoFocus: PropTypes.bool
