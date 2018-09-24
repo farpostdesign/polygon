@@ -46,12 +46,12 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
             </Section>
             <Section>
                 <H3>Projects</H3>
-                <InlineCreate text="Add Subfolder" stubRedirect="/projects?id=100" />
+                <InlineCreate name="name" text="Add Subfolder" stubRedirect="/projects?id=100" />
                 <List icon='folder-close' items={subProjects} />
             </Section>
             <Section>
                 <H3>Designs</H3>
-                <InlineCreate text="Add Design" stubRedirect="/design?id=100" />
+                <InlineCreate name="name" text="Add Design" stubRedirect="/design?id=100" />
                 <List icon='media' items={designs} />
             </Section>
         </Layout>

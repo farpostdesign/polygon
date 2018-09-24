@@ -3,6 +3,7 @@ import Router from 'next/router';
 import PropTypes from 'prop-types';
 import FormField from './FormField';
 import style from '../../style';
+import { titelize } from '../../utils';
 
 class InlineCreate extends Component {
     constructor() {
@@ -23,9 +24,10 @@ class InlineCreate extends Component {
     }
 
     render() {
+        const placeholder = this.props.placeholder || titelize(this.props.name);
         return (
             <div>
-                { this.state.isEditable ? <FormField type="text" name="name" autoFocus/> : null}
+                { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} autoFocus/> : null}
                 {
                     this.state.isEditable
                         ? <button onClick={this.handleSaveClick} style={style.BUTTON}>Create</button>
@@ -42,7 +44,9 @@ InlineCreate.defaultProps = {
 };
 
 InlineCreate.propTypes = {
+    name: PropTypes.string.isRequired,
     text: PropTypes.string,
+    placeholder: PropTypes.string,
     stubRedirect: PropTypes.string
 };
 
