@@ -12,6 +12,25 @@ class InlineCreate extends Component {
 
         this.handleEditClick = this.handleEditClick.bind(this);
         this.handleSaveClick = this.handleSaveClick.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.setCreateButtonRef = this.setCreateButtonRef.bind(this);
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
+    setCreateButtonRef(node) {
+        this.saveButtonRef = node;
+    }
+
+    componentDidMount() {
+        document.addEventListener('click', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
     }
 
     handleEditClick() {
@@ -23,14 +42,20 @@ class InlineCreate extends Component {
         Router.push(this.props.stubRedirect);
     }
 
+    handleClickOutside(event) {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target) && !this.saveButtonRef.contains(event.target)) {
+            this.setState({ isEditable: false });
+        }
+    }
+
     render() {
         const placeholder = this.props.placeholder || titelize(this.props.name);
         return (
             <div>
-                { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} autoFocus/> : null}
+                { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} ref={this.setWrapperRef} autoFocus/> : null}
                 {
                     this.state.isEditable
-                        ? <button onClick={this.handleSaveClick} style={style.BUTTON}>Create</button>
+                        ? <button ref={this.setCreateButtonRef} onClick={this.handleSaveClick} style={style.BUTTON}>Create</button>
                         : <button onClick={this.handleEditClick} style={style.BUTTON}>{this.props.text}</button>
                 }
 
