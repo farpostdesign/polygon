@@ -11,9 +11,9 @@ const icons = {
 const List = ({ items, icon }) => {
     const iconSrc = icons[icon];
     const ListItem = (item, index) => (
-        <li key={item.id || index}>
+        <li key={item.id || index} className="p-list--item">
             <Link href={item.href}>
-                <a className="p-list--item">
+                <a>
                     {icon && <img src={iconSrc} className="p-list--icon" />}
                     {item.title || item.name}
                 </a>
