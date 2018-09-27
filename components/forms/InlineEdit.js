@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormField from './FormField';
-import style from '../../style';
 
 class InlineEdit extends Component {
     constructor() {
@@ -54,12 +53,12 @@ class InlineEdit extends Component {
                 {
                     this.state.isEditable
                         ? <FormField type="text" name="name" value={this.props.object.title} ref={this.setWrapperRef} autoFocus/>
-                        :  <span style={style.INLINE_EDITABLE}>{this.props.object.title}</span>
+                        :  <span className="p-inline-editable">{this.props.object.title}</span>
                 }
                 {
                     this.state.isEditable
-                        ? <button ref={this.setSaveButtonRef} onClick={this.handleSaveClick} style={style.BUTTON}>Save</button>
-                        : <button onClick={this.handleEditClick} style={style.BUTTON}>Edit</button>
+                        ? <button ref={this.setSaveButtonRef} onClick={this.handleSaveClick} className="p-button">Save</button>
+                        : <button onClick={this.handleEditClick} className="p-button">Edit</button>
                 }
             </div>
         );

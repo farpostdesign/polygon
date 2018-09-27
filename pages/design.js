@@ -7,7 +7,6 @@ import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
 import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
-import style from '../style';
 import fakeDesigns from '../fakeDesign';
 import fakeProjects from '../fakeProjects';
 
@@ -53,16 +52,6 @@ const fakeImages = [
  *
  */
 
-const imageStyle = {
-    border: '1px solid #ccc',
-    marginBottom: '.75rem',
-    maxWidth: '100%'
-};
-
-const quickNavStyle = {
-    flex: '0 0 200px'
-};
-
 class Design extends Component {
     constructor(props) {
         super(props);
@@ -85,12 +74,12 @@ class Design extends Component {
 
     buildImage(image) {
         return (
-            <div style={{ marginBottom: '2rem' }}>
+            <div className="p-designs--item">
                 <H3 id={image.id}>{image.name}</H3>
-                <img style={imageStyle} src={image.preview} />
+                <img className="p-designs--image" src={image.preview} />
                 <div className="p-small-hide">
-                    <button style={style.BUTTON} data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
-                    <button style={style.BUTTON} data-filename={image.name}>Replace</button>
+                    <button className="p-button" data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
+                    <button className="p-button" data-filename={image.name}>Replace</button>
                 </div>
             </div>
         );
@@ -104,16 +93,16 @@ class Design extends Component {
                     <InlineEdit object={this.props.design} />
                 </Section>
                 <Section>
-                    <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} style={style.DROPZONE}>
+                    <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} className="p-dropzone">
                         {this.state.images.length ? 'Drop to add more images or click' : 'Drop to add images or click'}
                     </Dropzone>
                 </Section>
-                <div style={{ display: 'flex' }}>
-                    <div style={style.DESIGNS}>
+                <div className="p-collumns-container">
+                    <div className="p-designs p-collumn">
                         {this.state.images.map(this.buildImage)}
                     </div>
-                    <div className="p-small-hide" style={quickNavStyle}>
-                        <div style={{position: 'fixed' }}>
+                    <div className="p-quicknav-container p-small-hide">
+                        <div className="p-quicknav">
                             <List items={this.state.images} />
                         </div>
                     </div>

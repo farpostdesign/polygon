@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from '../../style';
 
 const onChangeStub = () => {
     // do nothing for now
@@ -15,7 +14,7 @@ const FormField = React.forwardRef((props, ref) => {
                 id={`form_field_${props.name}`}
                 {...props}
                 onChange={onChangeStub}
-                style={style.INPUT}
+                className="p-input"
             />
         </span>
     );

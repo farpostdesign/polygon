@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import style from '../style';
 
 const icons = {
     // https://www.iconfinder.com/icons/2044275/folder_interface_user_icon
@@ -14,8 +13,8 @@ const List = ({ items, icon }) => {
     const ListItem = (item, index) => (
         <li key={item.id || index}>
             <Link href={item.href}>
-                <a style={style.LIST_ITEM}>
-                    {icon && <img src={iconSrc} style={style.LIST_ICON}/>}
+                <a className="p-list--item">
+                    {icon && <img src={iconSrc} className="p-list--icon" />}
                     {item.title || item.name}
                 </a>
             </Link>
@@ -23,11 +22,11 @@ const List = ({ items, icon }) => {
     );
 
     if (!items.length) {
-        return <div style={style.LIST_EMPTY}><i>Empty</i></div>;
+        return <div className="p-list--empty"><i>Empty</i></div>;
     }
 
     return (
-        <ul style={style.LIST}>
+        <ul className="p-list">
             {items.map(ListItem)}
         </ul>
     );

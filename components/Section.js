@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import style from '../style';
 
 const Section = ({ children }) => (
-    <section style={style.SECTION}>{children}</section>
+    <section className="p-section">{children}</section>
 );
 
 Section.propTypes = {

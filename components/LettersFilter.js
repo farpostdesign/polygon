@@ -3,19 +3,12 @@ import Link from 'next/link';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    maxWidth: '960px',
-    margin: '1rem 0 2rem 0'
-};
-
 const LettersFilter = ({ current }) => (
-    <div style={style}>
+    <div className="p-letters-filter">
         {
             alphabet.map((char) =>
                 <Link key={char} href={`?char=${char}`}>
-                    <a style={current === char ? { color: 'red' } : {}}>
+                    <a className={current === char ? 'p-letters-filter--char p-letters-filter--char__active' : 'p-letters-filter--char'}>
                         {char}
                     </a>
                 </Link>

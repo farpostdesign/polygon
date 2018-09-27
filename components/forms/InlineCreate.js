@@ -2,7 +2,6 @@ import { Component } from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import FormField from './FormField';
-import style from '../../style';
 import { titelize } from '../../utils';
 
 class InlineCreate extends Component {
@@ -55,8 +54,8 @@ class InlineCreate extends Component {
                 { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} ref={this.setWrapperRef} autoFocus/> : null}
                 {
                     this.state.isEditable
-                        ? <button ref={this.setCreateButtonRef} onClick={this.handleSaveClick} style={style.BUTTON}>Create</button>
-                        : <button onClick={this.handleEditClick} style={style.BUTTON}>{this.props.text}</button>
+                        ? <button ref={this.setCreateButtonRef} onClick={this.handleSaveClick} className="p-button">Create</button>
+                        : <button onClick={this.handleEditClick} className="p-button">{this.props.text}</button>
                 }
 
             </div>
