@@ -74,7 +74,7 @@ class Design extends Component {
 
     buildImage(image) {
         return (
-            <div className="p-designs--item">
+            <div key={image.id} className="p-designs--item">
                 <H3 id={image.id}>{image.name}</H3>
                 <img className="p-designs--image" src={image.preview} />
                 <div className="p-small-hide">
