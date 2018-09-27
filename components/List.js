@@ -22,7 +22,7 @@ const List = ({ items, icon }) => {
     );
 
     if (!items.length) {
-        return <div className="p-list--empty"><i>Empty</i></div>;
+        return <div className="p-list-empty"><i>Empty</i></div>;
     }
 
     return (
