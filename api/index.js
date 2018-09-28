@@ -1,7 +1,9 @@
 const express = require('express');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
+const File = require('../app/models/file');
 const payload = require('./payload');
+const config = require('../config');
 
 const router = express.Router();
 
@@ -51,6 +53,13 @@ router.get('/design', async (req, res) => {
     if (!project) {
         throw new Error('Project not found');
     }
+    let files = await File.find({ design: design._id }).sort({ createdAt: -1 }).lean();
+    files = files.map((file) => {
+        file.src = `/${config.uploadsDir}/${file.design}/${file._id}.png`;
+        file.name = file._id;
+        file.href = `/design?id=${design.id}#${file._id}`;
+        return file;
+    });
     const breadcrumbsAggregate = await Project.aggregate([
         { $match: { _id: design.project } },
         {
@@ -68,7 +77,7 @@ router.get('/design', async (req, res) => {
     if (breadcrumbsAggregate.length) {
         breadcrumbs = [{ name: 'Projects', href: '/' }, ...payload([...breadcrumbsAggregate[0].breadcrumbs, project], 'projects'), { name: design.name }];
     }
-    res.json({ design, breadcrumbs });
+    res.json({ design, breadcrumbs, files });
 });
 
 module.exports = router;

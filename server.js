@@ -23,6 +23,7 @@ if (config.production) {
 }
 
 app.prepare().then(() => {
+    server.use(express.static('public'));
     server.use('/api', api);
     server.get('*', frontEndRequestHandler);
     server.listen(config.serverListenTo, (err) => {

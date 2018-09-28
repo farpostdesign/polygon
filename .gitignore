@@ -2,3 +2,5 @@
 node_modules
 .next
 .envlist
+public/uploads/*
+!public/uploads/.gitkeep

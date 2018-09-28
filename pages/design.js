@@ -10,19 +10,6 @@ import { InlineEdit } from '../components/forms';
 import 'isomorphic-unfetch';
 
 /**
- * Fake data
- *
- */
-
-const fakeImages = [
-    { id: 1, href: '?id=3#1', name: 'Kompleksoe snabjenie1', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41601.jpg' },
-    { id: 2, href: '?id=3#2', name: 'Kompleksoe snabjenie2', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41602.jpg' },
-    { id: 3, href: '?id=3#3', name: 'Kompleksoe snabjenie3', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/41801.jpg' },
-    { id: 4, href: '?id=3#4', name: 'Shkola svarshika', preview: 'http://www.poligon.farpost.com/v2/apps/poligon/add_files/dazel_1920px_tekst2.jpg' }
-];
-
-
-/**
  * Component
  *
  */
@@ -42,19 +29,19 @@ class Design extends Component {
     }
 
     handleFileRemoved(event) {
-        const { filename } = event.target.dataset;
-        const filesWithoutRemoved = this.state.images.filter((image) => image.name !== filename);
+        const { fileId } = event.target.dataset;
+        const filesWithoutRemoved = this.state.images.filter((image) => image._id !== fileId);
         this.setState({ images: filesWithoutRemoved });
     }
 
     buildImage(image) {
         return (
-            <div key={image.id} className="p-designs--item">
-                <H3 id={image.id}>{image.name}</H3>
-                <img className="p-designs--image" src={image.preview} />
+            <div key={image._id} className="p-designs--item">
+                <H3 id={image._id}>{image.name}</H3>
+                <img className="p-designs--image" src={image.src} />
                 <div className="p-small-hide">
-                    <button className="p-button" data-filename={image.name} onClick={this.handleFileRemoved}>Remove</button>
-                    <button className="p-button" data-filename={image.name}>Replace</button>
+                    <button className="p-button" data-file-id={image._id} onClick={this.handleFileRemoved}>Remove</button>
+                    <button className="p-button" data-file-id={image._id}>Replace</button>
                 </div>
             </div>
         );
@@ -89,8 +76,8 @@ class Design extends Component {
 
 Design.getInitialProps = async ({ query }) => {
     const res = await fetch(`http://localhost:3000/api/design?id=${query.id}`);
-    const { design, breadcrumbs } = await res.json();
-    return { design, breadcrumbs , images: fakeImages };
+    const { design, breadcrumbs, files } = await res.json();
+    return { design, breadcrumbs , images: files };
 };
 
 Design.propTypes = {

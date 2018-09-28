@@ -14,6 +14,18 @@ if (!config) {
     throw new Error(`Config not found for environment \`${env}\``);
 }
 
+/**
+ * General configuration
+ *
+ */
+
+config.uploadsDir =  'uploads';
+
+/**
+ * Environment booleans
+ *
+ */
+
 config.production = env === 'production';
 config.development = env === 'development';
 
