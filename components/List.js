@@ -15,7 +15,7 @@ const List = ({ items, icon }) => {
             <Link href={item.href}>
                 <a>
                     {icon && <img src={iconSrc} className="p-list--icon" />}
-                    {item.title || item.name}
+                    {item.name}
                 </a>
             </Link>
         </li>
