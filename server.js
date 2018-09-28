@@ -1,31 +1,34 @@
 const fs = require('fs');
-const http = require('http');
-const url = require('url');
+const express = require('express');
 const next = require('next');
+const api = require('./api');
 const serverDebug = require('debug')('polygon:server');
 const config = require('./config');
 
+const server = express();
+
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-const requestHandler = app.getRequestHandler();
+const frontEndRequestHandler = app.getRequestHandler();
 
 // Remove previous socket if exists
-try {
-    fs.unlinkSync(config.httpServerSocketPath);
-} catch (err) {
-    if (err.code !== 'ENOENT') {
-        throw err;
+if (config.production) {
+    try {
+        fs.unlinkSync(config.serverListenTo);
+    } catch (err) {
+        if (err.code !== 'ENOENT') {
+            throw err;
+        }
     }
 }
 
 app.prepare().then(() => {
-    http.createServer((req, res) => {
-        const parsedURL = url.parse(req.url, true);
-        requestHandler(req, res, parsedURL);
-    }).listen(config.httpServerSocketPath, (err) => {
+    server.use('/api', api);
+    server.get('*', frontEndRequestHandler);
+    server.listen(config.serverListenTo, (err) => {
         if (err) {
             throw err;
         }
-        serverDebug(`Server listening on path \`${config.httpServerSocketPath}\``);
+        serverDebug(`Server listening on \`${config.serverListenTo}\``);
     });
 });
