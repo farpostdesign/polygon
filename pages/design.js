@@ -7,32 +7,7 @@ import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
 import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
-import fakeDesigns from '../fakeDesign';
-import fakeProjects from '../fakeProjects';
-
-/**
- * Helpers
- *
- */
-
-function findDescendantsRecursively(parentId, ascendants = []) {
-    const project = fakeProjects.find(item => item.id === parentId);
-    if (!project) {
-        return ascendants;
-    }
-    if (typeof(project.parent) === 'undefined') {
-        return [project, ...ascendants];
-    }
-    return findDescendantsRecursively(project.parent, [project, ...ascendants]);
-}
-
-function findBreadcrumbs(designId) {
-    designId = Number(designId);
-    const design = fakeDesigns.find(item => item.id === designId);
-    const project = fakeProjects.find(item => item.id === design.project);
-    const breadcrumbs = findDescendantsRecursively(project.parent);
-    return [{ title: 'Projects', href: '/' }, ...breadcrumbs, project, design];
-}
+import 'isomorphic-unfetch';
 
 /**
  * Fake data
@@ -112,14 +87,10 @@ class Design extends Component {
     }
 }
 
-Design.getInitialProps = ({ query }) => {
-    const designId = Number(query.id);
-    const design = fakeDesigns.find(item => item.id === designId);
-    if (!design) {
-        throw 'Desing not found';
-    }
-    const breadcrumbs = findBreadcrumbs(designId);
-    return { design, breadcrumbs, images: fakeImages };
+Design.getInitialProps = async ({ query }) => {
+    const res = await fetch(`http://localhost:3000/api/design?id=${query.id}`);
+    const { design, breadcrumbs } = await res.json();
+    return { design, breadcrumbs , images: fakeImages };
 };
 
 Design.propTypes = {
