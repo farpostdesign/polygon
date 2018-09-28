@@ -7,6 +7,9 @@
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "debug": "^4.0.1",
+    "express": "^4.16.3",
+    "isomorphic-unfetch": "^3.0.0",
+    "mongoose": "^5.2.17",
     "next": "7.0.0",
     "node-sass": "^4.9.3",
     "react": "16.5.2",
@@ -16,12 +19,15 @@
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0",
+    "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "DEBUG=polygon:* next",
+    "test": "jest",
+    "dev": "DEBUG=polygon:* nodemon server.js",
     "build": "next build",
     "start": "DEBUG=polygon:* node server.js",
     "lint": "eslint ."
