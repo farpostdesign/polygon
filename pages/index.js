@@ -4,7 +4,7 @@ import LettersFilter from '../components/LettersFilter';
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import { InlineCreate } from '../components/forms';
-import fakeProjects from '../fakeProjects';
+import 'isomorphic-unfetch';
 
 const fakeCurrentLetter = 'D';
 const Index = ({ projects }) => (
@@ -19,12 +19,9 @@ const Index = ({ projects }) => (
     </Layout>
 );
 
-Index.getInitialProps = () => {
-    const projects = fakeProjects
-        .filter(item => {
-            return typeof(item.parent) === 'undefined' &&
-                item.title[0].toUpperCase() === fakeCurrentLetter;
-        });
+Index.getInitialProps = async () => {
+    const res = await fetch('http://localhost:3000/api/projects');
+    const projects = await res.json();
     return { projects };
 };
 
