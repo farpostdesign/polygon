@@ -1,4 +1,3 @@
-const { Types } = require('mongoose');
 const express = require('express');
 const Project = require('../app/models/project');
 const payload = require('./payload');
@@ -16,7 +15,7 @@ router.get('/project', async (req, res) => {
         throw new Error('Project not found');
     }
     const breadcrumbsAggregate = await Project.aggregate([
-        { $match: { _id: new Types.ObjectId(req.query.id) } },
+        { $match: { _id: project._id } },
         {
             $graphLookup: {
                 from: 'projects',
