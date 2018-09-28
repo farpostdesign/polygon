@@ -1,7 +1,20 @@
-const path = require('path');
+const development = require('./env/development');
+const production = require('./env/production');
 
-const config = {};
+const environments = {
+    development,
+    production
+};
 
-config.httpServerSocketPath = path.resolve('./tmp/sockets/polygon.sock');
+const DEFAULT_ENVIRONMENT = 'development';
+const env = process.env.NODE_ENV || DEFAULT_ENVIRONMENT;
+const config = environments[env];
+
+if (!config) {
+    throw new Error(`Config not found for environment \`${env}\``);
+}
+
+config.production = env === 'production';
+config.development = env === 'development';
 
 module.exports = config;
