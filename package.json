@@ -32,6 +32,9 @@
     "start": "DEBUG=polygon:* node server.js",
     "lint": "eslint ."
   },
+  "nodemonConfig": {
+    "ignore": ["test/*", "pages/*", "components/*"]
+  },
   "pre-commit": [
     "lint"
   ],
