@@ -16,10 +16,10 @@ const BreadcrumbsNav = ({ items }) => {
                         <ul className="p-breadcrumbs">
                             <li>
                                 <span className="p-breadcrumbs--separator">&larr;</span>
-                                <Link href={previous.href}><a>{previous.title}</a></Link>
+                                <Link href={previous.href}><a>{previous.name}</a></Link>
                                 <span className="p-breadcrumbs--separator">/</span>
                             </li>
-                            <li>{currentItem.title}</li>
+                            <li>{currentItem.name}</li>
                         </ul>
                     </div>
             }
@@ -28,10 +28,10 @@ const BreadcrumbsNav = ({ items }) => {
                         <ul className="p-breadcrumbs">
                             {ancestors.map((crumb, index) =>
                                 <li key={index}>
-                                    <Link href={crumb.href}><a>{crumb.title}</a></Link>
+                                    <Link href={crumb.href}><a>{crumb.name}</a></Link>
                                     <span className="p-breadcrumbs--separator">/</span>
                                 </li>)}
-                            <li>{currentItem.title}</li>
+                            <li>{currentItem.name}</li>
                         </ul>
                     </div>
             }
