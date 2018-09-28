@@ -6,31 +6,7 @@ import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
 import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
-import fakeProjects from '../fakeProjects';
-import fakeDesign from '../fakeDesign';
-
-/**
- * Helpers
- *
- */
-
-function findDescendantsRecursively(parentId, ascendants = []) {
-    const project = fakeProjects.find(item => item.id === parentId);
-    if (!project) {
-        return ascendants;
-    }
-    if (typeof(project.parent) === 'undefined') {
-        return [project, ...ascendants];
-    }
-    return findDescendantsRecursively(project.parent, [project, ...ascendants]);
-}
-
-function findBreadcrumbs(projectId) {
-    projectId = Number(projectId);
-    const project = fakeProjects.find(item => item.id === projectId);
-    const breadcrumbs = findDescendantsRecursively(project.parent);
-    return [{ title: 'Projects', href: '/' }, ...breadcrumbs, project];
-}
+import 'isomorphic-unfetch';
 
 /**
  * Component
@@ -59,17 +35,8 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
 };
 
 Projects.getInitialProps = async ({ query }) => {
-    const projectId = Number(query.id);
-
-    const project = fakeProjects.find(item => item.id === projectId);
-    if (!project) {
-        throw 'Project not found';
-    }
-
-    const subProjects = fakeProjects.filter(item => item.parent === projectId);
-    const designs = fakeDesign.filter(item => item.project === projectId);
-    const breadcrumbs = findBreadcrumbs(project.id);
-
+    const res = await fetch(`http://localhost:3000/api/project?id=${query.id}`);
+    const { project, subProjects, breadcrumbs, designs } = await res.json();
     return { project, subProjects, breadcrumbs, designs };
 };
 
