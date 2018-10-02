@@ -1,9 +1,11 @@
 const development = require('./env/development');
 const production = require('./env/production');
+const test = require('./env/test');
 
 const environments = {
     development,
-    production
+    production,
+    test
 };
 
 const DEFAULT_ENVIRONMENT = 'development';

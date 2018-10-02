@@ -26,8 +26,9 @@
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest test/**/*",
     "dev": "DEBUG=polygon:* nodemon server.js",
+    "debug": "DEBUG=* nodemon server.js",
     "build": "next build",
     "start": "DEBUG=polygon:* node server.js",
     "lint": "eslint ."

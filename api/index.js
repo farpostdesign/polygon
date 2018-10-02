@@ -2,6 +2,7 @@ const express = require('express');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const File = require('../app/models/file');
+const app = require('../app');
 const payload = require('./payload');
 const config = require('../config');
 
@@ -13,27 +14,11 @@ router.get('/projects', async (req, res) => {
 });
 
 router.get('/project', async (req, res) => {
-    const project = await Project.findOne({ _id: req.query.id }).lean();
+    const project = await Project.findOne({ _id: req.query.id });
     if (!project) {
         throw new Error('Project not found');
     }
-    const breadcrumbsAggregate = await Project.aggregate([
-        { $match: { _id: project._id } },
-        {
-            $graphLookup: {
-                from: 'projects',
-                startWith: '$parent',
-                connectFromField: 'parent',
-                connectToField: '_id',
-                as: 'breadcrumbs'
-            }
-        },
-        { $project: { _id: 0, breadcrumbs: 1 } }
-    ]);
-    let breadcrumbs = [];
-    if (breadcrumbsAggregate.length) {
-        breadcrumbs = [{ name: 'Projects', href: '/' }, ...payload(breadcrumbsAggregate[0].breadcrumbs, 'projects'), { name: project.name }];
-    }
+    const breadcrumbs = await app.breadcrumbs(project);
     const subProjects = await Project.find({ parent: project._id }, { name: 1 }).lean();
     const designs = await Design.find({ project: project._id }).lean();
     res.json({
@@ -45,7 +30,7 @@ router.get('/project', async (req, res) => {
 });
 
 router.get('/design', async (req, res) => {
-    const design = await Design.findOne({ _id: req.query.id }).lean();
+    const design = await Design.findOne({ _id: req.query.id });
     if (!design) {
         throw new Error('Desing not found');
     }
@@ -60,23 +45,7 @@ router.get('/design', async (req, res) => {
         file.href = `/design?id=${design.id}#${file._id}`;
         return file;
     });
-    const breadcrumbsAggregate = await Project.aggregate([
-        { $match: { _id: design.project } },
-        {
-            $graphLookup: {
-                from: 'projects',
-                startWith: '$parent',
-                connectFromField: 'parent',
-                connectToField: '_id',
-                as: 'breadcrumbs'
-            }
-        },
-        { $project: { _id: 0, breadcrumbs: 1 } }
-    ]);
-    let breadcrumbs = [];
-    if (breadcrumbsAggregate.length) {
-        breadcrumbs = [{ name: 'Projects', href: '/' }, ...payload([...breadcrumbsAggregate[0].breadcrumbs, project], 'projects'), { name: design.name }];
-    }
+    const breadcrumbs = await app.breadcrumbs(design);
     res.json({ design, breadcrumbs, files });
 });
 
