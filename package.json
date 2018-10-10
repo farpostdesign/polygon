@@ -22,12 +22,13 @@
     "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
+    "mongodb-memory-server": "^2.4.3",
     "nodemon": "^1.18.4",
     "pre-commit": "^1.2.2",
     "supertest": "^3.3.0"
   },
   "scripts": {
-    "test": "NODE_PATH=./test jest test/**/*",
+    "test": "NODE_PATH=./test jest",
     "dev": "DEBUG=polygon:* nodemon server.js",
     "debug": "DEBUG=* nodemon server.js",
     "build": "next build",
@@ -40,6 +41,10 @@
       "pages/*",
       "components/*"
     ]
+  },
+  "jest": {
+    "testRegex": ".*\\.(test|spec)\\.jsx?",
+    "verbose": false
   },
   "pre-commit": [
     "lint"
