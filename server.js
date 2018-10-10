@@ -4,6 +4,7 @@ const next = require('next');
 const api = require('./api');
 const serverDebug = require('debug')('polygon:server');
 const config = require('./config');
+require('./services/db');
 
 const server = express();
 
@@ -23,6 +24,7 @@ if (config.production) {
 }
 
 app.prepare().then(() => {
+    server.use(express.json());
     server.use(express.static('public'));
     server.use('/api', api);
     server.get('*', frontEndRequestHandler);

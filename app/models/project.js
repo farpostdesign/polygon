@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { ProjectSchema } = require('../../services/db');
+const { ProjectSchema } = require('../schemas');
 
 class Project extends mongoose.Model {
 

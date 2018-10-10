@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { FileSchema } = require('../../services/db');
+const { FileSchema } = require('../schemas');
 
 const model = mongoose.model('File', FileSchema);
 
