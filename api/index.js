@@ -7,13 +7,18 @@ const payload = require('./payload');
 const config = require('../config');
 
 const router = express.Router();
+const asyncRoute = (fn) => {
+    return (req, res, next) => {
+        Promise.resolve(fn(req, res, next)).catch(next);
+    };
+};
 
-router.get('/projects', async (req, res) => {
+router.get('/projects', asyncRoute(async (req, res) => {
     const projects = await Project.find({ parent: null }).lean();
     res.json(payload(projects, 'projects'));
-});
+}));
 
-router.get('/project', async (req, res) => {
+router.get('/project', asyncRoute(async (req, res) => {
     const project = await Project.findOne({ _id: req.query.id });
     if (!project) {
         throw new Error('Project not found');
@@ -27,9 +32,14 @@ router.get('/project', async (req, res) => {
         subProjects: payload(subProjects, 'projects'),
         designs: payload(designs, 'design')
     });
-});
+}));
 
-router.get('/design', async (req, res) => {
+router.post('/projects', asyncRoute(async (req, res) => {
+    const project = await app.createProject(req.body);
+    res.json({ data: project });
+}));
+
+router.get('/design', asyncRoute(async (req, res) => {
     const design = await Design.findOne({ _id: req.query.id });
     if (!design) {
         throw new Error('Desing not found');
@@ -47,6 +57,6 @@ router.get('/design', async (req, res) => {
     });
     const breadcrumbs = await app.breadcrumbs(design);
     res.json({ design, breadcrumbs, files });
-});
+}));
 
 module.exports = router;
