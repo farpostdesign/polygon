@@ -1,4 +1,5 @@
 const Project = require('./models/project');
+const Design = require('./models/design');
 const payload = require('../api/payload');
 
 const app = {
@@ -10,6 +11,10 @@ const app = {
 
     createProject: async (attributes) => {
         return Project.create(attributes);
+    },
+
+    createDesign: async (attributes) => {
+        return Design.create(attributes);
     }
 };
 

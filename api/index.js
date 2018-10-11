@@ -59,4 +59,9 @@ router.get('/design', asyncRoute(async (req, res) => {
     res.json({ design, breadcrumbs, files });
 }));
 
+router.post('/designs', asyncRoute(async (req, res) => {
+    const design = await app.createDesign(req.body);
+    res.json({ data: design });
+}));
+
 module.exports = router;
