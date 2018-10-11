@@ -26,7 +26,20 @@ if (config.production) {
 app.prepare().then(() => {
     server.use(express.json());
     server.use(express.static('public'));
+    // API
     server.use('/api', api);
+    // API Error handler
+    server.use((err, _req, res, _next) => {
+        const payload = {
+            errors: [err.message]
+        };
+        if (dev) {
+            payload.stack = err.stack;
+        }
+        res.status(err.statusCode || 500);
+        res.json(payload);
+    });
+    // Next app
     server.get('*', frontEndRequestHandler);
     server.listen(config.serverListenTo, (err) => {
         if (err) {

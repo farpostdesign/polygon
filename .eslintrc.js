@@ -73,7 +73,7 @@ module.exports = {
         'no-eval': 2,
         'no-with': 2,
         'valid-typeof': 2,
-        'no-unused-vars': 2,
+        'no-unused-vars': [2, { 'argsIgnorePattern': '^_' }],
         'no-continue': 1,
         'no-extra-semi': 1,
         'no-unreachable': 1,
