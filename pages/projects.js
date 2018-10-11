@@ -7,24 +7,8 @@ import BreadcrumbsNav from '../components/BreadcrumbsNav';
 import Section from '../components/Section';
 import H3 from '../components/H3';
 import { InlineEdit } from '../components/forms';
+import store from '../services/store';
 import 'isomorphic-unfetch';
-
-const store = {
-    dispatch(action) {
-        const type = action.type;
-        return store[type](action);
-    },
-
-    addProject(action) {
-        return fetch('/api/projects', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(action.attributes)
-        }).then((res) => res.json());
-    }
-};
 
 /**
  * Component
