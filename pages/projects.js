@@ -41,7 +41,19 @@ const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
             </Section>
             <Section>
                 <H3>Designs</H3>
-                <InlineCreate name="name" text="Add Design" stubRedirect="/design?id=100" />
+                <InlineCreate name="name"
+                    text="Add Design"
+                    handleSubmit={(attributes) => {
+                        attributes.project = project._id;
+                        store.dispatch({ type: 'addDesign', attributes })
+                            .then((res) => {
+                                if (res.errors) {
+                                    throw res.errors;
+                                }
+                                const design = res.data;
+                                Router.push(`/design?id=${design._id}`);
+                            }).catch(alert);
+                    }} />
                 <List icon='media' items={designs} />
             </Section>
         </Layout>
