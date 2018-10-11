@@ -1,19 +1,19 @@
 import { Component } from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import FormField from './FormField';
 import { titelize } from '../../utils';
 
 class InlineCreate extends Component {
-    constructor() {
-        super();
-        this.state = { isEditable: false };
+    constructor(props) {
+        super(props);
+        this.state = { isEditable: false, value: { [props.name]: '' } };
 
         this.handleEditClick = this.handleEditClick.bind(this);
         this.handleSaveClick = this.handleSaveClick.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.setCreateButtonRef = this.setCreateButtonRef.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     setWrapperRef(node) {
@@ -36,9 +36,14 @@ class InlineCreate extends Component {
         this.setState({ isEditable: true });
     }
 
+    handleInputChange(event) {
+        const { value } = event.target;
+        this.setState({ value: { [this.props.name]: value } });
+    }
+
     handleSaveClick() {
         this.setState({ isEditable: false });
-        Router.push(this.props.stubRedirect);
+        this.props.handleSubmit(this.state.value);
     }
 
     handleClickOutside(event) {
@@ -51,7 +56,7 @@ class InlineCreate extends Component {
         const placeholder = this.props.placeholder || titelize(this.props.name);
         return (
             <div>
-                { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} ref={this.setWrapperRef} autoFocus/> : null}
+                { this.state.isEditable ? <FormField type="text" name={this.props.name} placeholder={placeholder} ref={this.setWrapperRef} onChange={this.handleInputChange} autoFocus/> : null}
                 {
                     this.state.isEditable
                         ? <button ref={this.setCreateButtonRef} onClick={this.handleSaveClick} className="p-button">Create</button>
@@ -71,7 +76,7 @@ InlineCreate.propTypes = {
     name: PropTypes.string.isRequired,
     text: PropTypes.string,
     placeholder: PropTypes.string,
-    stubRedirect: PropTypes.string
+    handleSubmit: PropTypes.func
 };
 
 export default InlineCreate;

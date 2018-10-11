@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const onChangeStub = () => {
-    // do nothing for now
-};
-
 const FormField = React.forwardRef((props, ref) => {
     return (
         <span>
@@ -13,7 +9,6 @@ const FormField = React.forwardRef((props, ref) => {
                 ref={ref}
                 id={`form_field_${props.name}`}
                 {...props}
-                onChange={onChangeStub}
                 className="p-input"
             />
         </span>
