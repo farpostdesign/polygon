@@ -25,3 +25,26 @@ describe('POST /api/projects', () => {
         expect(res.body.data.name).toBe('project');
     });
 });
+
+describe('PATCH /api/project/:id', () => {
+    it('respond 200', async () => {
+        const project = await Project.create({ name: 'a' });
+        const res = await api.patch(`/api/projects/${project._id}`).send({ name: 'b' });
+        expect(res.statusCode).toBe(200);
+    });
+
+    it('renames project', async () => {
+        const project = await Project.create({ name: 'a' });
+        await api.patch(`/api/projects/${project._id}`).send({ name: 'b' });
+        expect(
+            await Project.count()
+        ).toBe(1);
+    });
+
+    it('returns updated project', async () => {
+        const project = await Project.create({ name: 'a' });
+        const res = await api.patch(`/api/projects/${project._id}`).send({ name: 'b' });
+        expect(res.body.data._id).toBe(project.id);
+        expect(res.body.data.name).toBe('b');
+    });
+});

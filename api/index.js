@@ -39,6 +39,11 @@ router.post('/projects', asyncRoute(async (req, res) => {
     res.json({ data: project });
 }));
 
+router.patch('/projects/:id', asyncRoute(async (req, res) => {
+    const project = await app.renameProject(req.params.id, req.body.name);
+    res.json({ data: project });
+}));
+
 router.get('/design', asyncRoute(async (req, res) => {
     const design = await Design.findOne({ _id: req.query.id });
     if (!design) {
