@@ -19,6 +19,10 @@ const app = {
 
     renameProject: async (_id, name) => {
         return Project.findOneAndUpdate({ _id }, { name }, { new: true });
+    },
+
+    renameDesign: async (_id, name) => {
+        return Design.findOneAndUpdate({ _id }, { name }, { new: true });
     }
 };
 
