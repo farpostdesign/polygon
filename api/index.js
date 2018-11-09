@@ -64,6 +64,11 @@ router.get('/design', asyncRoute(async (req, res) => {
     res.json({ design, breadcrumbs, files });
 }));
 
+router.patch('/designs/:id', asyncRoute(async (req, res) => {
+    const design = await app.renameDesign(req.params.id, req.body.name);
+    res.json({ data: design });
+}));
+
 router.post('/designs', asyncRoute(async (req, res) => {
     const design = await app.createDesign(req.body);
     res.json({ data: design });
