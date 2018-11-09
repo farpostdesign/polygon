@@ -56,13 +56,7 @@ router.get('/design', asyncRoute(async (req, res) => {
     if (!project) {
         throw new Error('Project not found');
     }
-    let files = await File.find({ design }).sort({ createdAt: -1 }).lean();
-    files = files.map((file) => {
-        file.src = `/${config.uploadsDir}/${file.design}/${file._id}${file.ext}`;
-        file.name = file._id;
-        file.href = `/design?id=${design.id}#${file._id}`;
-        return file;
-    });
+    const files = await File.find({ design }).sort({ createdAt: -1 });
     const breadcrumbs = await app.breadcrumbs(design);
     res.json({ design, breadcrumbs, files });
 }));
@@ -109,13 +103,7 @@ router.post('/designs/:id/uploads',
             throw new Error('Design not found');
         }
 
-        let files = await File.find({ design }).sort({ createdAt: -1 }).lean();
-        files = files.map((file) => {
-            file.src = `/${config.uploadsDir}/${file.design}/${file._id}${file.ext}`;
-            file.name = file._id;
-            file.href = `/design?id=${design.id}#${file._id}`;
-            return file;
-        });
+        let files = await File.find({ design }).sort({ createdAt: -1 });
         res.json({ data: files });
     })
 );
