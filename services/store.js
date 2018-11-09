@@ -37,8 +37,17 @@ const actions = {
             },
             body: JSON.stringify(action.attributes)
         }).then((res) => res.json());
-    }
+    },
 
+    uploadFiles(action) {
+        return fetch(`/api/designs/${action.id}/uploads`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: action.files
+        }).then((res) => res.json());
+    }
 };
 
 const store = {

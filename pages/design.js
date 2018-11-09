@@ -26,7 +26,19 @@ class Design extends Component {
     }
 
     handleFilesAdded(dropedFiles) {
-        this.setState({ images: dropedFiles.concat(this.state.images) });
+        const filesData = new FormData();
+        dropedFiles.forEach((droppedFile) => filesData.append('files', droppedFile));
+        store.dispatch({
+            type: 'uploadFiles',
+            id: this.props.design._id,
+            files: filesData
+        }).then((res) => {
+            if (res.errors) {
+                throw res.errors;
+            }
+
+            this.setState({ images: res.data });
+        }).catch(alert);
     }
 
     handleFileRemoved(event) {
