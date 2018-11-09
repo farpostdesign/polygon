@@ -21,7 +21,8 @@ if (!config) {
  *
  */
 
-config.uploadsDir =  'uploads';
+config.publicDir = 'public';
+config.uploadsDir = 'uploads';
 
 /**
  * Environment booleans

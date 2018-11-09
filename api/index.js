@@ -1,4 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
+const multer = require('multer');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const File = require('../app/models/file');
@@ -53,9 +56,9 @@ router.get('/design', asyncRoute(async (req, res) => {
     if (!project) {
         throw new Error('Project not found');
     }
-    let files = await File.find({ design: design._id }).sort({ createdAt: -1 }).lean();
+    let files = await File.find({ design }).sort({ createdAt: -1 }).lean();
     files = files.map((file) => {
-        file.src = `/${config.uploadsDir}/${file.design}/${file._id}.png`;
+        file.src = `/${config.uploadsDir}/${file.design}/${file._id}${file.ext}`;
         file.name = file._id;
         file.href = `/design?id=${design.id}#${file._id}`;
         return file;
@@ -63,6 +66,59 @@ router.get('/design', asyncRoute(async (req, res) => {
     const breadcrumbs = await app.breadcrumbs(design);
     res.json({ design, breadcrumbs, files });
 }));
+
+const storage = multer.diskStorage({
+    destination(req, file, callback) {
+        Design.findOne({ _id: req.params.id })
+            .then((design) => {
+                if (!design) {
+                    return callback(new Error('Design not found'));
+                }
+
+                const dir = path.join(config.publicDir, config.uploadsDir, design._id.toString());
+                fs.mkdir(dir, (err) => {
+                    if (err && err.code !== 'EEXIST') {
+                        return callback(err);
+                    }
+
+                    callback(null, dir);
+                });
+            });
+    },
+    filename(req, file, callback) {
+        Design.findOne({ _id: req.params.id })
+            .then((design) => {
+                if (!design) {
+                    return callback(new Error('Design not found'));
+                }
+
+                const ext = path.extname(file.originalname);
+                return File.create({ design: design._id, ext });
+            }).then((doc) => {
+                callback(null, `${doc._id}${doc.ext}`);
+            }).catch(callback);
+    }
+});
+const upload = multer({ storage });
+
+router.post('/designs/:id/uploads',
+    upload.array('files', 20),
+    asyncRoute(async (req, res) => {
+        const design = await Design.findOne({ _id: req.params.id });
+        if (!design) {
+            throw new Error('Design not found');
+        }
+
+        let files = await File.find({ design }).sort({ createdAt: -1 }).lean();
+        files = files.map((file) => {
+            file.src = `/${config.uploadsDir}/${file.design}/${file._id}${file.ext}`;
+            file.name = file._id;
+            file.href = `/design?id=${design.id}#${file._id}`;
+            return file;
+        });
+        res.json({ data: files });
+    })
+);
 
 router.patch('/designs/:id', asyncRoute(async (req, res) => {
     const design = await app.renameDesign(req.params.id, req.body.name);

@@ -13,5 +13,6 @@ module.exports.DesignSchema = new Schema({
 }, { timestamps: true });
 
 module.exports.FileSchema = new Schema({
+    ext: { type: String, required: true },
     design: { type: Schema.ObjectId, ref: 'Design', required: true }
 }, { timestamps: true });
