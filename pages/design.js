@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import store from '../services/store';
 import Dropzone from 'react-dropzone';
 import List from '../components/List';
 import Layout from '../components/Layout';
@@ -52,7 +53,22 @@ class Design extends Component {
             <Layout navBar={false}>
                 <BreadcrumbsNav items={this.props.breadcrumbs}/>
                 <Section>
-                    <InlineEdit object={this.props.design} />
+                    <InlineEdit name="name"
+                        object={this.props.design}
+                        handleSubmit={(attributes) => {
+                            store.dispatch({ type: 'updateDesign', attributes, id: this.props.design._id })
+                                .then((res) => {
+                                    if (res.errors) {
+                                        throw res.errors;
+                                    }
+                                    fetch(`http://localhost:3000/api/design?id=${this.props.design._id}`)
+                                        .then((res) => res.json())
+                                        .then(({ design, breadcrumbs }) => {
+                                            this.setState({ design, breadcrumbs });
+                                        });
+                                }).catch(alert);
+                        }}
+                    />
                 </Section>
                 <Section>
                     <Dropzone accepts="image/*" onDrop={this.handleFilesAdded} className="p-dropzone">

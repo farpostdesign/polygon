@@ -27,7 +27,18 @@ const actions = {
             },
             body: JSON.stringify(action.attributes)
         }).then((res) => res.json());
+    },
+
+    updateDesign(action) {
+        return fetch(`/api/designs/${action.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(action.attributes)
+        }).then((res) => res.json());
     }
+
 };
 
 const store = {
