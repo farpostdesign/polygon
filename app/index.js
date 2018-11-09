@@ -15,6 +15,10 @@ const app = {
 
     createDesign: async (attributes) => {
         return Design.create(attributes);
+    },
+
+    renameProject: async (_id, name) => {
+        return Project.findOneAndUpdate({ _id }, { name }, { new: true });
     }
 };
 
