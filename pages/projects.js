@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import Layout from '../components/Layout';
@@ -15,56 +16,83 @@ import 'isomorphic-unfetch';
  *
  */
 
-const Projects = ({ project, subProjects, breadcrumbs, designs }) => {
-    return (
-        <Layout>
-            <BreadcrumbsNav items={breadcrumbs} />
-            <Section>
-                <InlineEdit object={project} />
-            </Section>
-            <Section>
-                <H3>Projects</H3>
-                <InlineCreate name="name"
-                    text="Add Subfolder"
-                    handleSubmit={(attributes) => {
-                        attributes.parent = project._id;
-                        store.dispatch({ type: 'addProject', attributes })
-                            .then((res) => {
-                                if (res.errors) {
-                                    throw res.errors;
-                                }
-                                const project = res.data;
-                                Router.push(`/projects?id=${project._id}`);
-                            }).catch(alert);
-                    }} />
-                <List icon='folder-close' items={subProjects} />
-            </Section>
-            <Section>
-                <H3>Designs</H3>
-                <InlineCreate name="name"
-                    text="Add Design"
-                    handleSubmit={(attributes) => {
-                        attributes.project = project._id;
-                        store.dispatch({ type: 'addDesign', attributes })
-                            .then((res) => {
-                                if (res.errors) {
-                                    throw res.errors;
-                                }
-                                const design = res.data;
-                                Router.push(`/design?id=${design._id}`);
-                            }).catch(alert);
-                    }} />
-                <List icon='media' items={designs} />
-            </Section>
-        </Layout>
-    );
-};
+class Projects extends React.Component {
+    static async getInitialProps({ query }) {
+        const res = await fetch(`http://localhost:3000/api/project?id=${query.id}`);
+        const { project, subProjects, breadcrumbs, designs } = await res.json();
+        return { project, subProjects, breadcrumbs, designs };
+    }
 
-Projects.getInitialProps = async ({ query }) => {
-    const res = await fetch(`http://localhost:3000/api/project?id=${query.id}`);
-    const { project, subProjects, breadcrumbs, designs } = await res.json();
-    return { project, subProjects, breadcrumbs, designs };
-};
+    constructor(props) {
+        super(props);
+        const { project, subProjects, breadcrumbs, designs } = props;
+        this.state = {
+            project,
+            subProjects,
+            breadcrumbs,
+            designs
+        };
+    }
+
+    render() {
+        return (
+            <Layout>
+                <BreadcrumbsNav items={this.state.breadcrumbs} />
+                <Section>
+                    <InlineEdit name="name"
+                        object={this.state.project}
+                        handleSubmit={(attributes) => {
+                            store.dispatch({ type: 'updateProject', attributes, id: this.state.project._id })
+                                .then((res) => {
+                                    if (res.errors) {
+                                        throw res.errors;
+                                    }
+                                    fetch(`http://localhost:3000/api/project?id=${this.state.project._id}`)
+                                        .then((res) => res.json())
+                                        .then(({ project, breadcrumbs }) => {
+                                            this.setState({ project, breadcrumbs });
+                                        });
+                                }).catch(alert);
+                        }} />
+                </Section>
+                <Section>
+                    <H3>Projects</H3>
+                    <InlineCreate name="name"
+                        text="Add Subfolder"
+                        handleSubmit={(attributes) => {
+                            attributes.parent = this.state.project._id;
+                            store.dispatch({ type: 'addProject', attributes })
+                                .then((res) => {
+                                    if (res.errors) {
+                                        throw res.errors;
+                                    }
+                                    const project = res.data;
+                                    Router.push(`/projects?id=${project._id}`);
+                                }).catch(alert);
+                        }} />
+                    <List icon='folder-close' items={this.state.subProjects} />
+                </Section>
+                <Section>
+                    <H3>Designs</H3>
+                    <InlineCreate name="name"
+                        text="Add Design"
+                        handleSubmit={(attributes) => {
+                            attributes.project = this.state.project._id;
+                            store.dispatch({ type: 'addDesign', attributes })
+                                .then((res) => {
+                                    if (res.errors) {
+                                        throw res.errors;
+                                    }
+                                    const design = res.data;
+                                    Router.push(`/design?id=${design._id}`);
+                                }).catch(alert);
+                        }} />
+                    <List icon='media' items={this.state.designs} />
+                </Section>
+            </Layout>
+        );
+    }
+}
 
 Projects.propTypes = {
     project: PropTypes.object,

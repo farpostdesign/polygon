@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import FormField from './FormField';
 
 class InlineEdit extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.wrapperRef = null;
         this.saveButtonRef = null;
 
-        this.state = { isEditable: false };
+        this.state = { isEditable: false, object: props.object };
 
         this.handleEditClick = this.handleEditClick.bind(this);
         this.handleSaveClick = this.handleSaveClick.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.setSaveButtonRef = this.setSaveButtonRef.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     setWrapperRef(node) {
@@ -37,8 +38,14 @@ class InlineEdit extends Component {
         this.setState({ isEditable: true });
     }
 
+    handleInputChange(event) {
+        const { value } = event.target;
+        this.setState({ object: { [this.props.name]: value } });
+    }
+
     handleSaveClick() {
         this.setState({ isEditable: false });
+        this.props.handleSubmit(this.state.object);
     }
 
     handleClickOutside(event) {
@@ -52,8 +59,8 @@ class InlineEdit extends Component {
             <div>
                 {
                     this.state.isEditable
-                        ? <FormField type="text" name="name" value={this.props.object.name} ref={this.setWrapperRef} autoFocus/>
-                        :  <span className="p-inline-editable">{this.props.object.name}</span>
+                        ? <FormField type="text" name={this.props.name} ref={this.setWrapperRef} onChange={this.handleInputChange} value={this.state.object[this.props.name]} autoFocus/>
+                        :  <span className="p-inline-editable">{this.state.object[this.props.name]}</span>
                 }
                 {
                     this.state.isEditable
@@ -66,7 +73,9 @@ class InlineEdit extends Component {
 }
 
 InlineEdit.propTypes = {
-    object: PropTypes.object.isRequired
+    object: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired
 };
 
 export default InlineEdit;
