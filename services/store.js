@@ -9,6 +9,16 @@ const actions = {
         }).then((res) => res.json());
     },
 
+    updateProject(action) {
+        return fetch(`/api/projects/${action.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(action.attributes)
+        }).then((res) => res.json());
+    },
+
     addDesign(action) {
         return fetch('/api/designs', {
             method: 'POST',
