@@ -40,12 +40,14 @@ const actions = {
     },
 
     uploadFiles(action) {
+        const filesData = new FormData();
+        action.files.forEach((file) => filesData.append('files', file));
         return fetch(`/api/designs/${action.id}/uploads`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json'
             },
-            body: action.files
+            body: filesData
         }).then((res) => res.json());
     },
 

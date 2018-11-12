@@ -22,16 +22,15 @@ class Design extends Component {
 
         this.handleFileRemoved = this.handleFileRemoved.bind(this);
         this.handleFilesAdded = this.handleFilesAdded.bind(this);
+        this.buildfileReplaceHandler = this.buildfileReplaceHandler.bind(this);
         this.buildImage = this.buildImage.bind(this);
     }
 
-    handleFilesAdded(dropedFiles) {
-        const filesData = new FormData();
-        dropedFiles.forEach((droppedFile) => filesData.append('files', droppedFile));
+    handleFilesAdded(droppedFiles) {
         store.dispatch({
             type: 'uploadFiles',
             id: this.props.design._id,
-            files: filesData
+            files: droppedFiles
         }).then((res) => {
             if (res.errors) {
                 throw res.errors;
@@ -39,6 +38,31 @@ class Design extends Component {
 
             this.setState({ images: res.data });
         }).catch(alert);
+    }
+
+    buildfileReplaceHandler(fileId) {
+        return (sendedFile) => {
+            store.dispatch({
+                type: 'deleteFile',
+                designId: this.props.design._id,
+                fileId
+            }).then((deleteRes) => {
+                if (deleteRes.errors) {
+                    throw deleteRes.errors;
+                }
+                return store.dispatch({
+                    type: 'uploadFiles',
+                    id: this.props.design._id,
+                    files: sendedFile
+                });
+            }).then((uploadRes) => {
+                if (uploadRes.errors) {
+                    throw uploadRes.errors;
+                }
+
+                this.setState({ images: uploadRes.data });
+            }).catch(alert);
+        };
     }
 
     handleFileRemoved(event) {
@@ -63,7 +87,7 @@ class Design extends Component {
                 <img className="p-designs--image" src={image.src} />
                 <div className="p-small-hide">
                     <button className="p-button" data-file-id={image._id} onClick={this.handleFileRemoved}>Remove</button>
-                    <button className="p-button" data-file-id={image._id}>Replace</button>
+                    <Dropzone accepts="image/*" multiple={false} onDrop={this.buildfileReplaceHandler(image._id)} className="p-button">Replace</Dropzone>
                 </div>
             </div>
         );
