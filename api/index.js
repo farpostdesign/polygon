@@ -122,3 +122,5 @@ router.post('/designs', asyncRoute(async (req, res) => {
     const design = await app.createDesign(req.body);
     res.json({ data: design });
 }));
+
+module.exports = router;
