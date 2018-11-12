@@ -98,12 +98,7 @@ const upload = multer({ storage });
 router.post('/designs/:id/uploads',
     upload.array('files', 20),
     asyncRoute(async (req, res) => {
-        const design = await Design.findOne({ _id: req.params.id });
-        if (!design) {
-            throw new Error('Design not found');
-        }
-
-        let files = await File.find({ design }).sort({ createdAt: -1 });
+        const files = await app.designFilesList(req.params.id);
         res.json({ data: files });
     })
 );
@@ -114,7 +109,7 @@ router.delete('/designs/:designId/files/:fileId', asyncRoute(async (req, res) =>
         throw new Error('File not found');
     }
 
-    let files = await File.find({ design: req.params.designId }).sort({ createdAt: -1 });
+    const files = await app.designFilesList(req.params.designId);
     res.json({ data: files });
 }));
 
@@ -127,5 +122,3 @@ router.post('/designs', asyncRoute(async (req, res) => {
     const design = await app.createDesign(req.body);
     res.json({ data: design });
 }));
-
-module.exports = router;

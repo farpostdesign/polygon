@@ -1,5 +1,6 @@
 const Project = require('./models/project');
 const Design = require('./models/design');
+const File = require('./models/file');
 const payload = require('../api/payload');
 
 const app = {
@@ -23,6 +24,10 @@ const app = {
 
     renameDesign: async (_id, name) => {
         return Design.findOneAndUpdate({ _id }, { name }, { new: true });
+    },
+
+    designFilesList: async (designId) => {
+        return await File.find({ design: designId }).sort({ createdAt: -1 });
     }
 };
 
