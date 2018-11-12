@@ -4,7 +4,6 @@ const express = require('express');
 const multer = require('multer');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
-const File = require('../app/models/file');
 const app = require('../app');
 const payload = require('./payload');
 const config = require('../config');
@@ -56,7 +55,7 @@ router.get('/design', asyncRoute(async (req, res) => {
     if (!project) {
         throw new Error('Project not found');
     }
-    const files = await File.find({ design }).sort({ createdAt: -1 });
+    const files = await app.designFilesList(design.id);
     const breadcrumbs = await app.breadcrumbs(design);
     res.json({ design, breadcrumbs, files });
 }));
@@ -87,7 +86,7 @@ const storage = multer.diskStorage({
                 }
 
                 const ext = path.extname(file.originalname);
-                return File.create({ design: design._id, ext });
+                return app.createFile({ design: design._id, ext });
             }).then((doc) => {
                 callback(null, `${doc._id}${doc.ext}`);
             }).catch(callback);
@@ -104,7 +103,7 @@ router.post('/designs/:id/uploads',
 );
 
 router.delete('/designs/:designId/files/:fileId', asyncRoute(async (req, res) => {
-    const file = await File.findOneAndRemove({  _id: req.params.fileId, design: req.params.designId });
+    const file = await app.removeFile({  _id: req.params.fileId, design: req.params.designId });
     if (!file) {
         throw new Error('File not found');
     }

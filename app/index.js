@@ -26,8 +26,16 @@ const app = {
         return Design.findOneAndUpdate({ _id }, { name }, { new: true });
     },
 
+    createFile: async ({ design, ext }) => {
+        return File.create({ design, ext });
+    },
+
     designFilesList: async (designId) => {
         return await File.find({ design: designId }).sort({ createdAt: -1 });
+    },
+
+    removeFile: async (query) => {
+        return File.findOneAndRemove(query);
     }
 };
 
