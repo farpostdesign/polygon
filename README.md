@@ -1,17 +1,9 @@
-## Разверстывание
+# Polygon
 
-    $ ssh developer@design2.srv.loc "bash .deploy.sh polygon"
+Web application for design sharing. Builded with [next.js](https://nextjs.org/) and [express.js](https://expressjs.com/).
 
-Переменные окружения можно измения на серевере в `~/envlists/time_manager`.
+This project is still in development.
 
-Убедитесь, что ключ с пользователя, под которым производится развертываение на сервере добавлен в ключи для развертывания/доступа на bitbucket origin репозитории.
+## Author
 
-## Colorcheme
-
-```
-#60a3c1
-#6e6eab
-#52d9d7
-#7b3894
-#89027e
-```
+Dmitry Shvetsov @shvetsovdm <shvetsov@farpost.com>
