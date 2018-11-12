@@ -43,8 +43,17 @@ class Design extends Component {
 
     handleFileRemoved(event) {
         const { fileId } = event.target.dataset;
-        const filesWithoutRemoved = this.state.images.filter((image) => image._id !== fileId);
-        this.setState({ images: filesWithoutRemoved });
+        store.dispatch({
+            type: 'deleteFile',
+            designId: this.props.design._id,
+            fileId
+        }).then((res) => {
+            if (res.errors) {
+                throw res.errors;
+            }
+
+            this.setState({ images: res.data });
+        }).catch(alert);
     }
 
     buildImage(image) {

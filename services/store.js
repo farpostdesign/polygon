@@ -47,6 +47,15 @@ const actions = {
             },
             body: action.files
         }).then((res) => res.json());
+    },
+
+    deleteFile(action) {
+        return fetch(`/api/designs/${action.designId}/files/${action.fileId}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then((res) => res.json());
     }
 };
 
