@@ -12,6 +12,7 @@ const expressApp = express();
 const api = require('../api');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
+const File = require('../app/models/file');
 
 /**
  * API server setup
@@ -63,5 +64,6 @@ module.exports = {
      * Expose models for tests
      */
     Project,
-    Design
+    Design,
+    File
 };

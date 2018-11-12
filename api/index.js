@@ -108,6 +108,16 @@ router.post('/designs/:id/uploads',
     })
 );
 
+router.delete('/designs/:designId/files/:fileId', asyncRoute(async (req, res) => {
+    const file = await File.findOneAndRemove({  _id: req.params.fileId, design: req.params.designId });
+    if (!file) {
+        throw new Error('File not found');
+    }
+
+    let files = await File.find({ design: req.params.designId }).sort({ createdAt: -1 });
+    res.json({ data: files });
+}));
+
 router.patch('/designs/:id', asyncRoute(async (req, res) => {
     const design = await app.renameDesign(req.params.id, req.body.name);
     res.json({ data: design });
