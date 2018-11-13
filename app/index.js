@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Project = require('./models/project');
 const Design = require('./models/design');
 const File = require('./models/file');
@@ -46,7 +47,7 @@ const app = {
 
     removeFile: async (fileId) => {
         const removedFile = await File.findOneAndRemove({ _id: fileId });
-
+        fs.unlinkSync(removedFile.filepath);
         return removedFile;
     },
 
