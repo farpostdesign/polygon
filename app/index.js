@@ -26,16 +26,54 @@ const app = {
         return Design.findOneAndUpdate({ _id }, { name }, { new: true });
     },
 
-    createFile: async ({ design, ext }) => {
-        return File.create({ design, ext });
+    createFiles: async ({ files, designId }) => {
+        files = [].concat(files || []);
+        const lastPosition = await app.lastDesignFilesPosition(designId);
+        const filesAttrs = files.map((file, index) => {
+            const position = file.position || (lastPosition + index + 1);
+            return {
+                position,
+                design: designId,
+                filename: file.filename
+            };
+        });
+        return File.create(filesAttrs);
     },
 
     designFilesList: async (designId) => {
-        return await File.find({ design: designId }).sort({ createdAt: -1 });
+        return await File.find({ design: designId }).sort({ position: -1 });
     },
 
-    removeFile: async (query) => {
-        return File.findOneAndRemove(query);
+    removeFile: async (fileId) => {
+        const removedFile = await File.findOneAndRemove({ _id: fileId });
+
+        return removedFile;
+    },
+
+    lastDesignFilesPosition: async (designId) => {
+        const nolastPositionDefault = 0;
+        const file = await File.findOne({ design: designId }).sort({ position: -1 }).lean();
+        if (!file) {
+            return nolastPositionDefault;
+        }
+        return file.position;
+    },
+
+    reorderFiles: async (designId) => {
+        const files = await File.find({ design: designId })
+            .sort({ position: 1 })
+            .select('position');
+
+        if (files.length > 0) {
+            await Promise.all(files.map((file, index) => {
+                file.position = index + 1;
+                return file.save();
+            }));
+
+            return true;
+        }
+
+        return false;
     }
 };
 
