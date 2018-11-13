@@ -51,6 +51,18 @@ const actions = {
         }).then((res) => res.json());
     },
 
+    replaceFile(action) {
+        const filesData = new FormData();
+        filesData.append('file', action.file);
+        return fetch(`/api/designs/${action.designId}/files/${action.fileId}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: filesData
+        }).then((res) => res.json());
+    },
+
     deleteFile(action) {
         return fetch(`/api/designs/${action.designId}/files/${action.fileId}`, {
             method: 'DELETE',

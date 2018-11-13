@@ -41,26 +41,18 @@ class Design extends Component {
     }
 
     buildfileReplaceHandler(fileId) {
-        return (sendedFile) => {
+        return (sendedFiles) => {
             store.dispatch({
-                type: 'deleteFile',
+                type: 'replaceFile',
                 designId: this.props.design._id,
-                fileId
-            }).then((deleteRes) => {
-                if (deleteRes.errors) {
-                    throw deleteRes.errors;
-                }
-                return store.dispatch({
-                    type: 'uploadFiles',
-                    id: this.props.design._id,
-                    files: sendedFile
-                });
-            }).then((uploadRes) => {
-                if (uploadRes.errors) {
-                    throw uploadRes.errors;
+                fileId,
+                file: sendedFiles[0]
+            }).then((res) => {
+                if (res.errors) {
+                    throw res.errors;
                 }
 
-                this.setState({ images: uploadRes.data });
+                this.setState({ images: res.data });
             }).catch(alert);
         };
     }
