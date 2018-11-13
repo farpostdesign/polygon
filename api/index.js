@@ -60,53 +60,71 @@ router.get('/design', asyncRoute(async (req, res) => {
     res.json({ design, breadcrumbs, files });
 }));
 
+const ensureDesign = (req, res, next) => {
+    Design.findOne({ _id: req.params.id }).lean()
+        .then((design) => {
+            if (!design) {
+                next('Design not found');
+            }
+            req.polygon = req.polygon || {};
+            req.polygon.design = design;
+            next();
+        }).catch(next);
+};
+
 const storage = multer.diskStorage({
     destination(req, file, callback) {
-        Design.findOne({ _id: req.params.id })
-            .then((design) => {
-                if (!design) {
-                    return callback(new Error('Design not found'));
-                }
+        const dir = path.join(
+            config.publicDir,
+            config.uploadsDir,
+            req.polygon.design._id.toString()
+        );
+        fs.mkdir(dir, (err) => {
+            if (err && err.code !== 'EEXIST') {
+                return callback(err);
+            }
 
-                const dir = path.join(config.publicDir, config.uploadsDir, design._id.toString());
-                fs.mkdir(dir, (err) => {
-                    if (err && err.code !== 'EEXIST') {
-                        return callback(err);
-                    }
-
-                    callback(null, dir);
-                });
-            });
+            callback(null, dir);
+        });
     },
     filename(req, file, callback) {
-        Design.findOne({ _id: req.params.id })
-            .then((design) => {
-                if (!design) {
-                    return callback(new Error('Design not found'));
-                }
+        const timestamp = Date.now();
+        const { name, ext } = path.parse(file.originalname);
 
-                const ext = path.extname(file.originalname);
-                return app.createFile({ design: design._id, ext });
-            }).then((doc) => {
-                callback(null, `${doc._id}${doc.ext}`);
-            }).catch(callback);
+        callback(null, `${name}-${timestamp}${ext}`);
     }
 });
 const upload = multer({ storage });
 
 router.post('/designs/:id/uploads',
+    ensureDesign,
     upload.array('files', 20),
     asyncRoute(async (req, res) => {
+        await app.createFiles({ files: req.files, designId: req.polygon.design._id });
+        const files = await app.designFilesList(req.params.id);
+        res.json({ data: files });
+    })
+);
+
+router.put('/designs/:id/files/:fileId',
+    ensureDesign,
+    upload.single('file'),
+    asyncRoute(async (req, res) => {
+        const removedFile = await app.removeFile(req.params.fileId);
+        req.file.position = removedFile.position;
+        await app.createFiles({ files: req.file, designId: req.polygon.design._id });
         const files = await app.designFilesList(req.params.id);
         res.json({ data: files });
     })
 );
 
 router.delete('/designs/:designId/files/:fileId', asyncRoute(async (req, res) => {
-    const file = await app.removeFile({  _id: req.params.fileId, design: req.params.designId });
+    const file = await app.removeFile(req.params.fileId);
     if (!file) {
         throw new Error('File not found');
     }
+
+    await app.reorderFiles(req.params.designId);
 
     const files = await app.designFilesList(req.params.designId);
     res.json({ data: files });
