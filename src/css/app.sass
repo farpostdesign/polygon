@@ -88,16 +88,24 @@ a
   &__minimal
     border: none
 
-.p-input
-  padding: 0 10px
-  height: 2.4rem
-  width: 50%
-  max-width: 20rem
-  min-width: 300px
-  font-size: inherit
-  line-height: inherit
-  margin-right: 1rem
-  +borderBase($colorForms)
+.p-form
+  &--group
+    margin-bottom: .75rem
+    & + .p-button
+      margin-top: 1rem
+  &--label
+    display: block
+    margin-bottom: .25rem
+  &--field
+    padding: 0 10px
+    height: 2.4rem
+    width: 50%
+    max-width: 20rem
+    min-width: 300px
+    font-size: inherit
+    line-height: inherit
+    margin-right: 1rem
+    +borderBase($colorForms)
 
 .p-inline-editable
   font-size: 2rem

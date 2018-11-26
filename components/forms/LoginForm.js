@@ -2,12 +2,12 @@ import FormField from './FormField';
 
 const LoginForm = () => (
     <div>
-        <h1>Login</h1>
-        <br/>
-        <FormField type="email" name="email" />
-        <br/>
-        <FormField type="password" name="password" />
-        <br/>
+        <div className="p-form--group">
+            <FormField type="email" name="email" label="Email" />
+        </div>
+        <div className="p-form--group">
+            <FormField type="password" name="password" label="Password" />
+        </div>
         <button rightIcon="log-in" type='submit' className="p-button">Login</button>
     </div>
 );

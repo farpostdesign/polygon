@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 const FormField = React.forwardRef((props, ref) => {
     return (
         <span>
-            {props.label ? <label htmlFor={name}>{props.label}</label> : null}
+            {props.label ? <label className="p-form--label" htmlFor={props.name}>{props.label}</label> : null}
             <input
                 ref={ref}
                 id={`form_field_${props.name}`}
                 {...props}
-                className="p-input"
+                className="p-form--field"
             />
         </span>
     );
