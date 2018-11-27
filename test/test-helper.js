@@ -12,6 +12,7 @@ const expressApp = express();
 const api = require('../api');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
+const User = require('../app/models/user');
 const File = require('../app/models/file');
 
 /**
@@ -126,5 +127,6 @@ module.exports = {
      */
     Project,
     Design,
-    File
+    File,
+    User
 };
