@@ -15,6 +15,44 @@ const Design = require('../app/models/design');
 const File = require('../app/models/file');
 
 /**
+ * Jest custom matchers
+ *
+ */
+
+expect.extend({
+    toHaveStatus(receivedResponse, expected) {
+        const received = receivedResponse.statusCode;
+        const body = JSON.stringify(receivedResponse.body);
+        if (received === expected) {
+            return {
+                pass: true,
+                message: () => `expect(${received}).not.toRespondWithStatus(${expected})\nbody: ${body}`
+            };
+        } else {
+            return {
+                pass: false,
+                message: () => `expect(${received}).toRespondWithStatus(${expected})\nbody: ${body}`
+            };
+        }
+    },
+    toHaveError(receivedResponse, expectedStatus, expectedError) {
+        const receivedStatus = receivedResponse.statusCode;
+        const receivedError = receivedResponse.body.error;
+        if (receivedStatus === expectedStatus && receivedError === expectedError) {
+            return {
+                pass: true,
+                message: () => `expect(${receivedStatus}, ${receivedError}).not.toRespondWithStatus(${expectedStatus}, ${expectedError})`
+            };
+        } else {
+            return {
+                pass: false,
+                message: () => `expect(${receivedStatus}, ${receivedError}).toRespondWithStatus(${expectedStatus}, ${expectedError})`
+            };
+        }
+    }
+});
+
+/**
  * API server setup
  *
  */
