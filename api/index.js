@@ -7,6 +7,7 @@ const Design = require('../app/models/design');
 const app = require('../app');
 const payload = require('./payload');
 const config = require('../config');
+const auth = require('../services/auth');
 
 const router = express.Router();
 const asyncRoute = (fn) => {
@@ -14,6 +15,11 @@ const asyncRoute = (fn) => {
         Promise.resolve(fn(req, res, next)).catch(next);
     };
 };
+
+/**
+ * Project resources
+ *
+ */
 
 router.get('/projects', asyncRoute(async (req, res) => {
     const projects = await Project.find({ parent: null }).lean();
@@ -45,6 +51,11 @@ router.patch('/projects/:id', asyncRoute(async (req, res) => {
     const project = await app.renameProject(req.params.id, req.body.name);
     res.json({ data: project });
 }));
+
+/**
+ * Design resources
+ *
+ */
 
 router.get('/design', asyncRoute(async (req, res) => {
     const design = await Design.findOne({ _id: req.query.id });
@@ -139,5 +150,25 @@ router.post('/designs', asyncRoute(async (req, res) => {
     const design = await app.createDesign(req.body);
     res.json({ data: design });
 }));
+
+/**
+ * Authentication
+ *
+ */
+
+router.post('/login',
+    auth.localMiddleware,
+    asyncRoute(async (req, res) => {
+        const user = { _id: 'dummy user id' };
+        const token = auth.issueToken(user);
+        res.cookie('token', token, { secure: config.secureCookie, httpOnly: true });
+        res.json({ message: 'Authenticated successfully' });
+    })
+);
+
+/**
+ * Expose
+ *
+ */
 
 module.exports = router;
