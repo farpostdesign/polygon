@@ -70,6 +70,16 @@ const actions = {
                 'Accept': 'application/json'
             }
         }).then((res) => res.json());
+    },
+
+    login(action) {
+        return fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(action.credentials)
+        }).then((res) => res.json());
     }
 };
 
