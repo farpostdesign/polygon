@@ -49,6 +49,29 @@ expect.extend({
                 message: () => `expect(${receivedStatus}, ${receivedError}).toRespondWithStatus(${expectedStatus}, ${expectedError})`
             };
         }
+    },
+    toSetCookie(receivedResponse, expectedCookie, expectedValue, options = {}) {
+        const receivedSetCookie = receivedResponse.headers['set-cookie'];
+
+        let expectToMatch = expectedValue ? `${expectedCookie}=${expectedValue}` : expectedCookie;
+        if (options.httOnly) {
+            expectToMatch = `${expectToMatch}; HttpOnly`;
+        }
+        if (options.secure) {
+            expectToMatch = `${expectToMatch}; secure`;
+        }
+        const expectedSetCookie = new RegExp(expectToMatch);
+        if (expectedSetCookie.test(receivedSetCookie)) {
+            return {
+                pass: true,
+                message: () => `expected headers set-cookie: ${receivedSetCookie}\n to not match ${expectToMatch}`
+            };
+        } else {
+            return {
+                pass: false,
+                message: () => `expected headers set-cookie: ${receivedSetCookie}\n to match ${expectToMatch}`
+            };
+        }
     }
 });
 
