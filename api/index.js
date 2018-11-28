@@ -8,7 +8,6 @@ const app = require('../app');
 const payload = require('./payload');
 const asyncRoute = require('./async-route');
 const config = require('../config');
-const auth = require('../services/auth');
 
 const router = express.Router();
 
@@ -146,21 +145,6 @@ router.post('/designs', asyncRoute(async (req, res) => {
     const design = await app.createDesign(req.body);
     res.json({ data: design });
 }));
-
-/**
- * Authentication
- *
- */
-
-router.post('/login',
-    auth.localMiddleware,
-    asyncRoute(async (req, res) => {
-        const user = { _id: 'dummy user id' };
-        const token = auth.issueToken(user);
-        res.cookie('token', token, { secure: config.secureCookie, httpOnly: true });
-        res.json({ message: 'Authenticated successfully' });
-    })
-);
 
 /**
  * Expose
