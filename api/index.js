@@ -6,15 +6,11 @@ const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const app = require('../app');
 const payload = require('./payload');
+const asyncRoute = require('./async-route');
 const config = require('../config');
 const auth = require('../services/auth');
 
 const router = express.Router();
-const asyncRoute = (fn) => {
-    return (req, res, next) => {
-        Promise.resolve(fn(req, res, next)).catch(next);
-    };
-};
 
 /**
  * Project resources
