@@ -8,8 +8,8 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const testServer = require('supertest');
 const express = require('express');
-const expressApp = express();
 const api = require('../api');
+const apiToken = require('../api/token');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const User = require('../app/models/user');
@@ -81,7 +81,10 @@ expect.extend({
  *
  */
 
+const expressApp = express();
 expressApp.use(express.json());
+expressApp.use('/api', api);
+expressApp.use('/api', apiToken);
 
 /**
  * DB setup
@@ -120,7 +123,7 @@ module.exports = {
      *  for detailed information please refer
      *  to the documentation of supertest module
      */
-    api: testServer(expressApp.use('/api', api)),
+    api: testServer(expressApp),
 
     /**
      * Expose models for tests

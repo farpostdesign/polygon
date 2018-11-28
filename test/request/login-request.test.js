@@ -1,13 +1,13 @@
 const { api, User } = require('test-helper');
 
-describe('POST /api/login', () => {
+describe('POST /api/token', () => {
     it('respond with status 200 on successful authentication', async () => {
         await User.create({ email: 'user@example.com', password: '12345678' });
         const payload = {
             email: 'user@example.com',
             password: '12345678'
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).toHaveStatus(200);
     });
 
@@ -17,7 +17,7 @@ describe('POST /api/login', () => {
             email: 'user@example.com',
             password: '12345678'
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).toSetCookie('token');
     });
 
@@ -26,7 +26,7 @@ describe('POST /api/login', () => {
             email: '',
             password: ''
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).toHaveStatus(400);
     });
 
@@ -35,7 +35,7 @@ describe('POST /api/login', () => {
             email: '',
             password: ''
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).not.toSetCookie('token');
     });
 
@@ -45,7 +45,7 @@ describe('POST /api/login', () => {
             email: 'user@example.com',
             password: 'other pass'
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).toHaveStatus(401);
     });
 
@@ -55,7 +55,7 @@ describe('POST /api/login', () => {
             email: 'user@example.com',
             password: 'other pass'
         };
-        const res = await api.post('/api/login').send(payload);
+        const res = await api.post('/api/token').send(payload);
         expect(res).not.toSetCookie('token');
     });
 });
