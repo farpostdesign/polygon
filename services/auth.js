@@ -54,12 +54,12 @@ const jwtMiddleware = passport.authenticate('jwt', { session: false });
  */
 
 function issueToken(user) {
-    const claims = {
-        id: user._id.toString(),
+    const payload = { userId: user._id.toString() };
+    const opts = {
         issuer: JWT_ISSUER,
         audience: JWT_AUDIENCE
     };
-    return jwt.sign(claims, config.secret);
+    return jwt.sign(payload, config.secret, opts);
 }
 
 /**
