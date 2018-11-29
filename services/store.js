@@ -117,15 +117,21 @@ function getState(ctx) {
         return res.json();
     }
 
+    const reqOpts = {};
+    if (ctx.req) {
+        // proxy headers when doing server side rendering
+        // from original request to the server
+        reqOpts.headers = ctx.req.headers;
+    }
+
     return {
-        get projects() {
-            const opts = {};
-            if (ctx.req) {
-                // proxy headers when doing server side rendering
-                // from original request to the server
-                opts.headers = ctx.req.headers;
-            }
-            return fetch(withHostURL('/api/projects'), opts)
+        projects() {
+            return fetch(withHostURL('/api/projects'), reqOpts)
+                .then(handleUnauthorized)
+                .then(handleJSON);
+        },
+        project() {
+            return fetch(withHostURL(`/api/project?id=${ctx.query.id}`), reqOpts)
                 .then(handleUnauthorized)
                 .then(handleJSON);
         }

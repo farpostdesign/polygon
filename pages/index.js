@@ -34,7 +34,7 @@ const Index = ({ projects }) => (
 );
 
 Index.getInitialProps = async (context) => {
-    const projects = await store.getState(context).projects;
+    const projects = await store.getState(context).projects();
     return { projects };
 };
 

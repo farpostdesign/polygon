@@ -17,9 +17,9 @@ import 'isomorphic-unfetch';
  */
 
 class Projects extends React.Component {
-    static async getInitialProps({ query }) {
-        const res = await fetch(`http://localhost:3000/api/project?id=${query.id}`);
-        const { project, subProjects, breadcrumbs, designs } = await res.json();
+    static async getInitialProps(context) {
+        // const res = await fetch(`http://localhost:3000/api/project?id=${query.id}`);
+        const { project, subProjects, breadcrumbs, designs } = await store.getState(context).project();
         return { project, subProjects, breadcrumbs, designs };
     }
 
