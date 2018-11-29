@@ -127,9 +127,8 @@ class Design extends Component {
     }
 }
 
-Design.getInitialProps = async ({ query }) => {
-    const res = await fetch(`http://localhost:3000/api/design?id=${query.id}`);
-    const { design, breadcrumbs, files } = await res.json();
+Design.getInitialProps = async (context) => {
+    const { design, breadcrumbs, files } = await store.getState(context).design(context.query.id);
     return { design, breadcrumbs , images: files };
 };
 

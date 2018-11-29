@@ -130,8 +130,15 @@ function getState(ctx) {
                 .then(handleUnauthorized)
                 .then(handleJSON);
         },
-        project() {
-            return fetch(withHostURL(`/api/project?id=${ctx.query.id}`), reqOpts)
+
+        project(id) {
+            return fetch(withHostURL(`/api/project?id=${id}`), reqOpts)
+                .then(handleUnauthorized)
+                .then(handleJSON);
+        },
+
+        design(id) {
+            return fetch(withHostURL(`/api/design?id=${id}`), reqOpts)
                 .then(handleUnauthorized)
                 .then(handleJSON);
         }
