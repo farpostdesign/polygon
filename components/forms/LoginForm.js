@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
                 <div className="p-form--group">
                     <FormField type="password" name="password" label="Password" onChange={this.handleFieldCange} />
                 </div>
-                <button type='submit' className="p-button" onClick={this.handleSubmit}>Login</button>
+                <button type='submit' className="p-button" onClick={this.handleSubmit}>Log in</button>
             </div>
         );
     }
