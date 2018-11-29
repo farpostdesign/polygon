@@ -30,7 +30,7 @@ const localMiddleware = passport.authenticate('local', {
  */
 
 function extractJwtFromCookies(req) {
-    if (req && req.cookes) {
+    if (req && req.cookies) {
         return req.cookies['token'];
     }
     return null;
