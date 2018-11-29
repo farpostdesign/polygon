@@ -8,12 +8,28 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const testServer = require('supertest');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const api = require('../api');
 const apiToken = require('../api/token');
+const auth = require('../services/auth');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const User = require('../app/models/user');
 const File = require('../app/models/file');
+
+/**
+ * Superagent test plugins
+ *
+ */
+
+function superagentAuthenticateWith(user) {
+    return async (req) => {
+        const currentCookie = req.header['Cookie'];
+        const token = await auth.issueToken(user);
+        const cookieString = [currentCookie, `token=${token}`].join('; ');
+        req.set('Cookie', cookieString);
+    };
+}
 
 /**
  * Jest custom matchers
@@ -82,9 +98,11 @@ expect.extend({
  */
 
 const expressApp = express();
+expressApp.use(cookieParser());
 expressApp.use(express.json());
 expressApp.use('/api', api);
 expressApp.use('/api', apiToken);
+expressApp.use('/api/with-auth', auth.jwtMiddleware, api);
 
 /**
  * DB setup
@@ -124,6 +142,12 @@ module.exports = {
      *  to the documentation of supertest module
      */
     api: testServer(expressApp),
+
+    /**
+     * Authentication test helpers
+     *
+     */
+    authWith: superagentAuthenticateWith,
 
     /**
      * Expose models for tests

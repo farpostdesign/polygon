@@ -13,8 +13,7 @@ const router = express.Router();
 router.post('/token',
     auth.localMiddleware,
     asyncRoute(async (req, res) => {
-        const user = { _id: 'dummy user id' };
-        const token = auth.issueToken(user);
+        const token = auth.issueToken(req.user);
         res.cookie('token', token, { secure: config.secureCookie, httpOnly: true });
         res.json({ message: 'Authenticated successfully' });
     })

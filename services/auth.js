@@ -41,9 +41,13 @@ passport.use(new JwtStrategy({
     issuer: JWT_ISSUER,
     audience: JWT_AUDIENCE,
     secretOrKey: config.secret
-}, (jwtPayload, done) => {
-    const user = { id: 'dummy user id', email: 'dummyuser@example.com' };
-    done(null, user);
+}, (jwtPayload, callback) => {
+    User.findById(jwtPayload.userId).then((user) => {
+        if (!user) {
+            return callback(null, false);
+        }
+        return callback(null, user);
+    }).catch(callback);
 }));
 
 const jwtMiddleware = passport.authenticate('jwt', { session: false });

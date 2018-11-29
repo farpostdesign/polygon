@@ -1,9 +1,12 @@
 const fs = require('fs');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const next = require('next');
 const api = require('./api');
-const serverDebug = require('debug')('polygon:server');
+const apiToken = require('./api/token');
 const config = require('./config');
+const serverDebug = require('debug')('polygon:server');
+const auth = require('./services/auth');
 require('./services/db');
 
 const server = express();
@@ -24,10 +27,14 @@ if (config.production) {
 }
 
 app.prepare().then(() => {
+    server.use(cookieParser());
     server.use(express.json());
     server.use(express.static('public'));
+
     // API
-    server.use('/api', api);
+    server.use('/api', apiToken);
+    server.use('/api', auth.jwtMiddleware, api);
+
     // API Error handler
     server.use((err, _req, res, _next) => {
         const payload = {
@@ -39,6 +46,7 @@ app.prepare().then(() => {
         res.status(err.statusCode || 500);
         res.json(payload);
     });
+
     // Next app
     server.get('*', frontEndRequestHandler);
     server.listen(config.serverListenTo, (err) => {
