@@ -33,9 +33,8 @@ const Index = ({ projects }) => (
     </Layout>
 );
 
-Index.getInitialProps = async () => {
-    const res = await fetch('http://localhost:3000/api/projects');
-    const projects = await res.json();
+Index.getInitialProps = async (context) => {
+    const projects = await store.getState(context).projects;
     return { projects };
 };
 

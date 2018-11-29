@@ -1,9 +1,15 @@
-const { Project, api } = require('test-helper');
+const { Project, User, api, authWith } = require('test-helper');
 
 describe('GET /api/projects', () => {
-    it('respond 200', async () => {
-        const res = await api.get('/api/projects');
-        expect(res.statusCode).toBe(200);
+    it('responds 401 when unauthenticated', async () => {
+        const res = await api.get('/api/with-auth/projects');
+        expect(res).toHaveStatus(401);
+    });
+
+    it('responds 200 when unauthenticated', async () => {
+        const user = await User.create({ email: 'user@example.com', password: '12345678' });
+        const res = await api.get('/api/with-auth/projects').use(authWith(user));
+        expect(res).toHaveStatus(200);
     });
 });
 

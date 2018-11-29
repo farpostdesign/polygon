@@ -1,3 +1,11 @@
+import Router from 'next/router';
+import config from '../config';
+
+/**
+ * Actions, perform only on client side
+ *
+ */
+
 const actions = {
     addProject(action) {
         return fetch('/api/projects', {
@@ -83,6 +91,47 @@ const actions = {
     }
 };
 
+function withHostURL(path) {
+    return `http://${config.host}${path}`;
+}
+
+/**
+ * Get resources
+ *
+ * @param {Object} ctx - next js context, may be client side or server side
+ *
+ */
+function getState(ctx) {
+    function handleUnauthorized(res) {
+        if (res.status === 401) {
+            if (ctx.res) {
+                return ctx.res.redirect('/login');
+            } else {
+                return Router.push('/login');
+            }
+        }
+        return res;
+    }
+
+    function handleJSON(res) {
+        return res.json();
+    }
+
+    return {
+        get projects() {
+            const opts = {};
+            if (ctx.req) {
+                // proxy headers when doing server side rendering
+                // from original request to the server
+                opts.headers = ctx.req.headers;
+            }
+            return fetch(withHostURL('/api/projects'), opts)
+                .then(handleUnauthorized)
+                .then(handleJSON);
+        }
+    };
+}
+
 class StoreError extends Error {
     constructor(msg) {
         super(msg);
@@ -101,7 +150,8 @@ const store = {
             throw new StoreError(`There is no such action as \`${action.type}\``);
         }
         return actionFn(action);
-    }
+    },
+    getState
 };
 
-module.exports = store;
+export default store;
