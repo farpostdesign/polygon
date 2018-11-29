@@ -35,6 +35,7 @@
   },
   "scripts": {
     "test": "NODE_PATH=./test jest",
+    "testi": "NODE_PATH=./test node --inspect-brk node_modules/.bin/jest --runInBand",
     "dev": "DEBUG=polygon:* nodemon server.js",
     "debug": "DEBUG=* nodemon server.js",
     "build": "next build",
