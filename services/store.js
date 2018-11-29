@@ -73,7 +73,7 @@ const actions = {
     },
 
     login(action) {
-        return fetch('/api/login', {
+        return fetch('/api/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
