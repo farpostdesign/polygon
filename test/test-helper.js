@@ -17,6 +17,7 @@ const Design = require('../app/models/design');
 const User = require('../app/models/user');
 const Viewer = require('../app/models/viewer');
 const File = require('../app/models/file');
+const transacMessage = require('../services/transac-message');
 
 /**
  * Superagent test plugins
@@ -94,6 +95,26 @@ expect.extend({
 });
 
 /**
+ * TransacMessage setup
+ *
+ */
+
+const sendedMessages = [];
+function transacMessageTestMiddleware(recipient, message) {
+    sendedMessages.push({
+        recipient,
+        message
+    });
+}
+
+transacMessage.use(transacMessageTestMiddleware);
+
+beforeEach(() => {
+    transacMessage.resetToDefault();
+    sendedMessages.splice(0, sendedMessages.length);
+});
+
+/**
  * API server setup
  *
  */
@@ -143,6 +164,12 @@ module.exports = {
      *  to the documentation of supertest module
      */
     api: testServer(expressApp),
+
+    /**
+     * Expose getter that returns sended transactional messages
+     *
+     */
+    sendedMessages,
 
     /**
      * Authentication test helpers

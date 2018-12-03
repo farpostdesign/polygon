@@ -3,5 +3,6 @@ module.exports = {
     mongooseConnection: 'mongodb://localhost:27017/polygon',
     secret: 'devsecret',
     secureCookie: false,
-    host: 'localhost:3000'
+    host: 'localhost:3000',
+    defaultMessagingProvider: 'sendGrid'
 };
