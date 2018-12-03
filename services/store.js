@@ -97,6 +97,16 @@ const actions = {
                 'Content-Type': 'application/json'
             }
         }).then((res) => res.json());
+    },
+
+    sendmagiclink(action) {
+        return fetch('/api/send-magic-link', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(action.userdata)
+        }).then((res) => res.json());
     }
 };
 
@@ -114,9 +124,9 @@ function getState(ctx) {
     function handleUnauthorized(res) {
         if (res.status === 401) {
             if (ctx.res) {
-                return ctx.res.redirect('/login');
+                return ctx.res.redirect('/viewer/login');
             } else {
-                return Router.push('/login');
+                return Router.push('/viewer/login');
             }
         }
         return res;
