@@ -2,37 +2,40 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const { Schema } = mongoose;
+const BASE_SCHEMA_OPTIONS = {
+    timestamps: true
+};
 
 /**
  * Project Schema
  *
  */
 
-module.exports.ProjectSchema = new Schema({
+const ProjectSchema = new Schema({
     name: { type: String, required: true },
     parent: { type: Schema.ObjectId, ref: 'Project' }
-}, { timestamps: true });
+}, BASE_SCHEMA_OPTIONS);
 
 /**
  * Design Schema
  *
  */
 
-module.exports.DesignSchema = new Schema({
+const DesignSchema = new Schema({
     name: { type: String, required: true },
     project: { type: Schema.ObjectId, ref: 'Project', required: true }
-}, { timestamps: true });
+}, BASE_SCHEMA_OPTIONS);
 
 /**
  * File Schema
  *
  */
 
-module.exports.FileSchema = new Schema({
+const FileSchema = new Schema({
     filename: { type: String, required: true },
     position: { type: Number, required: true, min: 0 },
     design: { type: Schema.ObjectId, ref: 'Design', required: true }
-}, { timestamps: true });
+}, BASE_SCHEMA_OPTIONS);
 
 /**
  * User Schema
@@ -45,7 +48,7 @@ const UserSchema = new Schema({
     salt: { type: String, required: true },
     // hashed password with salt
     hash: { type: String, required: true }
-}, { timestamps: true });
+}, BASE_SCHEMA_OPTIONS);
 
 UserSchema.virtual('password').set(function setUserSchemaPassword(val) {
     this.__passwordToHash = val;
@@ -62,8 +65,6 @@ UserSchema.pre('save', function beforeUserSchemaSave(next) {
     });
 });
 
-module.exports.UserSchema = UserSchema;
-
 /**
  * Viewer Schema
  *
@@ -73,11 +74,17 @@ const ViewerSchema = new Schema({
     email: { type: String, required: true, unique: true },
     loginToken: { type: String },
     viewToken: { type: String }
-}, { timestamps: true });
+}, BASE_SCHEMA_OPTIONS);
 
 UserSchema.plugin(passportLocalMongoose, {
     usernameField: 'email',
     usernameLowerCase: true
 });
 
-module.exports.ViewerSchema = ViewerSchema;
+module.exports = {
+    ProjectSchema,
+    DesignSchema,
+    FileSchema,
+    UserSchema,
+    ViewerSchema
+};
