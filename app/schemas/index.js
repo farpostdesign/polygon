@@ -62,10 +62,22 @@ UserSchema.pre('save', function beforeUserSchemaSave(next) {
     });
 });
 
+module.exports.UserSchema = UserSchema;
+
+/**
+ * Viewer Schema
+ *
+ */
+
+const ViewerSchema = new Schema({
+    email: { type: String, required: true, unique: true },
+    loginToken: { type: String },
+    viewToken: { type: String }
+}, { timestamps: true });
 
 UserSchema.plugin(passportLocalMongoose, {
     usernameField: 'email',
     usernameLowerCase: true
 });
 
-module.exports.UserSchema = UserSchema;
+module.exports.ViewerSchema = ViewerSchema;

@@ -15,6 +15,7 @@ const auth = require('../services/auth');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
 const User = require('../app/models/user');
+const Viewer = require('../app/models/viewer');
 const File = require('../app/models/file');
 
 /**
@@ -155,5 +156,6 @@ module.exports = {
     Project,
     Design,
     File,
-    User
+    User,
+    Viewer
 };
