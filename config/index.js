@@ -23,6 +23,8 @@ if (!config) {
 
 config.publicDir = 'public';
 config.uploadsDir = 'uploads';
+config.sendGridAPIKey = process.env.SENDGRID_API_KEY;
+config.mailFrom = 'no-reply@polygon.farpost.com';
 
 /**
  * Environment booleans

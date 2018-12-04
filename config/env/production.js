@@ -13,5 +13,5 @@ module.exports = {
     secret,
     secureCookie: true,
     host: 'localhost:3000',
-    defaultMessagingProvider: 'sendGrind'
+    defaultMessagingProvider: 'SendGrind'
 };

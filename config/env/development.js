@@ -4,5 +4,5 @@ module.exports = {
     secret: 'devsecret',
     secureCookie: false,
     host: 'localhost:3000',
-    defaultMessagingProvider: 'sendGrid'
+    defaultMessagingProvider: 'SendGrid'
 };

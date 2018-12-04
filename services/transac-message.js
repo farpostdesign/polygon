@@ -12,7 +12,12 @@
  *
  */
 
+const sendGridMailer = require('@sendgrid/mail');
 const config = require('../config');
+
+sendGridMailer.setApiKey(config.sendGridAPIKey);
+
+const MAIL_FROM = config.mailFrom;
 
 class Register {
     constructor() {
@@ -43,12 +48,59 @@ function testProvider() {
     // do nothing
 }
 
+function sendGridProvider(recipient, message) {
+    const mail = {
+        to: recipient,
+        from: MAIL_FROM,
+        subject: message.subject,
+        text: message.text,
+        html: message.html
+    };
+    return sendGridMailer.send(mail);
+}
+
 /**
  * Message list
  *
  */
 
 const messagesList = new Register();
+
+function testMessage(tvars) {
+    return new Message({
+        subject: 'This is test message',
+        textFn: messageTextTemplate,
+        htmlFn: messageHTMLTemplate,
+        ...tvars
+    });
+}
+
+class Message {
+    constructor(opts) {
+        this.subject = opts.subject;
+        this.textFn = opts.textFn;
+        this.htmlFn = opts.htmlFn;
+        this.tvars = opts;
+    }
+
+    get text() {
+        return this.textFn(this.tvars);
+    }
+
+    get html() {
+        return this.htmlFn(this.tvars);
+    }
+}
+
+function messageTextTemplate(tvars) {
+    return `Hello, ${tvars.name}!
+
+        this is Polygon app reaching you.`;
+}
+
+function messageHTMLTemplate(tvars) {
+    return `<h1>Hello, ${tvars.name}!</h1><p>This is Polygon app reaching you.</p>`;
+}
 
 /**
  * Middlewares
@@ -67,6 +119,9 @@ function registerMiddleware(fn) {
  */
 function messageFactory(messageName, options) {
     const msg = messagesList.get(messageName);
+    if (!msg) {
+        throw new Error(`Message \`${messageName}\` not found`);
+    }
     return new msg(options);
 }
 
@@ -87,11 +142,11 @@ function send(args) {
         throw new TypeError('Missing argument `message`');
     }
 
-    const message = messageFactory(messageName);
+    const message = messageFactory(messageName, args);
     middlewares.forEach((mid) => mid(recipient, message));
 
     const provider = providersList.get(recipient.preferedMessageProvider) || providersList.default;
-    return provider(recipient, message);
+    return provider(recipient.email, message);
 }
 
 /**
@@ -101,12 +156,15 @@ function send(args) {
 
 function init() {
     providersList.register('testProvider', testProvider);
+    providersList.register('SendGrid', sendGridProvider);
 
     const defaultProvider = providersList.get(config.defaultMessagingProvider);
     if (!defaultProvider) {
         throw new Error(`Provider \`${config.defaultMessagingProvider}\` not found`);
     }
     providersList.default = defaultProvider;
+
+    messagesList.register('testMessage', testMessage);
 }
 
 function resetToDefault() {
