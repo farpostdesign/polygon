@@ -26,12 +26,13 @@ describe('Transactional Message module', () => {
                 return someMessageMockInstance;
             });
             const recipientMock = {
+                email: 'user@test.com',
                 preferedMessageProvider: 'testProvider'
             };
             messagesList.register('testMessage', someMessageMock);
             providersList.register('testProvider', testProvider);
             send({ to: recipientMock, message: 'testMessage' });
-            expect(testProvider).toBeCalledWith(recipientMock, someMessageMockInstance);
+            expect(testProvider).toBeCalledWith(recipientMock.email, someMessageMockInstance);
         });
 
         it('sending message', () => {
@@ -53,12 +54,13 @@ describe('Transactional Message module', () => {
                 return someMessageMockInstance;
             });
             const recipientMock = {
+                email: 'user@test.com',
                 preferedMessageProvider: null
             };
             messagesList.register('testMessage', someMessageMock);
             providersList.default = jest.fn();
             send({ to: recipientMock, message: 'testMessage' });
-            expect(providersList.default).toBeCalledWith(recipientMock, someMessageMockInstance);
+            expect(providersList.default).toBeCalledWith(recipientMock.email, someMessageMockInstance);
         });
     });
 });

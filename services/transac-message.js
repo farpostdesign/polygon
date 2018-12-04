@@ -15,7 +15,7 @@
 const config = require('../config');
 
 class Register {
-    construcor() {
+    constructor() {
         this.list = {};
     }
 
@@ -114,6 +114,8 @@ function resetToDefault() {
     messagesList.reset();
     init();
 }
+
+init();
 
 /**
  * Expose
