@@ -25,6 +25,7 @@ config.publicDir = 'public';
 config.uploadsDir = 'uploads';
 config.sendGridAPIKey = process.env.SENDGRID_API_KEY;
 config.mailFrom = 'no-reply@polygon.farpost.com';
+config.mattermostURL = process.env.MATTERMOST_URL;
 
 /**
  * Environment booleans

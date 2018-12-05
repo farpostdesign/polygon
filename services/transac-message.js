@@ -14,6 +14,7 @@
 
 const sendGridMailer = require('@sendgrid/mail');
 const config = require('../config');
+require('isomorphic-unfetch');
 
 sendGridMailer.setApiKey(config.sendGridAPIKey);
 
@@ -59,6 +60,25 @@ function sendGridProvider(recipient, message) {
     return sendGridMailer.send(mail);
 }
 
+function matterMostProvider(recipient, message) {
+    const { text } = message;
+    if (!text) {
+        throw new Error('Message has no text');
+    }
+    const username = 'polygon.farpost.com';
+    if (!recipient) {
+        throw new Error('Recipient has no username');
+    }
+    return fetch(config.mattermostURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text, username, channel: recipient })
+    });
+}
+
+
 /**
  * Message list
  *
@@ -95,7 +115,7 @@ class Message {
 function messageTextTemplate(tvars) {
     return `Hello, ${tvars.name}!
 
-        this is Polygon app reaching you.`;
+this is Polygon app reaching you.`;
 }
 
 function messageHTMLTemplate(tvars) {
@@ -157,6 +177,7 @@ function send(args) {
 function init() {
     providersList.register('testProvider', testProvider);
     providersList.register('SendGrid', sendGridProvider);
+    providersList.register('MatterMost', matterMostProvider);
 
     const defaultProvider = providersList.get(config.defaultMessagingProvider);
     if (!defaultProvider) {
