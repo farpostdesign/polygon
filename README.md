@@ -7,6 +7,7 @@ This project is still in development.
 ## NPM Scripts
 
 `npm run createuser shvetsovdm@farpost.com mypassword` – create a user in database with email and password
+`npm run sendmessage shvetsovdm@farpost.com [<provider>]` – send a transactional test massage to user with email/username and optional provider, default provider SendGrid
 
 ## Author
 

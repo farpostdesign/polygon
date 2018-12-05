@@ -9,11 +9,11 @@ const debug = require('debug')('polygon:sendtransacmessage');
 
 const DEFAULT_PROVIDER = 'SendGrid';
 
-const email = process.argv[3];
+const channel = process.argv[3];
 const preferedMessageProvider = process.argv[4] || DEFAULT_PROVIDER;
 
-if (!email) {
-    debug('Pass an email argument as the first argument to this script');
+if (!channel) {
+    debug('Pass a channel as the first argument to this script');
     process.exit(1);
 }
 
@@ -26,8 +26,8 @@ const handler = (docOrErr) => {
 };
 
 const recipient = {
-    email,
+    email: channel,
     preferedMessageProvider
 };
 
-send({ to: recipient, message: 'testMessage', name: email }).then(handler).catch(handler);
+send({ to: recipient, message: 'testMessage', name: 'Dear friend' }).then(handler).catch(handler);
