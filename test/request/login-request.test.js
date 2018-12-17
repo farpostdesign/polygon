@@ -2,7 +2,7 @@ const { api, User } = require('test-helper');
 
 describe('POST /api/token', () => {
     it('respond with status 200 on successful authentication', async () => {
-        await User.create({ email: 'user@example.com', password: '12345678' });
+        await User.create({ email: 'user@example.com', password: '12345678', messagingProvider: 'test', messagingAccount: '@user' });
         const payload = {
             email: 'user@example.com',
             password: '12345678'
@@ -12,7 +12,7 @@ describe('POST /api/token', () => {
     });
 
     it('sets token cookie', async () => {
-        await User.create({ email: 'user@example.com', password: '12345678' });
+        await User.create({ email: 'user@example.com', password: '12345678', messagingProvider: 'test', messagingAccount: '@user' });
         const payload = {
             email: 'user@example.com',
             password: '12345678'
@@ -40,7 +40,7 @@ describe('POST /api/token', () => {
     });
 
     it('responds with status 401 if wrong credentials', async () => {
-        await User.create({ email: 'user@example.com', password: 'pass' });
+        await User.create({ email: 'user@example.com', password: 'pass', messagingProvider: 'test', messagingAccount: '@user' });
         const payload = {
             email: 'user@example.com',
             password: 'other pass'
@@ -50,7 +50,7 @@ describe('POST /api/token', () => {
     });
 
     it('does not set a token cookie if wrong credentials', async () => {
-        await User.create({ email: 'user@example.com', password: 'pass' });
+        await User.create({ email: 'user@example.com', password: 'pass', messagingProvider: 'test', messagingAccount: '@user' });
         const payload = {
             email: 'user@example.com',
             password: 'other pass'

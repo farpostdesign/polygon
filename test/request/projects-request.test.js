@@ -7,7 +7,7 @@ describe('GET /api/projects', () => {
     });
 
     it('responds 200 when unauthenticated', async () => {
-        const user = await User.create({ email: 'user@example.com', password: '12345678' });
+        const user = await User.create({ email: 'user@example.com', password: '12345678', messagingProvider: 'test', messagingAccount: '@user' });
         const res = await api.get('/api/with-auth/projects').use(authWith(user));
         expect(res).toHaveStatus(200);
     });

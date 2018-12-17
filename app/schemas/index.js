@@ -47,7 +47,9 @@ const UserSchema = new Schema({
     // password salt
     salt: { type: String, required: true },
     // hashed password with salt
-    hash: { type: String, required: true }
+    hash: { type: String, required: true },
+    messagingProvider: { type: String, default: 'Mattermost' },
+    messagingAccount: { type: String, required: true }
 }, BASE_SCHEMA_OPTIONS);
 
 UserSchema.virtual('password').set(function setUserSchemaPassword(val) {
@@ -73,7 +75,9 @@ UserSchema.pre('save', function beforeUserSchemaSave(next) {
 const ViewerSchema = new Schema({
     email: { type: String, required: true, unique: true },
     loginToken: { type: String },
-    viewToken: { type: String }
+    viewToken: { type: String },
+    messagingProvider: { type: String, required: true },
+    messagingAccount: { type: String, required: true }
 }, BASE_SCHEMA_OPTIONS);
 
 UserSchema.plugin(passportLocalMongoose, {
