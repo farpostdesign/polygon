@@ -12,6 +12,5 @@ module.exports = {
     mongooseConnection: 'mongodb://db::27017/polygon',
     secret,
     secureCookie: true,
-    host: 'localhost:3000',
-    defaultMessagingProvider: 'SendGrind'
+    host: 'localhost:3000'
 };

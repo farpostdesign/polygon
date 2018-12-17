@@ -17,7 +17,7 @@ const Design = require('../app/models/design');
 const User = require('../app/models/user');
 const Viewer = require('../app/models/viewer');
 const File = require('../app/models/file');
-const transacMessage = require('../services/transac-message');
+const { messenger } = require('../services/messaging');
 
 /**
  * Superagent test plugins
@@ -100,17 +100,17 @@ expect.extend({
  */
 
 const sendedMessages = [];
-function transacMessageTestMiddleware(recipient, message) {
+function transacMessagesTestHook(message) {
     sendedMessages.push({
-        recipient,
+        recipient: message.recipient,
         message
     });
 }
 
-transacMessage.use(transacMessageTestMiddleware);
+messenger.registerHook(transacMessagesTestHook);
 
 beforeEach(() => {
-    transacMessage.resetToDefault();
+    messenger.reset();
     sendedMessages.splice(0, sendedMessages.length);
 });
 

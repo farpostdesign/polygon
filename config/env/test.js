@@ -3,6 +3,5 @@ module.exports = {
     mongooseConnection: 'mongodb://localhost:27017/polygon-test',
     secret: 'testsecret',
     secureCookie: false,
-    host: 'polygon-test.localhost',
-    defaultMessagingProvider: 'testProvider'
+    host: 'polygon-test.localhost'
 };
