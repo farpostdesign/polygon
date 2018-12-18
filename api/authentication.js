@@ -48,8 +48,9 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
         throw new Error('User not found');
     }
 
-    const loginLink = await auth.loginLink();
-    viewer.loginLink = loginLink;
+    const loginToken = await auth.issueLoginToken();
+    const loginLink = `${config.protocol}//${config.hostname}:${config.port}/linklogin/${loginToken}`;
+    viewer.loginToken = loginToken;
     await viewer.save();
     await messaging.sendLoginLink(viewer, { loginLink });
     res.json({ message: 'Login link has been sent' });

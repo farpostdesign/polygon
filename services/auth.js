@@ -75,32 +75,18 @@ function issueToken(user) {
 /**
  * Login Token
  *
- * used to aquire view token
- */
-function issueLoginToken(callback) {
-    crypto.randomBytes(config.tokenSize, (err, buf) => {
-        if (err) {
-            throw err;
-        }
-        callback(buf.toString('hex'));
-    });
-}
-
-/**
- * Make a login link
+ * Used to aquire view token
  *
- * @param {String} pathname - URL pathname of login link with leading slash `/`
- * @return {Promise} resolves to login URL string
+ * @return {Promise}
  */
-function loginLink(pathname) {
+function issueLoginToken() {
     return new Promise((resolve, reject) => {
-        try {
-            issueLoginToken((token) => {
-                resolve(`${config.protocol}//${config.hostname}:${config.port}${pathname}/${token}`);
-            });
-        } catch (err) {
-            reject(err);
-        }
+        crypto.randomBytes(config.tokenSize, (err, buf) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(buf.toString('hex'));
+        });
     });
 }
 
@@ -110,8 +96,8 @@ function loginLink(pathname) {
  */
 
 module.exports = {
+    issueLoginToken,
     localMiddleware,
     jwtMiddleware,
-    issueToken,
-    loginLink
+    issueToken
 };
