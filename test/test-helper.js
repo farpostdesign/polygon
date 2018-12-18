@@ -120,6 +120,15 @@ expressApp.use(express.json());
 expressApp.use('/api', api);
 expressApp.use('/api', apiToken);
 expressApp.use('/api/with-auth', auth.jwtMiddleware, api);
+// Error handler
+expressApp.use((err, _req, res, _next) => {
+    const payload = {
+        errors: [err.message]
+    };
+    payload.stack = err.stack;
+    res.status(err.statusCode || 500);
+    res.json(payload);
+});
 
 /**
  * DB setup
