@@ -89,12 +89,14 @@ function issueLoginToken(callback) {
 /**
  * Make a login link
  *
+ * @param {String} pathname - URL pathname of login link with leading slash `/`
+ * @return {Promise} resolves to login URL string
  */
-function loginLink() {
+function loginLink(pathname) {
     return new Promise((resolve, reject) => {
         try {
             issueLoginToken((token) => {
-                resolve(`${config.protocol}//${config.hostname}:${config.port}/what-it-will-be?logintoken=${token}`);
+                resolve(`${config.protocol}//${config.hostname}:${config.port}${pathname}/${token}`);
             });
         } catch (err) {
             reject(err);
