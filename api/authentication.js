@@ -17,7 +17,7 @@ router.post('/token',
     asyncRoute(async (req, res) => {
         const token = auth.issueToken(req.user);
         res.cookie(TOKEN_COOKIE_KEY, token, { secure: config.secureCookie, httpOnly: true });
-        res.json({ message: 'Authenticated successfully' });
+        res.json({ message: 'Successful login' });
     })
 );
 
@@ -29,7 +29,7 @@ router.delete('/token',
     auth.jwtMiddleware,
     asyncRoute(async (req, res) => {
         res.clearCookie(TOKEN_COOKIE_KEY);
-        res.json({ message: 'Token removed successfully' });
+        res.json({ message: 'Successful logout' });
     })
 );
 
