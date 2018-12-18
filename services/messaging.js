@@ -72,7 +72,7 @@ function send(user, messageName, args) {
 
     const provider = messenger[messagingProvider];
     if (!provider) {
-        throw new TypeError(`Provider \`${provider}\` not found`);
+        throw new TypeError(`Provider \`${messagingProvider}\` not found`);
     }
 
     args.recipient = user.messagingAccount;
