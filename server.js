@@ -43,7 +43,7 @@ app.prepare().then(() => {
         if (dev) {
             payload.stack = err.stack;
         }
-        res.status(err.statusCode || 500);
+        res.status(err.statusCode || err.status || 500);
         res.json(payload);
     });
 

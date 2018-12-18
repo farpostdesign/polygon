@@ -126,7 +126,7 @@ expressApp.use((err, _req, res, _next) => {
         errors: [err.message]
     };
     payload.stack = err.stack;
-    res.status(err.statusCode || 500);
+    res.status(err.statusCode || err.status || 500);
     res.json(payload);
 });
 
