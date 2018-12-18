@@ -7,6 +7,7 @@ const config = require('../config');
 
 const router = express.Router();
 const TOKEN_COOKIE_KEY = 'token';
+const VIEWER_TOKEN_COOKIE_KEY = 'viewer-token';
 
 /**
  * Get API token
@@ -55,6 +56,27 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
     await messaging.sendLoginLink(viewer, { loginLink });
     res.json({ message: 'Login link has been sent' });
 }));
+
+/**
+ * Login with magic link
+ *
+ */
+router.get('/loginlink/:loginToken', asyncRoute(async (req, res) => {
+    const { loginToken } = req.params;
+    const viewer = await Viewer.findOne({ loginToken });
+    if (!viewer) {
+        throw new Error('Viewer not found');
+    }
+    viewer.loginToken = null;
+    await viewer.save();
+
+    const viewerToken = await auth.issueToken(viewer);
+    res.cookie(VIEWER_TOKEN_COOKIE_KEY, viewerToken, { secure: config.secureCookie, httpOnly: true });
+
+    const redirectTo = req.query.redirect || '/';
+    res.redirect(redirectTo);
+}));
+
 
 /**
  * Expose
