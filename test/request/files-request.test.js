@@ -6,7 +6,7 @@ describe('DELETE /api/designs/:designId/files/:fileId', () => {
         const design = await Design.create({ name: 'design', project });
         const file = await File.create({ design, filename: '1.png', position: 1 });
         const res = await api.delete(`/api/designs/${design.id}/files/${file.id}`);
-        expect(res.statusCode).toBe(200);
+        expect(res).toHaveStatus(200);
     });
 
     it('deletes file by passed file id', async () => {
