@@ -10,7 +10,7 @@ const testServer = require('supertest');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const api = require('../api');
-const apiToken = require('../api/token');
+const apiAuthentication = require('../api/authentication');
 const auth = require('../services/auth');
 const Project = require('../app/models/project');
 const Design = require('../app/models/design');
@@ -118,7 +118,7 @@ const expressApp = express();
 expressApp.use(cookieParser());
 expressApp.use(express.json());
 expressApp.use('/api', api);
-expressApp.use('/api', apiToken);
+expressApp.use('/api', apiAuthentication);
 expressApp.use('/api/with-auth', auth.jwtMiddleware, api);
 // Error handler
 expressApp.use((err, _req, res, _next) => {

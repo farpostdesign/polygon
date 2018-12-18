@@ -1,0 +1,1 @@
+<%= subject %>. Click <%= loginLink %> to login into Polygon application.

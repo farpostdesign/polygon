@@ -1,16 +1,17 @@
 const express = require('express');
 const asyncRoute = require('./async-route');
 const auth = require('../services/auth');
+const messaging = require('../services/messaging');
+const Viewer = require('../app/models/viewer');
 const config = require('../config');
 
 const router = express.Router();
 const TOKEN_COOKIE_KEY = 'token';
 
 /**
- * Request for API token
+ * Get API token
  *
  */
-
 router.post('/token',
     auth.localMiddleware,
     asyncRoute(async (req, res) => {
@@ -20,6 +21,10 @@ router.post('/token',
     })
 );
 
+/**
+ * Remove API token
+ *
+ */
 router.delete('/token',
     auth.jwtMiddleware,
     asyncRoute(async (req, res) => {
@@ -27,6 +32,28 @@ router.delete('/token',
         res.json({ message: 'Token removed successfully' });
     })
 );
+
+/**
+ * Send login link
+ *
+ */
+router.post('/loginlink', asyncRoute(async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+        throw new Error('No email in request body');
+    }
+
+    const viewer = await Viewer.findOne({ email });
+    if (!viewer) {
+        throw new Error('User not found');
+    }
+
+    const loginLink = await auth.loginLink();
+    viewer.loginLink = loginLink;
+    await viewer.save();
+    await messaging.sendLoginLink(viewer, { loginLink });
+    res.json({ message: 'Login link has been sent' });
+}));
 
 /**
  * Expose

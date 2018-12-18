@@ -3,7 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const next = require('next');
 const api = require('./api');
-const apiToken = require('./api/token');
+const apiAuth = require('./api/authentication');
 const config = require('./config');
 const serverDebug = require('debug')('polygon:server');
 const auth = require('./services/auth');
@@ -32,7 +32,7 @@ app.prepare().then(() => {
     server.use(express.static('public'));
 
     // API
-    server.use('/api', apiToken);
+    server.use('/api', apiAuth);
     server.use('/api', auth.jwtMiddleware, api);
 
     // API Error handler
