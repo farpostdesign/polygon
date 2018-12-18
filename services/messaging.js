@@ -80,7 +80,13 @@ function send(user, messageName, args) {
     return provider(messageName, args).send();
 }
 
+function sendLoginLink(user, args) {
+    args.subject = 'Your login link for polygon.farpost.com';
+    send(user, 'login-link', args);
+}
+
 module.exports = {
+    sendLoginLink,
     send,
     messenger
 };
