@@ -12,5 +12,9 @@ module.exports = {
     mongooseConnection: 'mongodb://db::27017/polygon',
     secret,
     secureCookie: true,
-    host: 'localhost:3000'
+    host: 'polygon.farpost.com',
+    protocol: 'http:',
+    hostname: 'polygon.farpost.com',
+    port: 80,
+    tokenSize: 64
 };

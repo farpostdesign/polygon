@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -57,6 +58,11 @@ const jwtMiddleware = passport.authenticate('jwt', { session: false });
  *
  */
 
+/**
+ * API Tokens
+ *
+ * @return {Promise} token string
+ */
 function issueToken(user) {
     const payload = { userId: user._id.toString() };
     const opts = {
@@ -67,6 +73,36 @@ function issueToken(user) {
 }
 
 /**
+ * Login Token
+ *
+ * used to aquire view token
+ */
+function issueLoginToken(callback) {
+    crypto.randomBytes(config.tokenSize, (err, buf) => {
+        if (err) {
+            throw err;
+        }
+        callback(buf.toString('hex'));
+    });
+}
+
+/**
+ * Make a login link
+ *
+ */
+function loginLink() {
+    return new Promise((resolve, reject) => {
+        try {
+            issueLoginToken((token) => {
+                resolve(`${config.protocol}//${config.hostname}:${config.port}/what-it-will-be?logintoken=${token}`);
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+}
+
+/**
  * Expose
  *
  */
@@ -74,5 +110,6 @@ function issueToken(user) {
 module.exports = {
     localMiddleware,
     jwtMiddleware,
-    issueToken
+    issueToken,
+    loginLink
 };

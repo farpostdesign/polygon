@@ -1,7 +1,13 @@
+const serverListenTo = 3000;
+
 module.exports = {
-    serverListenTo: 3000,
+    serverListenTo,
     mongooseConnection: 'mongodb://localhost:27017/polygon',
     secret: 'devsecret',
     secureCookie: false,
-    host: 'localhost:3000'
+    host: `localhost:${serverListenTo}`,
+    protocol: 'http:',
+    hostname: 'localhost',
+    port: serverListenTo,
+    tokenSize: 64
 };

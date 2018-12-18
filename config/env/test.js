@@ -1,7 +1,13 @@
+const serverListenTo = 3333;
+
 module.exports = {
-    serverListenTo: 3000,
+    serverListenTo,
     mongooseConnection: 'mongodb://localhost:27017/polygon-test',
     secret: 'testsecret',
     secureCookie: false,
-    host: 'polygon-test.localhost'
+    host: `polygon-test.localhost:${serverListenTo}`,
+    protocol: 'https:',
+    hostname: 'polygon-test.localhost',
+    port: serverListenTo,
+    tokenSize: 8
 };
