@@ -45,6 +45,7 @@
     "start": "DEBUG=polygon:* node server.js",
     "lint": "eslint .",
     "createuser": "DEBUG=polygon:* node ./bin/createuser.js",
+    "createviewer": "DEBUG=polygon:* node ./bin/createviewer.js",
     "sendmessage": "DEBUG=polygon:* node --require dotenv/config ./bin/sendtransacmessage.js dotenv_config_path=./.envlist"
   },
   "nodemonConfig": {
