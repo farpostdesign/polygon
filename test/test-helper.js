@@ -100,18 +100,13 @@ expect.extend({
  */
 
 const sendedMessages = [];
-function transacMessagesTestHook(message) {
-    sendedMessages.push({
-        recipient: message.recipient,
-        message
-    });
-}
-
-messenger.registerHook(transacMessagesTestHook);
 
 beforeEach(() => {
     messenger.reset();
     sendedMessages.splice(0, sendedMessages.length);
+    messenger.registerProvider('test', (message) => {
+        sendedMessages.push(message);
+    });
 });
 
 /**
