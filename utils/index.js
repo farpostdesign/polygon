@@ -27,7 +27,24 @@ function optionsForSelect(collection, opts = {}) {
     }));
 }
 
+/**
+ * Pick properties from object
+ *
+ * @param {Object} object - object to pick keys
+ * @param {String[]} props - properties to pick from object
+ * @return {Object} object with picked properties
+ */
+function pickProps(object, ...props) {
+    return props.reduce((res, key) => {
+        if (Object.prototype.hasOwnProperty.call(object, key)) {
+            res[key] = object[key];
+        }
+        return res;
+    }, {});
+}
+
 module.exports = {
     titelize,
-    optionsForSelect
+    optionsForSelect,
+    pickProps
 };
