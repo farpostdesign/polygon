@@ -10,7 +10,7 @@ describe('Authentication requests', () => {
 
         it('sends message with login link', async () => {
             const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
-            const loginLink = /https:\/\/polygon-test.localhost:3333\/linklogin\/[A-Za-z0-9.\-_]+/;
+            const loginLink = /https:\/\/polygon-test.localhost:3333\/api\/loginlink\/[A-Za-z0-9.\-_]+/;
 
             await api.post('/api/loginlink').send({ email: viewer.email });
 
