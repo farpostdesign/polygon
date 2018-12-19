@@ -150,6 +150,12 @@ function getState(ctx) {
                 .then(handleJSON);
         },
 
+        viewers() {
+            return fetch(withHostURL('/api/viewers'), reqOpts)
+                .then(handleUnauthorized)
+                .then(handleJSON);
+        },
+
         project(id) {
             return fetch(withHostURL(`/api/project?id=${id}`), reqOpts)
                 .then(handleUnauthorized)
