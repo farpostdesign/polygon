@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'next/router';
 import FormField from './FormField';
 import store from '../../services/store';
 
@@ -20,7 +19,7 @@ class RequestMagicLinkForm extends React.Component {
                 if (res.errors) {
                     throw res.errors;
                 }
-                Router.push('/');
+                alert(res.message);
             }).catch(alert);
     };
 
