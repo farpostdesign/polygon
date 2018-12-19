@@ -146,6 +146,11 @@ router.post('/designs', asyncRoute(async (req, res) => {
     res.json({ data: design });
 }));
 
+router.get('/viewers', asyncRoute(async (req, res) => {
+    const viewers = await app.viewers();
+    res.json(payload(viewers));
+}));
+
 /**
  * Expose
  *

@@ -2,9 +2,14 @@ const fs = require('fs');
 const Project = require('./models/project');
 const Design = require('./models/design');
 const File = require('./models/file');
+const Viewer = require('./models/viewer');
 const payload = require('../api/payload');
 
 const app = {
+    viewers: () => {
+        return Viewer.find();
+    },
+
     breadcrumbs: async (current) => {
         const currentCrumb = { name: current.name };
         const ascendants = await current.ascendants();
