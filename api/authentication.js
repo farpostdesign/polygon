@@ -54,7 +54,9 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
     viewer.loginToken = loginToken;
     await viewer.save();
     await messaging.sendLoginLink(viewer, { loginLink });
-    res.json({ message: 'Login link has been sent' });
+    res.json({
+        message: `Login link has been sent to ${viewer.messagingProvider} ${viewer.messagingAccount} account`
+    });
 }));
 
 /**
