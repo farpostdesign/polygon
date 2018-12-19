@@ -7,11 +7,21 @@ import Section from '../../components/Section';
 import store from '../../services/store';
 import { optionsForSelect } from '../../utils';
 
-const ProjectEdit = ({ breadcrumbs, viewers }) => (
+const ProjectEdit = ({ project, breadcrumbs, viewers, selectedViewers }) => (
     <Layout>
         <BreadcrumbsNav items={breadcrumbs} />
         <Section>
-            <ViewersEditor options={optionsForSelect(viewers, { valueKey: '_id', labelKey: 'email' })} />
+            <ViewersEditor
+                options={optionsForSelect(viewers, { valueKey: '_id', labelKey: 'email' })}
+                selected={optionsForSelect(selectedViewers, { valueKey: '_id', labelKey: 'email' })}
+                handleSubmit={(selected) => {
+                    store.dispatch({
+                        type: 'updateProject',
+                        id: project._id,
+                        attributes: { viewers: selected } }
+                    ).catch(alert);
+                }}
+            />
         </Section>
     </Layout>
 );
@@ -21,12 +31,18 @@ ProjectEdit.getInitialProps = async (context) => {
     breadcrumbs[breadcrumbs.length - 1].href = `/projects?id=${project._id}`;
     breadcrumbs.push({ name: 'Edit' });
     const viewers = await store.getState(context).viewers();
-    return { breadcrumbs, viewers };
+    let selectedViewers = [];
+    if (project.viewers && project.viewers.length) {
+        selectedViewers = viewers.filter((viewer) => project.viewers.includes(viewer._id));
+    }
+    return { project, breadcrumbs, viewers, selectedViewers };
 };
 
 ProjectEdit.propTypes = {
+    project: PropTypes.object.isRequired,
     breadcrumbs: PropTypes.array.isRequired,
-    viewers: PropTypes.array.isRequired
+    viewers: PropTypes.array.isRequired,
+    selectedViewers: PropTypes.array.isRequired
 };
 
 export default ProjectEdit;
