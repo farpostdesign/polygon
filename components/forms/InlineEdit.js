@@ -56,11 +56,11 @@ class InlineEdit extends Component {
 
     render() {
         return (
-            <div>
+            <div className="p-inline-edit">
                 {
                     this.state.isEditable
                         ? <FormField type="text" name={this.props.name} ref={this.setWrapperRef} onChange={this.handleInputChange} value={this.state.object[this.props.name]} autoFocus/>
-                        :  <span className="p-inline-editable">{this.state.object[this.props.name]}</span>
+                        :  <span className="p-inline-edit--editable">{this.state.object[this.props.name]}</span>
                 }
                 {
                     this.state.isEditable

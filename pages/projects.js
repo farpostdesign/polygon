@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import Link from 'next/link';
 import Layout from '../components/Layout';
 import { InlineCreate } from '../components/forms';
 import List from '../components/List';
@@ -54,6 +55,7 @@ class Projects extends React.Component {
                                         });
                                 }).catch(alert);
                         }} />
+                    <Link href={`/projects/edit?id=${this.state.project._id}`}><button className="p-button">Edit viewers</button></Link>
                 </Section>
                 <Section>
                     <H3>Projects</H3>

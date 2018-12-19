@@ -20,9 +20,6 @@ body, html
 a
   color: #6e6eab
 
-.p-button + .p-button
-  margin-left: 1rem
-
 .p-content
   flex-grow: 1
   max-width: 900px
@@ -90,9 +87,14 @@ a
   color: $colorLink
   padding: .5rem .7rem
   border-radius: $borderRadiusBase
+  text-decoration: none
   +borderBase($colorLink)
   &__minimal
     border: none
+
+.p-button + .p-button,
+.p-inline-edit + .p-button
+  margin-left: 1rem
 
 .p-form
   &--group
@@ -113,12 +115,14 @@ a
     margin-right: 1rem
     +borderBase($colorForms)
 
-.p-inline-editable
-  font-size: 2rem
-  line-height: 2rem
-  height: 2rem
-  vertical-align: middle
-  margin-right: 1rem
+.p-inline-edit
+  display: inline-block
+  &--editable
+    font-size: 2rem
+    line-height: 2rem
+    height: 2rem
+    vertical-align: middle
+    margin-right: 1rem
 
 .p-designs
   display: flex
