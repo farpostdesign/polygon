@@ -47,7 +47,13 @@ const app = {
 
     removeFile: async (fileId) => {
         const removedFile = await File.findOneAndRemove({ _id: fileId });
-        fs.unlinkSync(removedFile.filepath);
+        try {
+            fs.unlinkSync(removedFile.filepath);
+        } catch (err) {
+            if (err.code !== 'ENOENT' || err.path !== removedFile.filepath) {
+                throw err;
+            }
+        }
         return removedFile;
     },
 
