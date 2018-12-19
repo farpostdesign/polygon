@@ -100,7 +100,7 @@ const actions = {
     },
 
     sendmagiclink(action) {
-        return fetch('/api/send-magic-link', {
+        return fetch('/api/loginlink', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
