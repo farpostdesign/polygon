@@ -69,4 +69,31 @@ describe('Auth service', () => {
             expect(decode.exp).toEqual(tokenExp);
         });
     });
+
+    describe('verifyToken', () => {
+        const token = 'fake-token';
+        const returnData = 'fake-data';
+        let jwtVerifySpy;
+
+        beforeAll(() => {
+            jwtVerifySpy = jest.spyOn(jwt, 'verify');
+            jwtVerifySpy.mockImplementation(() => {
+                return returnData;
+            });
+        });
+
+        it('calls jsonwebtoken.verify', async () => {
+            await auth.verifyToken(token);
+            expect(jwtVerifySpy).toBeCalledTimes(1);
+            expect(jwtVerifySpy).toBeCalledWith(token, 'testsecret');
+        });
+
+        it('returs jsonwebtoken.verify result', async () => {
+            expect(await auth.verifyToken(token)).toEqual(returnData);
+        });
+
+        afterAll(() => {
+            jwtVerifySpy.mockRestore();
+        });
+    });
 });

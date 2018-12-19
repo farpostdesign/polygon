@@ -176,6 +176,12 @@ module.exports = {
     sendedMessages,
 
     /**
+     * Expose auth service
+     *
+     */
+    auth,
+
+    /**
      * Authentication test helpers
      *
      */

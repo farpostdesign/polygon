@@ -98,6 +98,10 @@ function issueToken(user, opts = {}) {
     return jwt.sign(payload, config.secret, opts);
 }
 
+function verifyToken(token) {
+    return jwt.verify(token, config.secret);
+}
+
 /**
  * Expose
  *
@@ -106,5 +110,6 @@ function issueToken(user, opts = {}) {
 module.exports = {
     localMiddleware,
     jwtMiddleware,
-    issueToken
+    issueToken,
+    verifyToken
 };
