@@ -50,7 +50,7 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
     }
 
     const loginToken = await auth.issueToken(viewer, { expiresIn: FIVE_MINS });
-    const loginLink = `${config.protocol}//${config.hostname}:${config.port}/linklogin/${loginToken}`;
+    const loginLink = `${config.protocol}//${config.hostname}:${config.port}/api/loginlink/${loginToken}`;
     viewer.loginToken = loginToken;
     await viewer.save();
     await messaging.sendLoginLink(viewer, { loginLink });
