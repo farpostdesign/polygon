@@ -15,6 +15,5 @@ module.exports = {
     host: 'polygon.farpost.com',
     protocol: 'http:',
     hostname: 'polygon.farpost.com',
-    port: 80,
-    tokenSize: 64
+    port: 80
 };

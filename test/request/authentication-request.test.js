@@ -1,4 +1,4 @@
-const { Viewer, sendedMessages, api } = require('test-helper');
+const { Viewer, sendedMessages, auth, api } = require('test-helper');
 
 describe('Authentication requests', () => {
     describe('POST /loginlink', () => {
@@ -10,7 +10,7 @@ describe('Authentication requests', () => {
 
         it('sends message with login link', async () => {
             const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
-            const loginLink = /https:\/\/polygon-test.localhost:3333\/linklogin\/[a-z0-9]{16}/;
+            const loginLink = /https:\/\/polygon-test.localhost:3333\/linklogin\/[A-Za-z0-9.\-_]+/;
 
             await api.post('/api/loginlink').send({ email: viewer.email });
 
@@ -30,36 +30,41 @@ describe('Authentication requests', () => {
 
     describe('GET /loginlink/:token', () => {
         it('responds with status 302', async () => {
-            const loginToken = 'login-token';
-            await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com', loginToken });
+            const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
+            const loginToken = await auth.issueToken(viewer);
+            await Viewer.update({ _id: viewer._id }, { loginToken });
             const res = await api.get(`/api/loginlink/${loginToken}`);
             expect(res).toHaveStatus(302);
         });
 
         it('sets viewer token cookie', async () => {
-            const loginToken = 'login-token';
-            await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com', loginToken });
+            const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
+            const loginToken = await auth.issueToken(viewer);
+            await Viewer.update({ _id: viewer._id }, { loginToken });
             const res = await api.get(`/api/loginlink/${loginToken}`);
-            expect(res).toSetCookie('viewer-token');
+            expect(res).toSetCookie('token');
         });
 
         it('redirects to root page by default', async () => {
-            const loginToken = 'login-token';
-            await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com', loginToken });
+            const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
+            const loginToken = await auth.issueToken(viewer);
+            await Viewer.update({ _id: viewer._id }, { loginToken });
             const res = await api.get(`/api/loginlink/${loginToken}`);
             expect(res.headers.location).toEqual('/');
         });
 
         it('redirects to page from get redirect params', async () => {
-            const loginToken = 'login-token';
-            await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com', loginToken });
+            const viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
+            const loginToken = await auth.issueToken(viewer);
+            await Viewer.update({ _id: viewer._id }, { loginToken });
             const res = await api.get(`/api/loginlink/${loginToken}?redirect=/some/previous-page`);
             expect(res.headers.location).toEqual('/some/previous-page');
         });
 
         it('removes loginToken from logged in viewer', async () => {
-            const loginToken = 'login-token';
-            let viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com', loginToken });
+            let viewer = await Viewer.create({ email: 'viewer@example.com', messagingProvider: 'test', messagingAccount: 'viwer@example.com' });
+            const loginToken = await auth.issueToken(viewer);
+            await Viewer.update({ _id: viewer._id }, { loginToken });
             await api.get(`/api/loginlink/${loginToken}`);
             viewer = await Viewer.findById(viewer._id);
             expect(viewer.loginToken).toEqual(null);

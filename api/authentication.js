@@ -7,7 +7,7 @@ const config = require('../config');
 
 const router = express.Router();
 const TOKEN_COOKIE_KEY = 'token';
-const VIEWER_TOKEN_COOKIE_KEY = 'viewer-token';
+const FIVE_MINS = 60 * 5;
 
 /**
  * Get API token
@@ -49,7 +49,7 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
         throw new Error('User not found');
     }
 
-    const loginToken = await auth.issueLoginToken();
+    const loginToken = await auth.issueToken(viewer, { expiresIn: FIVE_MINS });
     const loginLink = `${config.protocol}//${config.hostname}:${config.port}/linklogin/${loginToken}`;
     viewer.loginToken = loginToken;
     await viewer.save();
@@ -63,6 +63,8 @@ router.post('/loginlink', asyncRoute(async (req, res) => {
  */
 router.get('/loginlink/:loginToken', asyncRoute(async (req, res) => {
     const { loginToken } = req.params;
+    await auth.verifyToken(loginToken);
+
     const viewer = await Viewer.findOne({ loginToken });
     if (!viewer) {
         throw new Error('Viewer not found');
@@ -71,12 +73,11 @@ router.get('/loginlink/:loginToken', asyncRoute(async (req, res) => {
     await viewer.save();
 
     const viewerToken = await auth.issueToken(viewer);
-    res.cookie(VIEWER_TOKEN_COOKIE_KEY, viewerToken, { secure: config.secureCookie, httpOnly: true });
+    res.cookie(TOKEN_COOKIE_KEY, viewerToken, { secure: config.secureCookie, httpOnly: true });
 
     const redirectTo = req.query.redirect || '/';
     res.redirect(redirectTo);
 }));
-
 
 /**
  * Expose

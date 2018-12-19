@@ -1,1 +1,3 @@
 <%= subject %>. Click <%= loginLink %> to login into Polygon application.
+
+This link will expires in 5 minutes.

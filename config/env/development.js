@@ -8,6 +8,5 @@ module.exports = {
     host: `localhost:${serverListenTo}`,
     protocol: 'http:',
     hostname: 'localhost',
-    port: serverListenTo,
-    tokenSize: 64
+    port: serverListenTo
 };
