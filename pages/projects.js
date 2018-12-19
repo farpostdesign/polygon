@@ -40,6 +40,7 @@ class Projects extends React.Component {
                 <Section>
                     <InlineEdit name="name"
                         object={this.state.project}
+                        buttonText="Rename"
                         handleSubmit={(attributes) => {
                             store.dispatch({ type: 'updateProject', attributes, id: this.state.project._id })
                                 .then((res) => {

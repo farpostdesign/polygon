@@ -92,6 +92,7 @@ class Design extends Component {
                 <Section>
                     <InlineEdit name="name"
                         object={this.props.design}
+                        buttonText="Rename"
                         handleSubmit={(attributes) => {
                             store.dispatch({ type: 'updateDesign', attributes, id: this.props.design._id })
                                 .then((res) => {

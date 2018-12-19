@@ -65,7 +65,7 @@ class InlineEdit extends Component {
                 {
                     this.state.isEditable
                         ? <button ref={this.setSaveButtonRef} onClick={this.handleSaveClick} className="p-button">Save</button>
-                        : <button onClick={this.handleEditClick} className="p-button">Edit</button>
+                        : <button onClick={this.handleEditClick} className="p-button">{this.props.buttonText}</button>
                 }
             </div>
         );
@@ -75,7 +75,12 @@ class InlineEdit extends Component {
 InlineEdit.propTypes = {
     object: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    buttonText: PropTypes.string
+};
+
+InlineEdit.defaultProps = {
+    buttonText: 'Edit'
 };
 
 export default InlineEdit;
