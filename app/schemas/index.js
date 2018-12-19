@@ -13,7 +13,8 @@ const BASE_SCHEMA_OPTIONS = {
 
 const ProjectSchema = new Schema({
     name: { type: String, required: true },
-    parent: { type: Schema.ObjectId, ref: 'Project' }
+    parent: { type: Schema.ObjectId, ref: 'Project' },
+    viewers: [{ type: Schema.ObjectId, ref: 'Viewer' }]
 }, BASE_SCHEMA_OPTIONS);
 
 /**

@@ -43,7 +43,7 @@ router.post('/projects', asyncRoute(async (req, res) => {
 }));
 
 router.patch('/projects/:id', asyncRoute(async (req, res) => {
-    const project = await app.renameProject(req.params.id, req.body.name);
+    const project = await app.updateProject(req.params.id, req.body);
     res.json({ data: project });
 }));
 

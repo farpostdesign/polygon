@@ -4,6 +4,7 @@ const Design = require('./models/design');
 const File = require('./models/file');
 const Viewer = require('./models/viewer');
 const payload = require('../api/payload');
+const { pickProps } = require('../utils');
 
 const app = {
     viewers: () => {
@@ -24,8 +25,16 @@ const app = {
         return Design.create(attributes);
     },
 
-    renameProject: async (_id, name) => {
-        return Project.findOneAndUpdate({ _id }, { name }, { new: true });
+    /**
+     * Update a project document
+     *
+     * @param {String|ObjectId} _id - id of the project
+     * @param {Object} attributes - attributes updates
+     * @return {Promise} project model
+     */
+    updateProject: (_id, attributes) => {
+        const updates = pickProps(attributes, 'name', 'viewers');
+        return Project.findOneAndUpdate({ _id }, updates, { new: true });
     },
 
     renameDesign: async (_id, name) => {
