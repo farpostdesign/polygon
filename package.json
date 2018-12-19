@@ -22,7 +22,8 @@
     "passport-local-mongoose": "^5.0.1",
     "react": "16.5.2",
     "react-dom": "16.5.2",
-    "react-dropzone": "^5.1.0"
+    "react-dropzone": "^5.1.0",
+    "react-select": "^2.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
